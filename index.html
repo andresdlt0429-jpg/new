@@ -107,8 +107,32 @@
       overflow: hidden;
       padding: 0;
     }
-    .hero .pane { position: absolute; inset: 0; }
+    /* gradient fallback: if the video ever fails, the pane still reads as sky */
+    .hero .pane {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(165deg,
+        color-mix(in oklch, var(--accent), var(--bg) 45%) 0%,
+        color-mix(in oklch, var(--accent), var(--bg) 72%) 55%,
+        var(--bg) 100%);
+    }
     .hero .pane video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    /* booking card floating over the hero corner */
+    .book-card {
+      position: absolute;
+      right: clamp(1rem, 4vw, 3.5rem);
+      bottom: 3.5rem;
+      z-index: 5;
+      width: 19rem;
+      background: var(--bg);
+      border-radius: 6px;
+      padding: 1.5rem;
+      box-shadow: 0 12px 40px color-mix(in oklch, var(--ink) 22%, transparent);
+    }
+    .book-card h2 { font-size: 1.3rem; font-weight: 800; }
+    .book-card p { color: var(--ink-soft); font-size: 0.9375rem; margin-top: 0.4rem; }
+    .book-card .button { margin-top: 1rem; width: 100%; text-align: center; }
+    @media (max-width: 900px) { .book-card { display: none; } }
     /* the dirty layer that scroll wipes away */
     .hero .grime-layer {
       position: absolute;
@@ -226,6 +250,46 @@
       .gallery .band figure:last-child img { aspect-ratio: auto; flex: 1 1 0; height: 0; min-height: 0; }
     }
 
+    /* ---------- buttons (shared) ---------- */
+    .button {
+      position: relative;
+      display: inline-block;
+      padding: 0.9rem 2.2rem;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: var(--font-display);
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+    /* shine sweep on hover: transform-only */
+    .button::after {
+      content: "";
+      position: absolute;
+      top: -60%;
+      bottom: -60%;
+      left: -30%;
+      width: 24%;
+      background: linear-gradient(to right, transparent, color-mix(in oklch, var(--bg) 45%, transparent), transparent);
+      transform: translateX(-160%) rotate(18deg);
+      pointer-events: none;
+    }
+    .button:hover::after { transform: translateX(640%) rotate(18deg); transition: transform 0.65s ease; }
+
+    /* ---------- offer band ---------- */
+    .offer {
+      background: var(--accent);
+      color: var(--bg);
+      text-align: center;
+      padding-block: 3.25rem;
+    }
+    .offer h2 { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; }
+    .offer p { margin-top: 0.5rem; color: color-mix(in oklch, var(--bg) 82%, transparent); }
+
     /* ---------- by the numbers ---------- */
     .stats .col {
       max-width: 64rem;
@@ -279,6 +343,48 @@
       .details .row p { grid-column: 2; }
     }
 
+    /* ---------- guarantee ---------- */
+    .guarantee .panel {
+      border: 2px solid var(--rule);
+      border-radius: 6px;
+      padding: 2.5rem 2rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .guarantee .check svg { width: 2.5rem; height: 2.5rem; color: var(--accent); }
+    .guarantee h2 { font-size: 1.6rem; font-weight: 800; }
+    .guarantee p { color: var(--ink-soft); margin-top: 0.6rem; }
+    @media (max-width: 600px) { .guarantee .panel { grid-template-columns: 1fr; } }
+
+    /* ---------- FAQ ---------- */
+    .faq h2 { font-size: 1.9rem; font-weight: 800; margin-bottom: 1.5rem; }
+    .faq details { border-top: 1px solid var(--rule); }
+    .faq details:last-child { border-bottom: 1px solid var(--rule); }
+    .faq summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding-block: 1.15rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: "+";
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 1.4rem;
+      transition: transform 0.25s ease;
+    }
+    .faq details[open] summary::after { transform: rotate(45deg); }
+    .faq details p { color: var(--ink-soft); padding-bottom: 1.25rem; max-width: 38rem; }
+
     /* ---------- CTA ---------- */
     .cta .panel {
       background: var(--panel);
@@ -288,21 +394,99 @@
     }
     .cta h2 { font-size: clamp(1.8rem, 4.5vw, 2.6rem); font-weight: 800; }
     .cta p { color: var(--ink-soft); margin-top: 0.75rem; }
-    .cta a.button {
-      display: inline-block;
-      margin-top: 1.75rem;
-      padding: 0.9rem 2.2rem;
-      background: var(--accent);
-      color: var(--bg);
-      font-family: var(--font-display);
-      font-weight: 700;
-      text-decoration: none;
-      border-radius: 4px;
+    .cta .button { margin-top: 1.75rem; }
+
+    /* ---------- scroll progress ---------- */
+    .progress {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      z-index: 70;
+      pointer-events: none;
     }
-    .cta a.button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+    .progress-bar {
+      height: 100%;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left center;
+    }
+
+    /* ---------- sticky book-now bar ---------- */
+    .sticky-bar {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      z-index: 60;
+      background: var(--ink);
+      color: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 0.7rem 1rem;
+      transition: transform 0.4s ease;
+    }
+    .sticky-bar.off { transform: translateY(110%); }
+    .sticky-bar .urgency { font-size: 0.9375rem; }
+    .sticky-bar .urgency strong { color: color-mix(in oklch, var(--accent), var(--bg) 45%); }
+    .sticky-bar .button { padding: 0.55rem 1.4rem; font-size: 0.9375rem; }
+
+    /* ---------- one-time nudge ---------- */
+    .nudge {
+      position: fixed;
+      right: 1rem;
+      bottom: 4.5rem;
+      z-index: 65;
+      width: min(19rem, calc(100vw - 2rem));
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 1.1rem 1.2rem;
+      box-shadow: 0 12px 36px color-mix(in oklch, var(--ink) 25%, transparent);
+      transform: translateY(160%);
+      opacity: 0;
+      transition: transform 0.45s ease, opacity 0.45s ease;
+      visibility: hidden;
+    }
+    .nudge.show { transform: translateY(0); opacity: 1; visibility: visible; }
+    .nudge p { font-size: 0.9375rem; }
+    .nudge p strong { font-family: var(--font-display); }
+    .nudge .button { margin-top: 0.7rem; padding: 0.5rem 1.2rem; font-size: 0.875rem; }
+    .nudge .dismiss {
+      position: absolute;
+      top: 0.35rem; right: 0.55rem;
+      border: 0; background: none;
+      font-size: 1.1rem;
+      color: var(--ink-soft);
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+
+    /* ---------- hover lifts + drawn checks ---------- */
+    .feature .media img, .gallery .band figure {
+      transition: transform 0.35s ease;
+    }
+    .feature .media img:hover, .gallery .band figure:hover { transform: translateY(-5px); }
+    .details .row .check { display: inline-block; margin-right: 0.45rem; vertical-align: -0.12em; }
+    .details .row .check svg { width: 1.3rem; height: 1.3rem; color: var(--accent); }
+    .details .row .check path {
+      stroke: currentColor;
+      stroke-width: 2.6;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      transition: stroke-dashoffset 0.5s ease 0.15s;
+    }
+    .details .row.on .check path { stroke-dashoffset: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      .details .row .check path { stroke-dashoffset: 0; transition: none; }
+      .button::after { display: none; }
+      .sticky-bar, .nudge, .feature .media img, .gallery .band figure, .button { transition: none; }
+    }
 
     footer {
-      padding: 2.5rem 1.25rem 3rem;
+      padding: 2.5rem 1.25rem 5.5rem;
       text-align: center;
       color: var(--ink-soft);
       font-size: 0.875rem;
@@ -315,6 +499,8 @@
   </style>
 </head>
 <body>
+
+  <div class="progress" aria-hidden="true"><div class="progress-bar"></div></div>
 
   <!-- HERO. Scroll-scrub: the grime layer wipes away as you scroll. -->
   <section class="hero" id="hero">
@@ -333,6 +519,11 @@
         <p class="caption">Scroll to <span class="accent">clear</span> the glass.</p>
       </div>
     </div>
+    <aside class="book-card">
+      <h2>Book a clean</h2>
+      <p>Free quote in under a minute. Most homes done within the week.</p>
+      <a class="button" href="mailto:andresdlt0429@gmail.com?subject=Free%20quote%20request">Get your free quote</a>
+    </aside>
   </section>
 
   <!-- THESIS + LEDE -->
@@ -397,19 +588,27 @@
     </div>
   </section>
 
+  <!-- OFFER BAND -->
+  <section class="offer">
+    <div class="col" data-reveal>
+      <h2>$20 off your first clean.</h2>
+      <p>Mention this site when you book. New customers only.</p>
+    </div>
+  </section>
+
   <!-- BY THE NUMBERS -->
   <section class="stats">
     <div class="col" data-reveal>
       <div>
-        <div class="value">900<span class="accent">+</span></div>
+        <div class="value"><span class="count" data-count="900">900</span><span class="accent">+</span></div>
         <div class="stat-label">windows cleaned this year</div>
       </div>
       <div>
-        <div class="value">4.9<span class="accent">&#9733;</span></div>
+        <div class="value"><span class="count" data-count="4.9" data-decimals="1">4.9</span><span class="accent">&#9733;</span></div>
         <div class="stat-label">average review</div>
       </div>
       <div>
-        <div class="value">7<span class="unit">days</span></div>
+        <div class="value"><span class="count" data-count="7">7</span><span class="unit">days</span></div>
         <div class="stat-label">a week, rain date free</div>
       </div>
     </div>
@@ -420,28 +619,68 @@
     <div class="col">
       <div class="row" data-reveal>
         <span class="num">1</span>
-        <h3>Insured for $2 million</h3>
+        <h3><span class="check"><svg viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M4 12.5 L10 18.5 L20 6.5"/></svg></span>Insured for $2 million</h3>
         <p>Ask, and we hand you the certificate before we unload a single pole.</p>
       </div>
       <div class="row" data-reveal>
         <span class="num">2</span>
-        <h3>The same two faces</h3>
+        <h3><span class="check"><svg viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M4 12.5 L10 18.5 L20 6.5"/></svg></span>The same two faces</h3>
         <p>No rotating crews. The people who cleaned your windows in spring come back in fall.</p>
       </div>
       <div class="row" data-reveal>
         <span class="num">3</span>
-        <h3>48-hour streak guarantee</h3>
+        <h3><span class="check"><svg viewBox="0 0 24 24" aria-hidden="true"><path pathLength="1" d="M4 12.5 L10 18.5 L20 6.5"/></svg></span>48-hour streak guarantee</h3>
         <p>Find a streak within two days and we return to fix it free.</p>
       </div>
     </div>
   </section>
 
+  <!-- GUARANTEE -->
+  <section class="guarantee">
+    <div class="col" data-reveal>
+      <div class="panel">
+        <span class="check" aria-hidden="true"><svg viewBox="0 0 24 24"><path pathLength="1" d="M4 12.5 L10 18.5 L20 6.5" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div>
+          <h2>Pay only for glass you love.</h2>
+          <p>
+            Walk the house with us when we finish. Find a streak within 48 hours
+            and we return to fix it free. Still not happy after that? The clean
+            is on us. No forms, no arguing, no fine print.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="col" data-reveal>
+      <h2>Fair questions</h2>
+      <details>
+        <summary>How much does it cost?</summary>
+        <p>Most single-story homes run $120 to $180 inside and out; two stories $180 to $260. You get an exact number before we start, and it doesn't change after.</p>
+      </details>
+      <details>
+        <summary>Do I need to be home?</summary>
+        <p>No. Exterior-only cleans just need gate access. We text when we're on the way and send photos when we're done.</p>
+      </details>
+      <details>
+        <summary>Are screens and sills included?</summary>
+        <p>Always. Screens brushed, sills wiped, and tracks detailed on request, at no extra charge.</p>
+      </details>
+      <details>
+        <summary>What if it rains right after?</summary>
+        <p>Rain doesn't dirty clean glass; minerals and dust do. If a storm streaks your windows within 48 hours, we come back free.</p>
+      </details>
+    </div>
+  </section>
+
   <!-- CTA -->
-  <section class="cta">
+  <section class="cta" id="book">
     <div class="col" data-reveal>
       <div class="panel">
         <h2>See what you've been missing.</h2>
-        <a class="button" href="#hero">Get your free quote</a>
+        <a class="button" href="mailto:andresdlt0429@gmail.com?subject=Free%20quote%20request">Get your free quote</a>
       </div>
     </div>
   </section>
@@ -449,6 +688,19 @@
   <footer>
     ClearView Window Cleaning
   </footer>
+
+  <!-- sticky book-now bar -->
+  <div class="sticky-bar">
+    <span class="urgency">Only <strong>3 slots</strong> left this week</span>
+    <a class="button" href="mailto:andresdlt0429@gmail.com?subject=Free%20quote%20request">Book now</a>
+  </div>
+
+  <!-- one-time nudge -->
+  <div class="nudge" role="status">
+    <button class="dismiss" aria-label="Dismiss">&times;</button>
+    <p><strong>Still deciding?</strong> Your first clean is $20 off, this week only.</p>
+    <a class="button" href="mailto:andresdlt0429@gmail.com?subject=Free%20quote%20request%20(%2420%20off)">Claim it</a>
+  </div>
 
   <script src="assets/js/lenis.min.js"></script>
   <script src="assets/js/gsap.min.js"></script>
@@ -496,6 +748,74 @@
           duration: 0.9,
           ease: "power2.out",
           scrollTrigger: { trigger: el, start: "top 82%" }
+        });
+      });
+
+      // Scroll progress bar
+      gsap.to(".progress-bar", {
+        scaleX: 1,
+        ease: "none",
+        scrollTrigger: { start: 0, end: "max", scrub: 0.3 }
+      });
+
+      // Sticky bar: hidden over the hero, slides in after the thesis
+      var bar = document.querySelector(".sticky-bar");
+      bar.classList.add("off");
+      ScrollTrigger.create({
+        trigger: ".thesis",
+        start: "top 60%",
+        onEnter: function () { bar.classList.remove("off"); },
+        onLeaveBack: function () { bar.classList.add("off"); }
+      });
+
+      // Count-up stats: final values live in the HTML, JS only animates
+      document.querySelectorAll(".count").forEach(function (el) {
+        var target = parseFloat(el.dataset.count);
+        var dec = parseInt(el.dataset.decimals || "0", 10);
+        var obj = { v: 0 };
+        gsap.to(obj, {
+          v: target,
+          duration: 1.4,
+          ease: "power1.out",
+          scrollTrigger: { trigger: el, start: "top 85%" },
+          onUpdate: function () { el.textContent = obj.v.toFixed(dec); }
+        });
+      });
+
+      // Draw-on checkmarks in the ledger
+      gsap.utils.toArray(".details .row").forEach(function (row) {
+        ScrollTrigger.create({
+          trigger: row,
+          start: "top 80%",
+          once: true,
+          onEnter: function () { row.classList.add("on"); }
+        });
+      });
+
+      // One-time dismissible nudge after the offer/stats
+      var nudge = document.querySelector(".nudge");
+      var seen = false;
+      try { seen = localStorage.getItem("cvNudge") === "1"; } catch (e) {}
+      if (!seen) {
+        ScrollTrigger.create({
+          trigger: ".stats",
+          start: "bottom 55%",
+          once: true,
+          onEnter: function () {
+            nudge.classList.add("show");
+            try { localStorage.setItem("cvNudge", "1"); } catch (e) {}
+          }
+        });
+      }
+      nudge.querySelector(".dismiss").addEventListener("click", function () {
+        nudge.classList.remove("show");
+      });
+
+      // Smooth-scroll same-page anchors through Lenis
+      document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        a.addEventListener("click", function (e) {
+          var t = document.querySelector(a.getAttribute("href"));
+          if (t) { e.preventDefault(); lenis.scrollTo(t); }
         });
       });
     })();
