@@ -6,49 +6,54 @@
   <title>ClearView Window Cleaning</title>
   <link rel="icon" href="data:,">
   <style>
+    /* Fonts: Archivo (display — work-van signage lineage), Source Sans 3 (body) */
+    @font-face {
+      font-family: "Archivo";
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+      src: url("assets/fonts/archivo-latin-700-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Archivo";
+      font-weight: 800;
+      font-style: normal;
+      font-display: swap;
+      src: url("assets/fonts/archivo-latin-800-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Source Sans 3";
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+      src: url("assets/fonts/source-sans-3-latin-400-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Source Sans 3";
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+      src: url("assets/fonts/source-sans-3-latin-600-normal.woff2") format("woff2");
+    }
+
+    /* Scene: a homeowner at her kitchen sink, mid-morning, garden through
+       just-cleaned glass. One light theme — daylight is the product.
+       Four tokens; everything else is mixed from them. */
     :root {
-      --ground: #F3F7FA;
-      --panel: #E6EEF4;
-      --ink: #132430;
-      --ink-soft: #465864;
-      --accent: #1B7DBD;
-      --glass: #DDEBF4;
-      --grime: #8E9AA3;
-      --rule: #C9D6DF;
-      --font-display: "Avenir Next", "Segoe UI", "Helvetica Neue", system-ui, sans-serif;
-      --font-body: "Seravek", "Segoe UI", "Lucida Grande", system-ui, sans-serif;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --ground: #0E1B24;
-        --panel: #162833;
-        --ink: #E8F1F7;
-        --ink-soft: #9FB4C2;
-        --accent: #4FA8DE;
-        --glass: #1D3442;
-        --grime: #3C4A54;
-        --rule: #27404F;
-      }
-    }
-    :root[data-theme="light"] {
-      --ground: #F3F7FA;
-      --panel: #E6EEF4;
-      --ink: #132430;
-      --ink-soft: #465864;
-      --accent: #1B7DBD;
-      --glass: #DDEBF4;
-      --grime: #8E9AA3;
-      --rule: #C9D6DF;
-    }
-    :root[data-theme="dark"] {
-      --ground: #0E1B24;
-      --panel: #162833;
-      --ink: #E8F1F7;
-      --ink-soft: #9FB4C2;
-      --accent: #4FA8DE;
-      --glass: #1D3442;
-      --grime: #3C4A54;
-      --rule: #27404F;
+      --bg: oklch(0.966 0.009 235);      /* daylight on white window trim */
+      --ink: oklch(0.245 0.018 240);     /* slate of the window shadow */
+      --muted: oklch(0.5 0.02 237);      /* wet-glass grey */
+      --accent: oklch(0.53 0.155 243);   /* the mid-morning sky, finally clear */
+
+      --ground: var(--bg);
+      --ink-soft: var(--muted);
+      --panel: color-mix(in oklch, var(--bg), var(--ink) 5%);
+      --glass: color-mix(in oklch, var(--bg), var(--accent) 10%);
+      --grime: color-mix(in oklch, var(--muted), var(--bg) 30%);
+      --rule: color-mix(in oklch, var(--bg), var(--ink) 16%);
+
+      --font-display: "Archivo", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+      --font-body: "Source Sans 3", "Segoe UI", "Lucida Grande", system-ui, sans-serif;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -68,7 +73,7 @@
     .label {
       font-family: var(--font-display);
       font-size: 0.75rem;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--accent);
@@ -85,7 +90,7 @@
       display: grid;
       place-items: center;
       background:
-        repeating-linear-gradient(-45deg, transparent 0 14px, color-mix(in srgb, var(--accent) 7%, transparent) 14px 28px),
+        repeating-linear-gradient(-45deg, transparent 0 14px, color-mix(in oklch, var(--accent) 7%, transparent) 14px 28px),
         var(--glass);
       border: 2px dashed var(--accent);
       border-radius: 4px;
@@ -109,7 +114,7 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(120% 90% at 30% 20%, color-mix(in srgb, var(--grime) 92%, transparent) 0%, color-mix(in srgb, var(--grime) 70%, transparent) 55%, color-mix(in srgb, var(--grime) 88%, transparent) 100%);
+        radial-gradient(120% 90% at 30% 20%, color-mix(in oklch, var(--grime) 92%, transparent) 0%, color-mix(in oklch, var(--grime) 70%, transparent) 55%, color-mix(in oklch, var(--grime) 88%, transparent) 100%);
       backdrop-filter: blur(6px) saturate(0.6);
       -webkit-backdrop-filter: blur(6px) saturate(0.6);
       clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
@@ -124,14 +129,14 @@
       background: var(--ink);
       border-radius: 5px;
       transform: translateX(-4vw) rotate(4deg);
-      box-shadow: 0 0 24px rgba(0,0,0,0.35);
+      box-shadow: 0 0 24px color-mix(in oklch, var(--ink) 35%, transparent);
       will-change: transform;
     }
     .hero .hero-copy {
       position: absolute;
       inset: auto 0 0 0;
       padding: 2rem 1.25rem 3.5rem;
-      background: linear-gradient(transparent, color-mix(in srgb, var(--ground) 88%, transparent));
+      background: linear-gradient(transparent, color-mix(in oklch, var(--ground) 88%, transparent));
     }
     .hero .hero-copy .inner { max-width: 42rem; margin-inline: auto; }
     .hero h1 {
@@ -209,7 +214,7 @@
       margin-top: 1.75rem;
       padding: 0.9rem 2.2rem;
       background: var(--accent);
-      color: #fff;
+      color: var(--bg);
       font-family: var(--font-display);
       font-weight: 700;
       text-decoration: none;
