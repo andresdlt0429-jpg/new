@@ -85,19 +85,8 @@
     }
     section { padding-block: 6rem; }
 
-    /* ---------- placeholder blocks (swapped for real footage later) ---------- */
-    .placeholder {
-      display: grid;
-      place-items: center;
-      background:
-        repeating-linear-gradient(-45deg, transparent 0 14px, color-mix(in oklch, var(--accent) 7%, transparent) 14px 28px),
-        var(--glass);
-      border: 2px dashed var(--accent);
-      border-radius: 4px;
-      color: var(--ink-soft);
-      text-align: center;
-      padding: 1rem;
-    }
+    /* ---------- media ---------- */
+    img, video { display: block; max-width: 100%; }
     .caption {
       font-size: 0.9375rem;
       color: var(--ink-soft);
@@ -112,7 +101,7 @@
       padding: 0;
     }
     .hero .pane { position: absolute; inset: 0; }
-    .hero .pane .placeholder { position: absolute; inset: 0; border: 0; border-radius: 0; }
+    .hero .pane video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     /* the dirty layer that scroll wipes away */
     .hero .grime-layer {
       position: absolute;
@@ -169,7 +158,12 @@
       .feature .col { grid-template-columns: 1fr 1fr; }
       .feature.flip .media { order: 2; }
     }
-    .feature .media .placeholder { aspect-ratio: 4 / 3; }
+    .feature .media img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 4px;
+    }
     .feature h3 { font-size: 1.75rem; font-weight: 700; margin: 0.5rem 0 0.75rem; }
     .feature p { color: var(--ink-soft); }
 
@@ -183,10 +177,15 @@
       padding-inline: 1.25rem;
     }
     .gallery .band figure { display: flex; flex-direction: column; gap: 0.6rem; height: 100%; }
-    .gallery .placeholder { aspect-ratio: 16 / 9; }
+    .gallery .band video, .gallery .band img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 4px;
+    }
     @media (min-width: 760px) {
       .gallery .band { grid-template-columns: 3fr 2fr; align-items: stretch; }
-      .gallery .band figure:last-child .placeholder { aspect-ratio: auto; flex: 1; }
+      .gallery .band figure:last-child img { aspect-ratio: auto; flex: 1; min-height: 0; }
     }
 
     /* ---------- detail rows: the ledger ---------- */
@@ -249,11 +248,13 @@
 </head>
 <body>
 
-  <!-- HERO. Scroll-scrub: the grime layer wipes away as you scroll.
-       Footage slot, Video 1: slow squeegee pass across sunlit glass, 16:9, muted loop. -->
+  <!-- HERO. Scroll-scrub: the grime layer wipes away as you scroll. -->
   <section class="hero" id="hero">
     <div class="pane">
-      <div class="placeholder" aria-hidden="true"></div>
+      <video autoplay muted loop playsinline aria-hidden="true">
+        <source src="assets/hero.webm" type="video/webm">
+        <source src="assets/hero.mp4" type="video/mp4">
+      </video>
       <div class="grime-layer" aria-hidden="true"></div>
       <div class="squeegee" aria-hidden="true"></div>
     </div>
@@ -277,11 +278,11 @@
     </div>
   </section>
 
-  <!-- FEATURE 1. Footage slot, Image 1: water-fed brush on an upstairs window, 4:3. -->
+  <!-- FEATURE 1 -->
   <section class="feature">
     <div class="col">
       <div class="media" data-reveal>
-        <div class="placeholder" aria-hidden="true"></div>
+        <img src="assets/g1.jpg" alt="Water-fed pole brush cleaning an upstairs window from the lawn">
       </div>
       <div class="copy" data-reveal>
         <h3>Upstairs without ladders</h3>
@@ -294,11 +295,11 @@
     </div>
   </section>
 
-  <!-- FEATURE 2. Footage slot, Image 2: close squeegee work on a picture window, 4:3. -->
+  <!-- FEATURE 2 -->
   <section class="feature flip">
     <div class="col">
       <div class="media" data-reveal>
-        <div class="placeholder" aria-hidden="true"></div>
+        <img src="assets/g2.jpg" alt="Macro of a squeegee blade edge separating beaded water from dry glass">
       </div>
       <div class="copy" data-reveal>
         <h3>Finished by hand</h3>
@@ -311,17 +312,18 @@
     </div>
   </section>
 
-  <!-- GALLERY BAND.
-       Footage slot, Video 2: pan across a bay window mid-clean, 16:9.
-       Footage slot, Image 3: garden seen from inside through cleaned glass, 16:9. -->
+  <!-- GALLERY BAND -->
   <section class="gallery">
     <div class="band">
       <figure data-reveal>
-        <div class="placeholder" aria-hidden="true"></div>
+        <video autoplay muted loop playsinline>
+          <source src="assets/middle.webm" type="video/webm">
+          <source src="assets/middle.mp4" type="video/mp4">
+        </video>
         <figcaption class="caption">Grime left, <span class="accent">clarity</span> right.</figcaption>
       </figure>
       <figure data-reveal>
-        <div class="placeholder" aria-hidden="true"></div>
+        <img src="assets/g3.jpg" alt="Garden seen in sharp focus through a just-cleaned kitchen window">
         <figcaption class="caption">The backyard, back in <span class="accent">focus</span>.</figcaption>
       </figure>
     </div>
@@ -368,6 +370,12 @@
   <script>
     (function () {
       var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduced) {
+        document.querySelectorAll("video").forEach(function (v) {
+          v.removeAttribute("autoplay");
+          v.pause();
+        });
+      }
       if (reduced || !window.gsap) return;
 
       gsap.registerPlugin(ScrollTrigger);
