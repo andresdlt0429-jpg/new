@@ -6,7 +6,7 @@
   <title>ClearView Window Cleaning</title>
   <link rel="icon" href="data:,">
   <style>
-    /* Fonts: Archivo (display — work-van signage lineage), Source Sans 3 (body) */
+    /* Fonts: Archivo (display, work-van signage lineage), Source Sans 3 (body) */
     @font-face {
       font-family: "Archivo";
       font-weight: 700;
@@ -37,7 +37,7 @@
     }
 
     /* Scene: a homeowner at her kitchen sink, mid-morning, garden through
-       just-cleaned glass. One light theme — daylight is the product.
+       just-cleaned glass. One light theme: daylight is the product.
        Four tokens; everything else is mixed from them. */
     :root {
       --bg: oklch(0.966 0.009 235);      /* daylight on white window trim */
@@ -98,7 +98,11 @@
       text-align: center;
       padding: 1rem;
     }
-    .placeholder .label { display: block; margin-bottom: 0.35rem; }
+    .caption {
+      font-size: 0.9375rem;
+      color: var(--ink-soft);
+    }
+    .caption .accent { color: var(--accent); font-weight: 600; }
 
     /* ---------- hero: the squeegee scrub ---------- */
     .hero {
@@ -144,7 +148,7 @@
       font-weight: 800;
       letter-spacing: -0.02em;
     }
-    .hero .hint { color: var(--ink-soft); margin-top: 0.75rem; }
+    .hero .caption { margin-top: 0.75rem; }
 
     /* ---------- thesis ---------- */
     .thesis h2 {
@@ -178,27 +182,35 @@
       margin-inline: auto;
       padding-inline: 1.25rem;
     }
+    .gallery .band figure { display: flex; flex-direction: column; gap: 0.6rem; height: 100%; }
+    .gallery .placeholder { aspect-ratio: 16 / 9; }
     @media (min-width: 760px) {
       .gallery .band { grid-template-columns: 3fr 2fr; align-items: stretch; }
-      .gallery .band > div:last-child { display: grid; }
-      .gallery .band > div:last-child .placeholder { aspect-ratio: auto; height: 100%; }
+      .gallery .band figure:last-child .placeholder { aspect-ratio: auto; flex: 1; }
     }
-    .gallery .placeholder { aspect-ratio: 16 / 9; }
-    .gallery header { max-width: 42rem; margin: 0 auto 2.5rem; padding-inline: 1.25rem; }
 
     /* ---------- detail rows: the ledger ---------- */
     .details .row {
       display: grid;
-      grid-template-columns: auto 1fr;
+      grid-template-columns: 2.25rem 15rem 1fr;
       gap: 1.5rem;
       align-items: baseline;
       padding-block: 1.75rem;
       border-top: 1px solid var(--rule);
     }
     .details .row:last-child { border-bottom: 1px solid var(--rule); }
-    .details .row h3 { font-size: 1.35rem; font-weight: 700; min-width: 14rem; }
+    .details .row .num {
+      font-family: var(--font-display);
+      font-weight: 800;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+    }
+    .details .row h3 { font-size: 1.35rem; font-weight: 700; }
     .details .row p { color: var(--ink-soft); }
-    @media (max-width: 600px) { .details .row { grid-template-columns: 1fr; gap: 0.4rem; } }
+    @media (max-width: 600px) {
+      .details .row { grid-template-columns: 2.25rem 1fr; }
+      .details .row p { grid-column: 2; }
+    }
 
     /* ---------- CTA ---------- */
     .cta .panel {
@@ -237,128 +249,101 @@
 </head>
 <body>
 
-  <!-- HERO · scroll-scrub: the grime layer wipes away as you scroll -->
+  <!-- HERO. Scroll-scrub: the grime layer wipes away as you scroll.
+       Footage slot, Video 1: slow squeegee pass across sunlit glass, 16:9, muted loop. -->
   <section class="hero" id="hero">
     <div class="pane">
-      <div class="placeholder">
-        <span>
-          <span class="label">Video 1 · Hero loop</span>
-          Slow squeegee pass across sunlit glass, sky reflected · 16:9, muted, loops
-        </span>
-      </div>
+      <div class="placeholder" aria-hidden="true"></div>
       <div class="grime-layer" aria-hidden="true"></div>
       <div class="squeegee" aria-hidden="true"></div>
     </div>
     <div class="hero-copy">
       <div class="inner">
-        <span class="label">Residential &amp; commercial window cleaning</span>
+        <span class="label">Window cleaning for homes and storefronts</span>
         <h1>ClearView Window Cleaning</h1>
-        <p class="hint">Scroll to clear the glass.</p>
+        <p class="caption">Scroll to <span class="accent">clear</span> the glass.</p>
       </div>
     </div>
   </section>
 
-  <!-- THESIS -->
+  <!-- THESIS + LEDE -->
   <section class="thesis">
     <div class="col" data-reveal>
-      <span class="label">Why we exist</span>
       <h2>The local window cleaner your neighbors trust.</h2>
       <p>
-        ClearView is a small, local crew that leaves your glass spotless and your
-        mind at ease. One visit and you'll see why homeowners around here stopped
-        shopping around.
+        ClearView is a two-person crew, not a franchise. Most of our week is
+        repeat customers who book us by name.
       </p>
     </div>
   </section>
 
-  <!-- FEATURE 1 -->
+  <!-- FEATURE 1. Footage slot, Image 1: water-fed brush on an upstairs window, 4:3. -->
   <section class="feature">
     <div class="col">
       <div class="media" data-reveal>
-        <div class="placeholder">
-          <span>
-            <span class="label">Image 1 · Pure-water pole</span>
-            Water-fed brush working an upstairs window, ladder-free · 4:3
-          </span>
-        </div>
+        <div class="placeholder" aria-hidden="true"></div>
       </div>
       <div class="copy" data-reveal>
-        <span class="label">Upstairs, without ladders</span>
-        <h3>Pure-water reach for every floor</h3>
+        <h3>Upstairs without ladders</h3>
         <p>
-          Our water-fed pole system scrubs second-story glass and frames with
-          deionized water — no ladders against your siding, no detergent haze
-          left to dry in the sun. It rinses spot-free because there's nothing
-          in the water to leave behind.
+          We filter every mineral out of the water before it touches your glass,
+          so it dries without a single spot. The pole reaches 30 feet up, and no
+          ladder ever leans on your siding.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- FEATURE 2 -->
+  <!-- FEATURE 2. Footage slot, Image 2: close squeegee work on a picture window, 4:3. -->
   <section class="feature flip">
     <div class="col">
       <div class="media" data-reveal>
-        <div class="placeholder">
-          <span>
-            <span class="label">Image 2 · Hand detail</span>
-            Close squeegee work on a front picture window, streak-free edge · 4:3
-          </span>
-        </div>
+        <div class="placeholder" aria-hidden="true"></div>
       </div>
       <div class="copy" data-reveal>
-        <span class="label">The part machines can't do</span>
-        <h3>Hand-finished, edge to edge</h3>
+        <h3>Finished by hand</h3>
         <p>
-          Ground-floor and interior glass gets the old-school treatment: mop,
-          squeegee, and a dry towel run around every edge. Sills wiped, screens
-          brushed, locks and latches left exactly as we found them.
+          Every ground-floor pane gets the squeegee, then a dry towel around all
+          four edges. Sills wiped, screens brushed, latches left exactly as we
+          found them.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- GALLERY BAND -->
+  <!-- GALLERY BAND.
+       Footage slot, Video 2: pan across a bay window mid-clean, 16:9.
+       Footage slot, Image 3: garden seen from inside through cleaned glass, 16:9. -->
   <section class="gallery">
-    <header data-reveal>
-      <span class="label">The proof</span>
-      <h3>Before and after, same window, same day.</h3>
-    </header>
     <div class="band">
-      <div data-reveal>
-        <div class="placeholder">
-          <span>
-            <span class="label">Video 2 · Before / after sweep</span>
-            Camera pans across a bay window mid-clean — grime on one side, clarity on the other · 16:9
-          </span>
-        </div>
-      </div>
-      <div data-reveal>
-        <div class="placeholder">
-          <span>
-            <span class="label">Image 3 · The reveal</span>
-            Homeowner's view from inside: garden through freshly cleaned glass · 16:9
-          </span>
-        </div>
-      </div>
+      <figure data-reveal>
+        <div class="placeholder" aria-hidden="true"></div>
+        <figcaption class="caption">Grime left, <span class="accent">clarity</span> right.</figcaption>
+      </figure>
+      <figure data-reveal>
+        <div class="placeholder" aria-hidden="true"></div>
+        <figcaption class="caption">The backyard, back in <span class="accent">focus</span>.</figcaption>
+      </figure>
     </div>
   </section>
 
   <!-- DETAIL ROWS -->
   <section class="details">
     <div class="col">
-      <span class="label" data-reveal>The fine print, up front</span>
       <div class="row" data-reveal>
-        <h3>Licensed &amp; insured</h3>
-        <p>Full liability coverage on every job, and we'll show you the certificate before we show you a ladder.</p>
+        <span class="num">1</span>
+        <h3>Insured for $2 million</h3>
+        <p>Ask, and we hand you the certificate before we unload a single pole.</p>
       </div>
       <div class="row" data-reveal>
-        <h3>One crew, every visit</h3>
-        <p>The same faces each time — people who know which gate sticks and which flowerbed to step around.</p>
+        <span class="num">2</span>
+        <h3>The same two faces</h3>
+        <p>No rotating crews. The people who cleaned your windows in spring come back in fall.</p>
       </div>
       <div class="row" data-reveal>
-        <h3>The streak-free guarantee</h3>
-        <p>Spot a streak within 48 hours and we come back and fix it free. No forms, no fuss — just call.</p>
+        <span class="num">3</span>
+        <h3>48-hour streak guarantee</h3>
+        <p>Find a streak within two days and we return to fix it free.</p>
       </div>
     </div>
   </section>
@@ -368,14 +353,13 @@
     <div class="col" data-reveal>
       <div class="panel">
         <h2>See what you've been missing.</h2>
-        <p>Free quote in under a minute — most homes cleaned within the week.</p>
         <a class="button" href="#hero">Get your free quote</a>
       </div>
     </div>
   </section>
 
   <footer>
-    ClearView Window Cleaning · Locally owned &amp; operated
+    ClearView Window Cleaning
   </footer>
 
   <script src="assets/js/lenis.min.js"></script>
