@@ -247,7 +247,8 @@
     }
     @media (min-width: 760px) {
       .gallery .band { grid-template-columns: 3fr 2fr; align-items: stretch; }
-      .gallery .band figure:last-child img { aspect-ratio: auto; flex: 1 1 0; height: 0; min-height: 0; }
+      .gallery .band figure:last-child img,
+      .gallery .band figure:last-child video { aspect-ratio: auto; flex: 1 1 0; height: 0; min-height: 0; }
     }
 
     /* ---------- buttons (shared) ---------- */
@@ -582,8 +583,11 @@
         <figcaption class="caption">Grime left, <span class="accent">clarity</span> right.</figcaption>
       </figure>
       <figure data-reveal>
-        <img src="assets/g3.jpg" alt="Garden seen in sharp focus through a just-cleaned kitchen window">
-        <figcaption class="caption">The backyard, back in <span class="accent">focus</span>.</figcaption>
+        <video autoplay muted loop playsinline>
+          <source src="assets/job.webm" type="video/webm">
+          <source src="assets/job.mp4" type="video/mp4">
+        </video>
+        <figcaption class="caption">Shot on a <span class="accent">real</span> job.</figcaption>
       </figure>
     </div>
   </section>
