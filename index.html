@@ -22,6 +22,13 @@
       src: url("assets/fonts/archivo-latin-800-normal.woff2") format("woff2");
     }
     @font-face {
+      font-family: "Archivo";
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+      src: url("assets/fonts/archivo-latin-900-normal.woff2") format("woff2");
+    }
+    @font-face {
       font-family: "Source Sans 3";
       font-weight: 400;
       font-style: normal;
@@ -133,9 +140,40 @@
     }
     .hero .hero-copy .inner { max-width: 42rem; margin-inline: auto; }
     .hero h1 {
-      font-size: clamp(2.6rem, 7vw, 4.75rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
+      font-size: clamp(3rem, 7.5vw, 5.15rem);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      line-height: 1.14;
+    }
+    /* hand-drawn underline swash: draws itself once on load, then stays */
+    .swash {
+      position: relative;
+      display: inline-block;
+    }
+    .swash svg {
+      position: absolute;
+      left: -0.06em;
+      right: -0.06em;
+      bottom: -0.1em;
+      width: calc(100% + 0.12em);
+      height: 0.22em;
+      color: var(--accent);
+      overflow: visible;
+    }
+    .swash path {
+      stroke: currentColor;
+      stroke-width: 7;
+      fill: none;
+      stroke-linecap: round;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      animation: swash-draw 0.8s ease-out 0.5s forwards;
+    }
+    @keyframes swash-draw {
+      to { stroke-dashoffset: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .swash path { animation: none; stroke-dashoffset: 0; }
     }
     .hero .caption { margin-top: 0.75rem; }
 
@@ -186,6 +224,36 @@
     @media (min-width: 760px) {
       .gallery .band { grid-template-columns: 3fr 2fr; align-items: stretch; }
       .gallery .band figure:last-child img { aspect-ratio: auto; flex: 1 1 0; height: 0; min-height: 0; }
+    }
+
+    /* ---------- by the numbers ---------- */
+    .stats .col {
+      max-width: 64rem;
+      display: grid;
+      gap: 2.5rem;
+      text-align: center;
+    }
+    @media (min-width: 640px) { .stats .col { grid-template-columns: 1fr 1fr 1fr; } }
+    .stats .value {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(3rem, 6.5vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      font-variant-numeric: tabular-nums;
+    }
+    .stats .value .accent { color: var(--accent); }
+    .stats .value .unit {
+      font-size: 0.42em;
+      font-weight: 800;
+      color: var(--ink-soft);
+      margin-left: 0.18em;
+      letter-spacing: 0;
+    }
+    .stats .stat-label {
+      margin-top: 0.6rem;
+      font-size: 0.9375rem;
+      color: var(--ink-soft);
     }
 
     /* ---------- detail rows: the ledger ---------- */
@@ -261,7 +329,7 @@
     <div class="hero-copy">
       <div class="inner">
         <span class="label">Window cleaning for homes and storefronts</span>
-        <h1>ClearView Window Cleaning</h1>
+        <h1><span class="swash">ClearView<svg viewBox="0 0 200 22" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M5 15 C 38 7, 74 19, 108 11 C 134 5, 162 14, 195 9"/></svg></span> Window Cleaning</h1>
         <p class="caption">Scroll to <span class="accent">clear</span> the glass.</p>
       </div>
     </div>
@@ -326,6 +394,24 @@
         <img src="assets/g3.jpg" alt="Garden seen in sharp focus through a just-cleaned kitchen window">
         <figcaption class="caption">The backyard, back in <span class="accent">focus</span>.</figcaption>
       </figure>
+    </div>
+  </section>
+
+  <!-- BY THE NUMBERS -->
+  <section class="stats">
+    <div class="col" data-reveal>
+      <div>
+        <div class="value">900<span class="accent">+</span></div>
+        <div class="stat-label">windows cleaned this year</div>
+      </div>
+      <div>
+        <div class="value">4.9<span class="accent">&#9733;</span></div>
+        <div class="stat-label">average review</div>
+      </div>
+      <div>
+        <div class="value">7<span class="unit">days</span></div>
+        <div class="stat-label">a week, rain date free</div>
+      </div>
     </div>
   </section>
 
