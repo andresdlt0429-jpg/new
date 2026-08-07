@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CRM Pipeline Board</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Pipeline Board</h1>
+    <div class="actions">
+      <span id="sync-status"></span>
+      <button id="sync-now-btn">Sync Now</button>
+      <button id="add-lead-btn" class="primary">+ Add Lead</button>
+      <a class="navlink" href="settings.html">Settings</a>
+    </div>
+  </header>
+
+  <div id="board" class="board"></div>
+
+  <!-- Lead detail / edit modal -->
+  <div id="lead-overlay" class="overlay hidden">
+    <div class="modal">
+      <h2 id="modal-title">Lead</h2>
+      <input type="hidden" id="lead-id" />
+      <label>Name</label>
+      <input id="lead-name" type="text" placeholder="Jane Prospect" />
+      <label>Email</label>
+      <input id="lead-email" type="text" placeholder="jane@company.com" />
+      <label>Phone</label>
+      <input id="lead-phone" type="text" placeholder="(555) 555-1234" />
+      <label>Stage</label>
+      <select id="lead-stage"></select>
+      <label>Notes</label>
+      <textarea id="lead-notes" placeholder="Call notes, context, next steps..."></textarea>
+      <div id="lead-calendar-link" style="margin-top:10px;font-size:12px;"></div>
+      <div class="modal-actions">
+        <button id="lead-delete-btn" class="danger">Delete</button>
+        <div class="right">
+          <button id="lead-cancel-btn">Cancel</button>
+          <button id="lead-save-btn" class="primary">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/board.js"></script>
+</body>
+</html>

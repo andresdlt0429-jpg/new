@@ -1,0 +1,16 @@
+{
+  "name": "crm-pipeline",
+  "version": "1.0.0",
+  "description": "CRM pipeline board that syncs leads from Google Calendar events, classified into stages by event color, with optional Discord notifications.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "googleapis": "^140.0.1"
+  }
+}

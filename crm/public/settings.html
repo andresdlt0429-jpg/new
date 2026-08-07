@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CRM Settings</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Settings</h1>
+    <div class="actions">
+      <a class="navlink" href="index.html">← Back to board</a>
+    </div>
+  </header>
+
+  <div class="settings-wrap">
+    <div id="banner"></div>
+
+    <section>
+      <h2>Google Calendar</h2>
+      <p class="hint">Connect the Google account whose calendar has your lead/call events on it.</p>
+      <div class="row">
+        <label>Status</label>
+        <span id="google-status" class="status-pill off">Not connected</span>
+      </div>
+      <div class="row" id="connect-row">
+        <label>&nbsp;</label>
+        <button id="google-connect-btn" class="primary">Connect Google Calendar</button>
+        <button id="google-disconnect-btn" class="danger" style="display:none;">Disconnect</button>
+      </div>
+      <div class="row" id="calendar-row" style="display:none;">
+        <label for="calendar-select">Calendar to sync</label>
+        <select id="calendar-select"></select>
+      </div>
+      <div class="row">
+        <label for="sync-interval">Auto-sync every</label>
+        <select id="sync-interval">
+          <option value="1">1 minute</option>
+          <option value="5">5 minutes</option>
+          <option value="15">15 minutes</option>
+          <option value="30">30 minutes</option>
+          <option value="60">60 minutes</option>
+        </select>
+      </div>
+    </section>
+
+    <section>
+      <h2>Stage ↔ Calendar Color Mapping</h2>
+      <p class="hint">
+        Color an event on your calendar and it becomes a lead in that stage on the board.
+        Events with no color set (or a color not listed here) are ignored.
+      </p>
+      <div id="stage-mapping"></div>
+      <button id="reset-stages-btn" style="margin-top:8px;">Reset to defaults</button>
+    </section>
+
+    <section>
+      <h2>Discord Notifications</h2>
+      <p class="hint">Paste a Discord channel webhook URL to get a message whenever a lead is created or changes stage.</p>
+      <div class="row">
+        <label for="discord-url">Webhook URL</label>
+        <input id="discord-url" type="text" placeholder="https://discord.com/api/webhooks/..." />
+      </div>
+      <button id="discord-test-btn">Send test message</button>
+      <p class="hint" style="margin-top:10px;">
+        In Discord: Server Settings → Integrations → Webhooks → New Webhook → pick a channel → Copy Webhook URL.
+      </p>
+    </section>
+
+    <button id="save-btn" class="primary">Save Settings</button>
+  </div>
+
+  <script src="js/settings.js"></script>
+</body>
+</html>
