@@ -16,16 +16,19 @@ stage automatically:
 | Stage | Default color |
 |---|---|
 | New Lead | Blueberry (dark blue) |
-| Demo Call Scheduled | Peacock (teal) |
+| Demo Call Scheduled | *No color (calendar default)* |
 | Demo Call – Thinking It Over | Banana (yellow) |
 | Demo Call – Free Trial | Flamingo (pink) |
 | Closed Won | Basil (dark green) |
 | Ghosted / No-Show | Tomato (red) |
 | Closed Lost | Graphite (gray) |
 
-Events with no color set (Google's calendar-default color) or a color not
-in this list are ignored — they won't show up as leads. You can remap any
-stage to a different color any time from the **Settings** page.
+"No color (calendar default)" is a special option (alongside the 11 real
+Google colors) that matches events you never manually colored — the ones
+that just show up in whatever color your calendar defaults to. Only one
+stage should be mapped to it at a time. Any color not assigned to a stage
+is ignored — events using it won't show up as leads. Remap any stage to a
+different color any time from the **Settings** page.
 
 ## 1. Set up Google OAuth credentials (one-time)
 

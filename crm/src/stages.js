@@ -12,6 +12,10 @@ const GOOGLE_EVENT_COLORS = {
   '9': { name: 'Blueberry', hex: '#3f51b5' },
   '10': { name: 'Basil', hex: '#0b8043' },
   '11': { name: 'Tomato', hex: '#d50000' },
+  // Not a real Google colorId — represents an event left uncolored (using
+  // the calendar's own default color). Selectable in Settings just like any
+  // other color so a stage can catch events nobody bothered to color.
+  default: { name: 'No color (calendar default)', hex: '#8a97a6' },
 };
 
 // Default stage pipeline, left-to-right board order, each tied to one
@@ -19,7 +23,7 @@ const GOOGLE_EVENT_COLORS = {
 // (overrides are stored in the settings table as JSON and merged over this).
 const DEFAULT_STAGES = [
   { key: 'new_lead', label: 'New Lead', colorId: '9' }, // Blueberry
-  { key: 'demo_scheduled', label: 'Demo Call Scheduled', colorId: '7' }, // Peacock
+  { key: 'demo_scheduled', label: 'Demo Call Scheduled', colorId: 'default' }, // uncolored/default events
   { key: 'thinking_it_over', label: 'Demo Call – Thinking It Over', colorId: '5' }, // Banana
   { key: 'free_trial', label: 'Demo Call – Free Trial', colorId: '4' }, // Flamingo
   { key: 'closed_won', label: 'Closed Won', colorId: '10' }, // Basil
@@ -32,7 +36,8 @@ function stagesWithColors(stages) {
 }
 
 function colorIdToStageKey(stages, colorId) {
-  const stage = stages.find((s) => s.colorId === String(colorId));
+  const key = colorId ? String(colorId) : 'default'; // Google omits colorId for uncolored events
+  const stage = stages.find((s) => s.colorId === key);
   return stage ? stage.key : null;
 }
 

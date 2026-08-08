@@ -114,7 +114,9 @@ async function pushStageToCalendarEvent(lead, newStageKey) {
 
   const stages = getSetting('stages');
   const colorId = stageKeyToColorId(stages, newStageKey);
-  if (!colorId) return;
+  // 'default' means "no color" — not a real Google colorId, and there's no
+  // reliable API way to clear an event's color, so just leave it as-is.
+  if (!colorId || colorId === 'default') return;
 
   await calendar.events.patch({
     calendarId: lead.calendar_id || getSetting('calendar_id') || 'primary',
@@ -145,7 +147,7 @@ async function scheduleCallForLead(lead, { start, end, calendarId } = {}) {
     requestBody: {
       summary: lead.name,
       description: lead.notes || '',
-      colorId: colorId || undefined,
+      colorId: colorId && colorId !== 'default' ? colorId : undefined,
       start: { dateTime: start },
       end: { dateTime: end },
       attendees: lead.email ? [{ email: lead.email }] : undefined,
