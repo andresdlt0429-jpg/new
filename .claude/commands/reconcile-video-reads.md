@@ -11,6 +11,14 @@ You are reconciling two independent reads of the same video into one trustworthy
 
 Read both files in full before writing anything. If `$2` contains multiple `## Sample N` sections (from `--samples > 1`), treat agreement *between those samples* as part of Reading B's own confidence, not as a third independent reading — a claim only both samples agree on counts as one solid Reading B claim; a claim that shows up in just one sample is already suspect before you even compare it to Reading A.
 
+## Weigh the evidence before you label it
+
+**Names are evidence, numbers are decoration.** Both readers are genuinely good at naming things — the tool on screen, the error text, the exact command string, the phrase the presenter used. Neither is good at numbers: vision models have no internal clock and no axes to measure against, so timestamps, durations, counts and percentages are reconstructions rather than readings, routinely off by whole seconds even when the surrounding structure is correct. Two readings agreeing on a *name* is strong evidence. Two readings disagreeing on a *number* is barely evidence of anything — don't spend a `CONFLICT` on it, and never let a spec line depend on a number neither reader could actually measure.
+
+**Watch for the archetype trap.** Each reader tends to report what this *kind* of video usually contains rather than what this specific one did — ask about a tutorial and you get back the shape of tutorials. The distinctive step, the one that is the actual reason this video was worth saving, is exactly what gets normalized away into the average. When both readings sound like a generic version of the topic, that agreement is not confirmation; flag it rather than promoting it to `CONFIRMED`.
+
+**The fluency tell.** When a claim reads smoother and more complete than the material around it, it more likely came from training data than from the video. Check those lines first, and prefer the reading that is specific and slightly awkward over the one that is polished and generic.
+
 ## What to do
 
 Go claim by claim through both readings — what the video builds, the steps in order, specific commands/code/config shown on screen, and anything either reading flagged as unclear or a possible mistake. For each distinct claim, label it with exactly one of:
