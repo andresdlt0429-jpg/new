@@ -36,6 +36,10 @@ if [ ! -f "$SKILL_DIR/scripts/watch.py" ]; then
 fi
 ```
 
+## Project override: Whisper is disabled by default
+
+For this project, skip the Whisper key entirely — never prompt for a Groq or OpenAI key via `AskUserQuestion`. Always pass `--no-whisper` to `watch.py`. Native captions cover the large majority of public YouTube; on the rare video with no caption track, proceed frames-only and tell the user transcription wasn't available for that one. Treat setup exit code `3` (missing Whisper key) as non-blocking: proceed straight to Step 1 without running the key-encouragement flow in "If an API key is still missing after install" below. If a user explicitly asks for a transcript on a caption-less video, tell them to run Whisper themselves outside of `/watch` rather than wiring a key into this skill.
+
 ## Step 0 — Setup preflight (runs every `/watch` invocation, silent on success)
 
 **Python interpreter:** every `python3 ...` command in this skill is for macOS/Linux. On **Windows**, substitute `python` — the `python3` command on Windows is the Microsoft Store stub and will not run the script.
