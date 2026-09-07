@@ -8,39 +8,51 @@ Claude Code session.
 ```
 video URL
    │
-   ├──► /watch  ──────────────────────────► notes/watch-pass.md
-   │    (.claude/skills/watch)                (frames + real transcript,
-   │    downloads locally, reads frames         local — no cloud calls
-   │    + captions/local Whisper transcript      by default)
+   ▼
+1. Scope the video
+   Name the section you actually need (--start/--end) and pick --detail
+   on purpose (see "Choosing --detail" below) — a window beats a whole video.
    │
-   └──► scripts/gemini_review.py ──────────► notes/gemini-pass.md
-        (sends only the URL — Google           (an independent read —
-         fetches + watches it on their side)     no download, no upload)
-
-              notes/watch-pass.md
-              notes/gemini-pass.md
-                        │
-                        ▼
-              /reconcile-video-reads
-              (.claude/commands)
-                        │
-                        ▼
-                  notes/spec.md
-        (one spec, every claim labeled
-         CONFIRMED / SINGLE SOURCE / CONFLICT,
-         plus an open-questions list)
-                        │
-                        ▼
-              skill-creator  (built into Claude Code)
-              hand it notes/spec.md, it interviews
-              you and writes a new skill
-                        │
-                        ▼
-              run the new skill once on a real
-              input and fix whatever breaks
+   ▼
+2. Claude watches — /watch (.claude/skills/watch)
+   Downloads locally, reads frames + a real transcript (native captions,
+   or local offline faster-whisper if missing) into its own context.
+   No cloud calls by default.
+   │
+   ▼
+3. You write pass one — BEFORE looking at Gemini
+   Claude writes its own structured read of what it just saw, from its
+   own context only, to notes/watch-pass.md. Do this before step 4 —
+   reading Gemini's take first would anchor pass one to it.
+   │
+   ▼
+4. Gemini watches — scripts/gemini_review.py
+   Same URL, sent straight to Gemini — Google fetches and watches the
+   video on their own side, nothing downloads here. Two samples so a
+   guess is visible as a guess. → notes/gemini-pass.md
+   │
+   ▼
+5. Reconcile — /reconcile-video-reads (.claude/commands)
+   notes/watch-pass.md + notes/gemini-pass.md → notes/spec.md
+   One spec, every claim labeled CONFIRMED / SINGLE SOURCE / CONFLICT,
+   plus an open-questions list.
+   │
+   ▼
+6. Build it, then run it once
+   Hand notes/spec.md to skill-creator (built into Claude Code) — it
+   interviews you and writes the skill. Then run the new skill once on
+   a real input and fix what breaks. This step is not optional.
 ```
 
-## 1. Read the video locally — `/watch`
+## 1. Scope the video
+
+Don't let `--detail` default — pick it on purpose. See
+["Choosing --detail"](#choosing---detail-a-real-benchmark) below for real
+numbers. If you only care about part of a long video, narrow it with
+`--start`/`--end` on both `/watch` and `scripts/gemini_review.py` — a
+focused window beats a sparse pass over the whole thing.
+
+## 2. Claude watches — `/watch`
 
 ```bash
 /watch "<video-url>" what does this build?
@@ -52,13 +64,36 @@ captions (free) or — only if captions are missing — a local, offline
 cloud call). Cloud Whisper (Groq/OpenAI) is disabled by default in this
 project — see `.claude/skills/watch/SKILL.md` for why.
 
-To save the report to a file for reconciliation later:
+This step happens interactively, inside your Claude Code session — Claude
+reads the extracted frames and transcript into its own context via the
+`Read` tool. There's no file to redirect to yet; that's step 3.
 
-```bash
-python3 .claude/skills/watch/scripts/watch.py "<video-url>" > notes/watch-pass.md
-```
+## 3. Write pass one — before you look at Gemini
 
-## 2. Read the same video independently — Gemini
+With the frames and transcript still in context from step 2, have Claude
+write its own structured understanding of the video to `notes/watch-pass.md`
+— **before** running or reading anything from Gemini. Looking at Gemini's
+read first would anchor pass one to it instead of it being an independent
+reading.
+
+A reasonable structure (adapt to what the video actually covers):
+
+1. **Overview** — what the video builds or covers, in a few sentences
+2. **Prerequisites / setup** — anything needed before the walkthrough starts
+3. **Steps** — the build/walkthrough in order
+4. **Commands, code & config shown on screen** — transcribed as exactly as
+   the frames allow
+5. **Decisions & rationale** — anything the video explains the *why* of
+6. **Uncertain / ambiguous moments** — cuts, unclear audio, anything that
+   might be a mistake in the video itself
+
+Note the `/watch` working directory (printed at the end of its report) or
+key frame paths somewhere in `notes/watch-pass.md` if you're not deleting it
+right away — `/reconcile-video-reads` re-checks the actual frames to settle
+any `CONFLICT` with Gemini's read, and can only do that if the frames (or a
+path to them) are still findable.
+
+## 4. Gemini watches — independent second read
 
 ```bash
 pip install google-genai
@@ -78,7 +113,7 @@ that shows up in only one is more likely the model guessing. See
 `scripts/gemini_review.py`'s module docstring for the model-chain fallback
 and `--fps` details.
 
-## 3. Reconcile the two reads
+## 5. Reconcile the two reads
 
 ```
 /reconcile-video-reads notes/watch-pass.md notes/gemini-pass.md notes/spec.md
@@ -94,7 +129,7 @@ Merges both readings into one spec, claim by claim:
 Ends with an **open questions** list — worth keeping even after the build
 ships, since it's a record of what the video never actually covered.
 
-## 4. Build the skill, then run it once for real
+## 6. Build the skill, then run it once for real
 
 Hand `notes/spec.md` to `skill-creator` (Anthropic's built-in skill for
 writing skills). Treat the labels as real: build `CONFIRMED` lines in with
@@ -110,6 +145,32 @@ Keep `notes/spec.md` (and `notes/watch-pass.md` / `notes/gemini-pass.md`) in
 the new skill's own folder rather than deleting them — they're the
 provenance for every line in the skill, useful the next time it misbehaves
 and you need to check whether the bug is yours or the tutorial's.
+
+## Choosing `--detail`, a real benchmark
+
+Real numbers from a 49m8s YouTube video at 1280x720 with English auto
+captions — a long, mostly static screen recording, which is the case that
+stresses the frame cap hardest. Your own numbers will vary with video
+length and motion, but the shape holds:
+
+| Mode | Frames | Extraction time | Image tokens | Use it when |
+|---|---|---|---|---|
+| `transcript` | 0 | ~4.5s | 0 | Someone is talking, not typing |
+| `efficient` | 50 | ~0.5s | ~9.8k | First look at a long screen recording |
+| `balanced` | 100 | ~20.9s | ~19.7k | Default, when you need to read the screen |
+| `token-burner` | 116 | ~21.0s | ~22.8k | High-motion video where 100 frames misses cuts |
+
+Token cost is dominated by frames — every frame is an image. `transcript`
+mode skips the video download entirely when captions exist, so a talking-head
+tutorial costs a few seconds and zero image tokens. `efficient` reconstructs
+keyframes only, which makes it roughly 40x faster than the scene modes, and
+on low-motion footage can return *more* frames than `balanced` — "efficient"
+means fast extraction, not fewer frames.
+
+`--resolution 1024` roughly quadruples image tokens per frame — pair it with
+`efficient` or a narrow `--start`/`--end` window rather than `balanced`
+across a full video. Reading a terminal is worth paying the extra resolution
+for; reading a terminal for 49 minutes straight is not.
 
 ## Security notes
 
