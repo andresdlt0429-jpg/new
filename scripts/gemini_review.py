@@ -62,12 +62,19 @@ def _offset(seconds: float | None) -> str | None:
     return f"{seconds:.0f}s" if seconds is not None else None
 
 
-def build_contents(url: str, prompt: str, start: float | None, end: float | None) -> types.Content:
+def build_contents(
+    url: str,
+    prompt: str,
+    start: float | None,
+    end: float | None,
+    fps: float | None = None,
+) -> types.Content:
     video_metadata = None
-    if start is not None or end is not None:
+    if start is not None or end is not None or fps is not None:
         video_metadata = types.VideoMetadata(
             start_offset=_offset(start if start is not None else 0.0),
             end_offset=_offset(end),
+            fps=fps,
         )
     return types.Content(
         parts=[
@@ -122,6 +129,14 @@ def main() -> int:
     ap.add_argument("--start", type=float, default=None, help="Clip start, in seconds")
     ap.add_argument("--end", type=float, default=None, help="Clip end, in seconds")
     ap.add_argument(
+        "--fps",
+        type=float,
+        default=None,
+        help="Frames per second Gemini samples from the video (0.0-24.0, default 1.0). "
+             "1 fps is plenty for someone talking through a build; raise it only if on-screen "
+             "commands or fast visual changes are getting missed — it multiplies token cost.",
+    )
+    ap.add_argument(
         "--focus",
         type=str,
         default="the whole video",
@@ -152,11 +167,13 @@ def main() -> int:
         raise SystemExit("--samples must be at least 1")
     if args.end is not None and args.start is not None and args.end <= args.start:
         raise SystemExit("--end must be greater than --start")
+    if args.fps is not None and not (0.0 <= args.fps <= 24.0):
+        raise SystemExit("--fps must be between 0.0 and 24.0")
 
     client = genai.Client(api_key=api_key)
     prompt = args.prompt or DEFAULT_PROMPT_TEMPLATE.format(focus=args.focus)
     models = [m.strip() for m in args.models.split(",")] if args.models else MODEL_CHAIN
-    contents = build_contents(args.url, prompt, args.start, args.end)
+    contents = build_contents(args.url, prompt, args.start, args.end, fps=args.fps)
 
     print(f"# Gemini review: {args.url}")
     print()
