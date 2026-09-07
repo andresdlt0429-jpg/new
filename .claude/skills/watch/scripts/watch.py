@@ -20,6 +20,7 @@ from download import download, fetch_captions, is_url  # noqa: E402
 from frames import MAX_FPS, auto_fps, auto_fps_focus, extract_at_timestamps, extract_keyframes, extract_scene_or_uniform, format_time, get_metadata, merge_frames, parse_time, parse_timestamps  # noqa: E402
 from transcribe import filter_range, format_transcript, parse_vtt  # noqa: E402
 from whisper import load_api_key, transcribe_video  # noqa: E402
+import local_whisper  # noqa: E402
 
 
 def main() -> int:
@@ -52,13 +53,26 @@ def main() -> int:
     ap.add_argument(
         "--no-whisper",
         action="store_true",
-        help="Disable Whisper fallback. Report frames-only if no captions available.",
+        help="Disable the cloud Whisper (Groq/OpenAI) fallback. Local faster-whisper "
+             "still runs if installed and --no-local-whisper isn't set.",
     )
     ap.add_argument(
         "--whisper",
         choices=["groq", "openai"],
         default=None,
-        help="Force a specific Whisper backend. Default: prefer Groq, fall back to OpenAI.",
+        help="Force a specific cloud Whisper backend. Default: prefer Groq, fall back to OpenAI.",
+    )
+    ap.add_argument(
+        "--no-local-whisper",
+        action="store_true",
+        help="Disable the local faster-whisper fallback (offline, no API key). "
+             "Enabled by default when faster-whisper is installed.",
+    )
+    ap.add_argument(
+        "--local-whisper-model",
+        type=str,
+        default=local_whisper.DEFAULT_MODEL,
+        help=f"faster-whisper model size for local transcription (default: {local_whisper.DEFAULT_MODEL}).",
     )
     ap.add_argument(
         "--no-dedup",
@@ -236,30 +250,57 @@ def main() -> int:
         except Exception as exc:
             print(f"[watch] subtitle parse failed: {exc}", file=sys.stderr)
 
-    if not transcript_segments and not args.no_whisper and video_path and meta.get("has_audio"):
-        backend, api_key = load_api_key(args.whisper)
-        if backend and api_key:
-            try:
-                all_segments, used_backend = transcribe_video(
-                    video_path,
-                    work / "audio.mp3",
-                    backend=backend,
-                    api_key=api_key,
+    if not transcript_segments and video_path and meta.get("has_audio"):
+        used_transcript = False
+
+        if not args.no_whisper:
+            backend, api_key = load_api_key(args.whisper)
+            if backend and api_key:
+                try:
+                    all_segments, used_backend = transcribe_video(
+                        video_path,
+                        work / "audio.mp3",
+                        backend=backend,
+                        api_key=api_key,
+                    )
+                    transcript_segments = filter_range(all_segments, start_sec, end_sec) if focused else all_segments
+                    transcript_text = format_transcript(transcript_segments)
+                    transcript_source = f"whisper ({used_backend})"
+                    used_transcript = True
+                except SystemExit as exc:
+                    print(f"[watch] cloud whisper fallback failed: {exc}", file=sys.stderr)
+            elif args.whisper:
+                print(
+                    f"[watch] --whisper {args.whisper} was set but the matching API key is missing",
+                    file=sys.stderr,
                 )
-                transcript_segments = filter_range(all_segments, start_sec, end_sec) if focused else all_segments
-                transcript_text = format_transcript(transcript_segments)
-                transcript_source = f"whisper ({used_backend})"
-            except SystemExit as exc:
-                print(f"[watch] whisper fallback failed: {exc}", file=sys.stderr)
-        else:
-            hint = (
-                f"--whisper {args.whisper} was set but the matching API key is missing"
-                if args.whisper else
-                "no subtitles and no Whisper API key found"
-            )
-            setup_py = SCRIPT_DIR / "setup.py"
+
+        if not used_transcript and not args.no_local_whisper:
+            if local_whisper.is_available():
+                try:
+                    all_segments, label = local_whisper.transcribe_video_local(
+                        video_path,
+                        work / "audio.mp3",
+                        model_size=args.local_whisper_model,
+                    )
+                    transcript_segments = filter_range(all_segments, start_sec, end_sec) if focused else all_segments
+                    transcript_text = format_transcript(transcript_segments)
+                    transcript_source = label
+                    used_transcript = True
+                except SystemExit as exc:
+                    print(f"[watch] local whisper fallback failed: {exc}", file=sys.stderr)
+            else:
+                print(
+                    "[watch] no captions and faster-whisper not installed — "
+                    "pip install faster-whisper for a free offline transcript "
+                    "(or configure a Groq/OpenAI key and drop --no-whisper for the cloud fallback)",
+                    file=sys.stderr,
+                )
+
+        if not used_transcript and args.no_whisper and args.no_local_whisper:
             print(
-                f"[watch] {hint} — run `python3 {setup_py}` to enable the Whisper fallback",
+                "[watch] no captions — transcription disabled "
+                "(--no-whisper and --no-local-whisper both set)",
                 file=sys.stderr,
             )
     elif not transcript_segments and video_path and not meta.get("has_audio"):
@@ -377,9 +418,11 @@ def main() -> int:
         setup_py = SCRIPT_DIR / "setup.py"
         print(
             "_No transcript available — proceed with frames only. "
-            "Captions were missing and the Whisper fallback was unavailable "
-            "(no API key set, or `--no-whisper` was used). "
-            f"Run `python3 {setup_py}` to enable Whisper, then re-run._"
+            "Captions were missing and no Whisper fallback produced a transcript "
+            "(no cloud API key configured, faster-whisper not installed, or both fallbacks "
+            "were disabled with `--no-whisper`/`--no-local-whisper`). "
+            f"Run `pip install faster-whisper` for a free offline fallback, or `python3 {setup_py}` "
+            "to configure a cloud key, then re-run._"
         )
 
     print()
