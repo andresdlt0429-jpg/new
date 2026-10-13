@@ -1,1 +1,5 @@
 .env
+# text assistant: your real settings, keys, and saved texts stay on your computer
+sms-assistant/settings.toml
+sms-assistant/data/
+__pycache__/

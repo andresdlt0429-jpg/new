@@ -1,0 +1,96 @@
+# =====================================================================
+#  YOUR TEXT ASSISTANT SETTINGS
+#
+#  This is the "remote control" for your assistant. Change anything
+#  here, save, and it takes effect on the next text. No code needed.
+#
+#  First time: copy this file to settings.toml and edit that copy.
+#  (settings.toml stays on your computer and never gets uploaded.)
+#
+#  Lines starting with # are notes for you. The assistant ignores them.
+# =====================================================================
+
+[me]
+name = "boss"                 # what I call you
+phone = "+15555550123"        # YOUR cell number, with +1 in front
+timezone = "America/New_York" # so quiet hours use your clock
+
+# ---------------------------------------------------------------------
+#  TONE: how I talk to you
+# ---------------------------------------------------------------------
+[tone]
+# Pick one:
+#   "chill"        -> "yo boss, Mom texted: 'call me back'"
+#   "straight"     -> "Mom: call me back"
+#   "hype"         -> "🔥 BOSS! Mom just hit you up: 'call me back'"
+#   "professional" -> "New message from Mom: 'call me back'"
+style = "chill"
+emojis = true
+max_length = 300   # longest text I'll ever send you (keeps it short)
+
+# ---------------------------------------------------------------------
+#  WHAT HAPPENS AT EACH PRIORITY LEVEL
+#
+#  Every incoming text gets sorted into one of 4 buckets:
+#    urgent  >  high  >  normal  >  low
+#
+#  Then I do whatever you put here for that bucket:
+#    "call"   = I phone you and read it out loud
+#    "text"   = I text you right away
+#    "digest" = I save it and send you one summary text later
+#    "ignore" = I save it (searchable) but never ping you
+# ---------------------------------------------------------------------
+[levels]
+urgent = "call"
+high   = "text"
+normal = "digest"
+low    = "ignore"
+
+# Anything that doesn't match a contact or keyword below lands here:
+default = "normal"
+
+# ---------------------------------------------------------------------
+#  QUIET HOURS: don't bug me while I sleep
+#  During these hours ONLY "urgent" gets through. Everything else
+#  waits for the next digest.
+# ---------------------------------------------------------------------
+[quiet_hours]
+enabled = true
+start = "22:00"
+end   = "07:00"
+
+# ---------------------------------------------------------------------
+#  DIGEST: the summary text of everything that wasn't worth a ping
+#  Times are on a 24-hour clock in your timezone.
+# ---------------------------------------------------------------------
+[digest]
+times = ["08:00", "13:00", "18:00"]
+
+# ---------------------------------------------------------------------
+#  KEYWORDS: words that bump a text up or down
+#  (not case sensitive; "ASAP" and "asap" both match)
+# ---------------------------------------------------------------------
+[keywords]
+urgent = ["emergency", "911", "hospital", "accident", "urgent", "call me now"]
+high   = ["call me", "asap", "invoice", "payment", "quote", "estimate", "today"]
+low    = ["unsubscribe", "reply stop", "promo", "% off", "sale ends", "your code is"]
+
+# ---------------------------------------------------------------------
+#  CONTACTS: people who always get a set level, no matter what they say
+#  Copy a [[contacts]] block for each person.
+#  level can be "urgent", "high", "normal", or "low".
+# ---------------------------------------------------------------------
+[[contacts]]
+name  = "Mom"
+phone = "+15555550100"
+level = "urgent"
+
+[[contacts]]
+name  = "Best client"
+phone = "+15555550101"
+level = "high"
+
+[[contacts]]
+name  = "Spammy store"
+phone = "+15555550199"
+level = "low"
