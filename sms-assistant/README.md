@@ -23,7 +23,7 @@ cd sms-assistant
 python3 sms.py check                                   # what's set up
 python3 sms.py try "+15555550100" "can you call me"    # how would this text be sorted?
 python3 sms.py test-text                               # see the test text it would send
-python3 -m unittest -v                                 # run the 27 self-checks
+python3 -m unittest -v                                 # run the 37 self-checks
 ```
 
 ## Step 2: Make it yours (priorities and tone)
@@ -74,36 +74,75 @@ Twilio is a service that gives programs a phone number. It's how the assistant t
 Rough costs: about a penny per text, a couple of cents per minute of calling.
 Twilio may ask you to fill out a short form to register your number for texting in the US.
 
-## Step 4: Let it read your texts
+## Step 4: Let it read your texts (iPhone + Mac)
 
-This part depends on your phone.
+Apple doesn't let apps on the iPhone read your texts. But your iPhone already **copies every text to your Mac**
+(both blue iMessages and green SMS), and the Mac saves them in a file. The assistant reads that file.
 
-**Android: yes, it can read all incoming texts.**
-Install **SMS Gateway for Android** (free, open source, sms-gate.app). In its settings, add a
-webhook for the `sms:received` event pointing to your listener (Step 5):
-`https://YOUR-ADDRESS/incoming?token=YOUR_WEBHOOK_TOKEN`.
-Now every text your phone gets is copied to the assistant.
+Think of the Mac as a **mailroom**: every letter that reaches your iPhone also lands there, and the assistant sorts the mail.
 
-**iPhone: Apple doesn't let any app read your texts.** Options:
-- Give people your **Twilio number** for the things you want watched (like work texts). Point the Twilio
-  number's "A message comes in" webhook to the same link above.
-- If you have a **Mac** with Messages synced, your texts are stored on it, and Claude Code running on that Mac
-  can read them. (That's a separate add-on; ask and it can be built.)
+**4a. Make sure your texts reach the Mac**
+1. iPhone: **Settings > [your name] > iCloud > Messages** (or "Show All" > Messages) > turn on **Sync this iPhone**.
+2. iPhone: **Settings > Apps > Messages > Text Message Forwarding** > turn on your Mac. (This brings over the green-bubble texts.)
+3. Mac: open **Messages** and check that your recent texts show up there.
 
-## Step 5: Keep it running 24/7
+**4b. Get Python 3.11+ on the Mac** (one time)
+In Terminal, type `python3 --version`. If it says lower than 3.11 (or nothing), install the latest from
+**python.org/downloads** (normal installer, click Next a few times).
 
-The listener has to be on all the time with a web address, like a shop that has to be open for customers to walk in.
-
+**4c. Get this code onto the Mac**
 ```bash
-python3 -c "import secrets; print(secrets.token_urlsafe(24))"   # put this in .env as WEBHOOK_TOKEN
-python3 sms.py serve                                            # starts listening on port 8080
+git clone https://github.com/andresdlt0429-jpg/new.git
+cd new && git checkout claude/loving-bell-qtgr0d && cd sms-assistant
+```
+If git asks for a password, download it instead: on GitHub, switch to the `claude/loving-bell-qtgr0d` branch,
+click the green **Code** button > **Download ZIP**, unzip it, and open the `sms-assistant` folder in Terminal.
+
+**4d. Give Terminal permission to read Messages**
+macOS locks the Messages folder. Unlock it for Terminal:
+**System Settings > Privacy & Security > Full Disk Access** > turn on **Terminal** > quit Terminal (Cmd+Q) and reopen it.
+
+**4e. Check it works**
+```bash
+python3 sms.py mac-check
+```
+It should show how many messages it can see and **your last 5 texts**. If those look right, it's reading correctly.
+Names come from your Mac's Contacts app automatically.
+
+**4f. Load your old texts so you can search them** (optional, sends nothing)
+```bash
+python3 sms.py mac-history
+python3 sms.py search "dinner"
 ```
 
-Where to run it:
-- **A computer that stays on** + a free tunnel like **Cloudflare Tunnel** to give it a web address.
-- **A small hosting service** (Railway, Render, Fly.io, about $5/month). Set the `.env` values as their "environment variables".
+## Step 5: Keep it running
 
-The listener also sends your digest automatically at the times in `[digest] times`.
+```bash
+caffeinate -i python3 sms.py mac-watch
+```
+
+Leave that Terminal window open. It checks for new texts every 10 seconds, and `caffeinate` stops the Mac from
+falling asleep while it runs. It also sends your digest at the times in `[digest] times`.
+
+- **Laptop?** Keep it plugged in and the lid open. If it sleeps, it catches up when it wakes. Texts that came in more
+  than 30 minutes earlier go into the digest instead of pinging you, **except urgent ones**, which still call.
+- It never reacts to texts **you** sent, or to the assistant's own alerts (texts from your Twilio number).
+- To stop: click the window and press **Ctrl+C**.
+
+<details>
+<summary>Not using a Mac? (Android, or a Twilio number as your "work line")</summary>
+
+**Android:** install **SMS Gateway for Android** (free, sms-gate.app). Add a webhook for the `sms:received` event
+pointing to `https://YOUR-ADDRESS/incoming?token=YOUR_WEBHOOK_TOKEN`.
+**Twilio number:** in Twilio, set the number's "A message comes in" webhook to the same link.
+
+Then run the web listener somewhere that's always on, with a web address (a computer plus a free Cloudflare
+Tunnel, or a small host like Railway or Render):
+```bash
+python3 -c "import secrets; print(secrets.token_urlsafe(24))"   # put this in .env as WEBHOOK_TOKEN
+python3 sms.py serve
+```
+</details>
 
 ## Everyday commands
 
@@ -117,6 +156,7 @@ python3 sms.py receive "+1555..." "hi" # pretend a text came in (sends for real 
 
 ## Safety built in
 
-- The listener only accepts texts that carry your secret `WEBHOOK_TOKEN`, so strangers can't feed it fake texts.
+- The Mac reader only ever *reads* Messages. It can't change or delete your texts.
+- The web listener only accepts texts that carry your secret `WEBHOOK_TOKEN`, so strangers can't feed it fake texts.
 - Your keys (`.env`), your settings, and your saved texts (`data/`) never get uploaded to GitHub.
 - No Twilio keys = practice mode = nothing gets sent.

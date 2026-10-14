@@ -10,11 +10,17 @@
   python3 sms.py search "rent"               look through all saved texts
   python3 sms.py digest                      send the summary text now
   python3 sms.py serve                       run 24/7 and listen for texts
+
+On a Mac (reads the texts your iPhone syncs to Messages):
+  python3 sms.py mac-check                   can I read your texts? shows the last 5
+  python3 sms.py mac-history                 copy all old texts into the searchable inbox
+  python3 sms.py mac-watch                   watch for new texts 24/7
 """
 
 import argparse
 import hmac
 import os
+import sqlite3
 import sys
 import threading
 import time as clock
@@ -22,6 +28,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 
 import assistant as a
+import mac_messages as mac
 
 
 def show(rows):
@@ -97,6 +104,10 @@ def main(argv=None):
     sub.add_parser("digest")
     s = sub.add_parser("serve")
     s.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8080)))
+    sub.add_parser("mac-check")
+    sub.add_parser("mac-history")
+    s = sub.add_parser("mac-watch")
+    s.add_argument("--every", type=int, default=10, help="seconds between checks")
     args = p.parse_args(argv)
 
     a.load_env()
@@ -128,6 +139,9 @@ def main(argv=None):
             print(f"call  : {a.word_it(settings, 'call', d.who, args.body)}")
         return
 
+    if args.cmd.startswith("mac-"):
+        return run_mac(args, settings, phone)
+
     bot = a.Assistant(settings, phone)
     me = bot.my_number
 
@@ -155,6 +169,52 @@ def main(argv=None):
         print(f"listening on port {args.port}  (Twilio {'live' if phone.live else 'practice mode'})")
         try:
             server.serve_forever()
+        except KeyboardInterrupt:
+            stop.set()
+
+
+def run_mac(args, settings, phone):
+    try:
+        db = mac.open_readonly(mac.CHAT_DB)
+    except mac.NoAccess as e:
+        sys.exit(str(e))
+    names = mac.load_names()
+    bot = a.Assistant(settings, phone, names=names)
+    watcher = mac.MacWatcher(bot, db, skip=[bot.my_number, phone.from_number])
+
+    if args.cmd == "mac-check":
+        total = db.execute("SELECT COUNT(*) FROM message").fetchone()[0]
+        print(f"Messages database : readable, {total:,} messages")
+        print(f"Contacts          : {len(names):,} phone numbers/emails with names")
+        print(f"Twilio            : {'CONNECTED' if phone.live else 'not set up yet (practice mode)'}")
+        print("\nLast 5 texts you received (to confirm I'm reading them right):")
+        start = max(mac.newest_rowid(db) - 400, 0)
+        got = [m for m in mac.fetch(db, start, 400) if not m["from_me"]][-5:]
+        for m in got:
+            when = m["when"].astimezone(a.ZoneInfo(settings["me"].get("timezone", "UTC")))
+            print(f"  {when:%b %d %I:%M%p}  {bot.name_for(m['sender'])}: {a.shorten(m['body'], 70)}")
+        if not got:
+            print("  (none found)")
+    elif args.cmd == "mac-history":
+        print("Copying your old texts into the inbox (nothing gets sent)...")
+        print(f"done: {watcher.import_history():,} texts saved. Try: python3 sms.py search \"dinner\"")
+    elif args.cmd == "mac-watch":
+        stop = threading.Event()
+        threading.Thread(target=digest_loop, args=(bot, stop), daemon=True).start()
+        watcher.check_once()  # the first run marks "now" as the starting line
+        print(f"watching Messages every {args.every}s  (Twilio {'live' if phone.live else 'practice mode'})")
+        print("leave this window open. Ctrl+C to stop.")
+        try:
+            while True:
+                try:
+                    for d in watcher.check_once():
+                        print(f"{a.now_local(settings):%I:%M%p} {d.who} -> {d.level}/{d.action}"
+                              f" ({'; '.join(d.reasons)})")
+                except sqlite3.OperationalError:
+                    pass  # Messages was busy writing; try again next round
+                except OSError as e:
+                    print(f"couldn't reach Twilio ({e}); will keep watching")
+                clock.sleep(args.every)
         except KeyboardInterrupt:
             stop.set()
 

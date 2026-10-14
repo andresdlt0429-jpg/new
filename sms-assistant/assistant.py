@@ -8,7 +8,6 @@ import base64
 import json
 import os
 import sqlite3
-import tomllib
 import urllib.parse
 import urllib.request
 from dataclasses import dataclass, field
@@ -16,6 +15,12 @@ from datetime import datetime, time
 from pathlib import Path
 from xml.sax.saxutils import escape
 from zoneinfo import ZoneInfo
+
+try:
+    import tomllib
+except ImportError:  # Python older than 3.11 (common on Macs)
+    raise SystemExit("This needs Python 3.11 or newer. Get it free at python.org/downloads, "
+                     "then run commands with python3 again.")
 
 HERE = Path(__file__).resolve().parent
 LEVELS = ["low", "normal", "high", "urgent"]
@@ -71,6 +76,12 @@ def normalize_phone(number):
     return "+" + digits if digits else ""
 
 
+def person_key(handle):
+    """One spelling per person: emails lowercased, phone numbers normalized."""
+    handle = str(handle or "").strip()
+    return handle.lower() if "@" in handle else normalize_phone(handle)
+
+
 # ---------------------------------------------------------------- sorting
 
 @dataclass
@@ -82,9 +93,9 @@ class Decision:
 
 
 def find_contact(settings, sender):
-    sender = normalize_phone(sender)
+    key = person_key(sender)
     for c in settings.get("contacts", []):
-        if normalize_phone(c["phone"]) == sender:
+        if key and person_key(c["phone"]) == key:
             return c
     return None
 
@@ -268,18 +279,20 @@ class Inbox:
                 id INTEGER PRIMARY KEY,
                 received_at TEXT, sender TEXT, who TEXT, body TEXT,
                 level TEXT, action TEXT, reasons TEXT,
-                pending_digest INTEGER DEFAULT 0, source TEXT)"""
+                pending_digest INTEGER DEFAULT 0, source TEXT, ext_id TEXT UNIQUE)"""
         )
 
-    def add(self, sender, body, decision, source, when):
+    def add(self, sender, body, decision, source, when, ext_id=None):
+        """Save a text. Returns False if this exact text (same ext_id) was already saved."""
         with self.db:
-            self.db.execute(
-                "INSERT INTO messages (received_at, sender, who, body, level, action, reasons,"
-                " pending_digest, source) VALUES (?,?,?,?,?,?,?,?,?)",
+            cur = self.db.execute(
+                "INSERT OR IGNORE INTO messages (received_at, sender, who, body, level, action,"
+                " reasons, pending_digest, source, ext_id) VALUES (?,?,?,?,?,?,?,?,?,?)",
                 (when.isoformat(timespec="seconds"), sender, decision.who, body, decision.level,
                  decision.action, "; ".join(decision.reasons),
-                 int(decision.action == "digest"), source),
+                 int(decision.action == "digest"), source, ext_id),
             )
+        return cur.rowcount == 1
 
     def recent(self, limit=20, level=None):
         sql = "SELECT received_at, who, level, action, body FROM messages"
@@ -312,20 +325,35 @@ class Inbox:
 # ---------------------------------------------------------------- the assistant
 
 class Assistant:
-    def __init__(self, settings, phone=None, inbox=None):
+    def __init__(self, settings, phone=None, inbox=None, names=None):
         self.settings = settings
         self.phone = phone or Phone()
         self.inbox = inbox or Inbox()
+        self.names = names or {}  # person_key -> name, e.g. from your Mac's Contacts
 
     @property
     def my_number(self):
         return normalize_phone(self.settings["me"]["phone"])
 
-    def handle(self, sender, body, source="manual", now=None):
-        """A text just came in. Save it, sort it, and ping you if it deserves it."""
+    def name_for(self, sender):
+        contact = find_contact(self.settings, sender)
+        return contact["name"] if contact else self.names.get(person_key(sender), sender)
+
+    def handle(self, sender, body, source="manual", now=None, received=None, ext_id=None,
+               late=False):
+        """A text just came in. Save it, sort it, and ping you if it deserves it.
+
+        late=True means it arrived a while ago (say the Mac was asleep), so only
+        urgent texts still get a call or text; the rest go to the digest.
+        """
         now = now or now_local(self.settings)
         decision = triage(self.settings, sender, body, now)
-        self.inbox.add(sender, body, decision, source, now)
+        decision.who = self.name_for(sender)
+        if late and decision.level != "urgent" and decision.action in ("call", "text"):
+            decision.action = "digest"
+            decision.reasons.append("came in a while ago, holding for the digest")
+        if not self.inbox.add(sender, body, decision, source, received or now, ext_id):
+            return None  # already handled this exact text before
         if decision.action == "call":
             self.phone.call(self.my_number, word_it(self.settings, "call", decision.who, body))
             # A call can be missed, so leave the words in a text too.
@@ -334,6 +362,15 @@ class Assistant:
             kind = "urgent" if decision.level == "urgent" else "text"
             self.phone.text(self.my_number, word_it(self.settings, kind, decision.who, body))
         return decision
+
+    def archive(self, sender, body, received, ext_id, from_me=False, source="history"):
+        """Save an old text so it's searchable. Never pings you."""
+        if from_me:
+            decision = Decision("normal", "sent", f"You -> {self.name_for(sender)}", ["you sent this"])
+        else:
+            decision = triage(self.settings, sender, body, received)
+            decision = Decision(decision.level, "history", self.name_for(sender), decision.reasons)
+        return self.inbox.add(sender, body, decision, source, received, ext_id)
 
     def send_digest(self):
         msg = build_digest(self.settings, self.inbox.take_digest())
