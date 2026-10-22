@@ -1,0 +1,73 @@
+{
+  "source": "raw/phase1-test_4k-portrait_jfk-voice.mp4",
+  "source_info": {
+    "w": 2160,
+    "h": 3840,
+    "fps": "30/1",
+    "codec": "h264",
+    "duration": 11.0,
+    "has_audio": true
+  },
+  "preflight_working_copy": {
+    "free_ram_gb": 15.0,
+    "need_ram_gb": 3.7,
+    "free_disk_gb": 25.4,
+    "need_disk_gb": 10.0,
+    "source_gb": 0.0
+  },
+  "working_copy": {
+    "path": "proxy/phase1-test_4k-portrait_jfk-voice_work.mp4",
+    "w": 1440,
+    "h": 2560,
+    "scale": 0.667,
+    "seconds": 27.6,
+    "ffmpeg_peak_ram_gb": 0.92
+  },
+  "whisper": [
+    {
+      "model": "small",
+      "load_s": 1.7,
+      "transcribe_s": 3.8,
+      "rtf": 0.34,
+      "words": 22,
+      "mean_word_prob": 0.941
+    },
+    {
+      "model": "medium",
+      "load_s": 19.7,
+      "transcribe_s": 10.1,
+      "rtf": 0.92,
+      "words": 22,
+      "mean_word_prob": 0.977
+    }
+  ],
+  "transcript": "And so, my fellow Americans, ask not what your country can do for you, ask what you can do for your country.",
+  "faces": {
+    "frames_sampled": 22,
+    "frames_with_face": 22,
+    "face_rate": 1.0,
+    "seconds": 2.5,
+    "mean_center_x_pct": 48.9,
+    "mean_center_y_pct": 28.5,
+    "mean_face_height_pct": 16.1
+  },
+  "preflight_render": {
+    "free_ram_gb": 12.9,
+    "need_ram_gb": 3.7,
+    "free_disk_gb": 24.0,
+    "need_disk_gb": 10.0,
+    "source_gb": 0.01
+  },
+  "caption_render": {
+    "path": "out/phase1-test_4k-portrait_jfk-voice_phase1_captions.mp4",
+    "seconds": 29.0,
+    "fps": 11.4,
+    "est_seconds_per_output_minute": 158,
+    "ffmpeg_peak_ram_gb": 0.94,
+    "caption_lines": 7,
+    "font": "Inter",
+    "font_px": 92,
+    "out_mb": 7.6
+  },
+  "peak_python_ram_gb": 2.71
+}

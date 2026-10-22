@@ -1,0 +1,51 @@
+{
+  "source": "raw/dlt-intro-sample.mp4",
+  "source_info": {
+    "w": 1080,
+    "h": 1920,
+    "fps": "30/1",
+    "codec": "h264",
+    "duration": 20.5,
+    "has_audio": true
+  },
+  "preflight_working_copy": {
+    "free_ram_gb": 14.7,
+    "need_ram_gb": 3.7,
+    "free_disk_gb": 24.0,
+    "need_disk_gb": 10.0,
+    "source_gb": 0.0
+  },
+  "working_copy": {
+    "path": "proxy/dlt-intro-sample_work.mp4",
+    "w": 1080,
+    "h": 1920,
+    "scale": 1.0,
+    "seconds": 10.3,
+    "ffmpeg_peak_ram_gb": 0.48
+  },
+  "whisper": [
+    {
+      "model": "small",
+      "load_s": 1.9,
+      "transcribe_s": 0.1,
+      "rtf": 0.01,
+      "words": 0,
+      "mean_word_prob": null
+    },
+    {
+      "model": "medium",
+      "load_s": 4.6,
+      "transcribe_s": 0.1,
+      "rtf": 0.0,
+      "words": 0,
+      "mean_word_prob": null
+    }
+  ],
+  "transcript": "",
+  "faces": {
+    "frames_sampled": 41,
+    "frames_with_face": 0,
+    "face_rate": 0.0,
+    "seconds": 1.7
+  }
+}

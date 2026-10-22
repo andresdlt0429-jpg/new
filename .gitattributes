@@ -1,0 +1,7 @@
+# Any finished video/audio committed from the editor folders goes through Git LFS.
+out/**/*.mp4 filter=lfs diff=lfs merge=lfs -text
+out/**/*.mov filter=lfs diff=lfs merge=lfs -text
+cards/**/*.mp4 filter=lfs diff=lfs merge=lfs -text
+cards/**/*.mov filter=lfs diff=lfs merge=lfs -text
+spec/**/*.mp4 filter=lfs diff=lfs merge=lfs -text
+spec/**/*.mov filter=lfs diff=lfs merge=lfs -text

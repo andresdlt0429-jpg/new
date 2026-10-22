@@ -1,0 +1,32 @@
+{
+  "_note": "All brand values live here, never in code. null = not supplied yet by Andy. Fields marked _placeholder are engine defaults until spec/SOP-DLT-1-v2-video-standard.md sets them.",
+  "agency": "DLT Marketing",
+  "colors": {
+    "_todo": "Andy to supply DLT hex codes",
+    "primary": null,
+    "secondary": null,
+    "accent": null
+  },
+  "fonts": {
+    "headline": null,
+    "caption": null,
+    "fallback_headline": "Inter",
+    "fallback_caption": "Inter"
+  },
+  "captions": {
+    "own_ads": {
+      "case": "sentence",
+      "caps_key_words_per_line": [1, 2],
+      "rule": "Own-ad captions: sentence case, caps on 1-2 key words per line"
+    },
+    "client_ads": {
+      "color": "#FFFFFF",
+      "color_coding": false,
+      "rule": "Client ad captions: plain white, no color coding",
+      "_placeholder": ["size_pct_of_height", "margin_bottom_pct", "max_words_per_line"],
+      "size_pct_of_height": 3.6,
+      "margin_bottom_pct": 28,
+      "max_words_per_line": 4
+    }
+  }
+}

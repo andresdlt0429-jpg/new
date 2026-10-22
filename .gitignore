@@ -1,1 +1,14 @@
 .env
+__pycache__/
+# Footage and renders stay local (large, regenerable). Folders kept via .gitkeep.
+raw/*
+proxy/*
+work/*
+out/*
+!*/.gitkeep
+# Phase proof reports (numbers) are committed; stills stay local (test fixtures).
+!out/phase*-proof/
+out/phase*-proof/*.png
+# Model weights are downloaded by the engines on first run.
+engines/models/
+engines/machine_limits.json
