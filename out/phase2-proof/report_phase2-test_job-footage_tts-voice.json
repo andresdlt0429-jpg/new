@@ -1,0 +1,48 @@
+{
+  "source": "raw/phase2-test_job-footage_tts-voice.mp4",
+  "source_info": {
+    "w": 732,
+    "h": 962,
+    "fps": "30/1",
+    "codec": "h264",
+    "duration": 15.833333,
+    "has_audio": true
+  },
+  "working_copy": {
+    "path": "proxy/phase2-test_job-footage_tts-voice_work.mp4",
+    "w": 732,
+    "h": 962,
+    "reused": true
+  },
+  "whisper": {
+    "model": "medium",
+    "load_s": 7.5,
+    "transcribe_s": 16.7,
+    "rtf": 1.05,
+    "words": 42,
+    "mean_word_prob": 0.952
+  },
+  "loudness": {
+    "integrated_lufs": -16.0,
+    "loudness_range_lu": 3.4,
+    "true_peak_dbtp": -0.4
+  },
+  "faces": {
+    "frames_sampled": 32,
+    "frames_with_face": 0,
+    "face_rate": 0.0,
+    "seconds": 1.2
+  },
+  "words": 42,
+  "numbers_spoken": 4,
+  "pauses": 4,
+  "lead_in_s": 0.0,
+  "tail_s": 0.01,
+  "flags": [
+    "number \"3\" @ 5.8s has p=0.614: confirm by ear before it goes on screen",
+    "true peak -0.4 dBTP: clipping risk in source audio",
+    "no face detected in any sample (fine for b-roll; matters for talking-head reframing)",
+    "source is 732x962, below 1440p: working copy kept native (no upscale)"
+  ],
+  "outputs": "work/phase2-test_job-footage_tts-voice"
+}

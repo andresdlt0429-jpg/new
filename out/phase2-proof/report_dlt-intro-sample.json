@@ -1,0 +1,47 @@
+{
+  "source": "raw/dlt-intro-sample.mp4",
+  "source_info": {
+    "w": 1080,
+    "h": 1920,
+    "fps": "30/1",
+    "codec": "h264",
+    "duration": 20.5,
+    "has_audio": true
+  },
+  "working_copy": {
+    "path": "proxy/dlt-intro-sample_work.mp4",
+    "w": 1080,
+    "h": 1920,
+    "reused": true
+  },
+  "whisper": {
+    "model": "medium",
+    "load_s": 8.8,
+    "transcribe_s": 0.1,
+    "rtf": 0.01,
+    "words": 0,
+    "mean_word_prob": null
+  },
+  "loudness": {
+    "integrated_lufs": -16.2,
+    "loudness_range_lu": 16.9,
+    "true_peak_dbtp": -3.3
+  },
+  "faces": {
+    "frames_sampled": 41,
+    "frames_with_face": 0,
+    "face_rate": 0.0,
+    "seconds": 1.6
+  },
+  "words": 0,
+  "numbers_spoken": 0,
+  "pauses": 0,
+  "lead_in_s": 20.5,
+  "tail_s": 0.0,
+  "flags": [
+    "NO SPEECH: no captions possible, and no numbers may appear on screen",
+    "no face detected in any sample (fine for b-roll; matters for talking-head reframing)",
+    "source is 1080x1920, below 1440p: working copy kept native (no upscale)"
+  ],
+  "outputs": "work/dlt-intro-sample"
+}
