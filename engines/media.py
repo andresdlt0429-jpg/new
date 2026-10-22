@@ -92,10 +92,14 @@ def transcribe(audio, model_name, duration):
                    "mean_word_prob": round(float(np.mean([w["p"] for w in words])), 3) if words else None}
 
 
-def read_frames(path, w, h, fps):
-    p = subprocess.Popen(["ffmpeg", "-hide_banner", "-loglevel", "error", "-i", path,
-                          "-vf", f"fps={fps}", "-f", "rawvideo", "-pix_fmt", "rgb24", "-"],
-                         stdout=subprocess.PIPE)
+def read_frames(path, w, h, fps, limit=None):
+    """Yield (t, rgb) at w x h (ffmpeg scales if the file differs). limit = max frames,
+    applied inside ffmpeg so the pipe is never cut mid-write."""
+    cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-i", path,
+           "-vf", f"fps={fps},scale={w}:{h}:flags=bilinear"]
+    if limit:
+        cmd += ["-frames:v", str(limit)]
+    p = subprocess.Popen(cmd + ["-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
     n = w * h * 3
     i = 0
     while True:

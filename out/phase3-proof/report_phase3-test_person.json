@@ -1,0 +1,42 @@
+{
+  "source": "raw/phase3-test_person.mp4",
+  "w": 1440,
+  "h": 2560,
+  "duration": 6.0,
+  "matte_ms_per_frame": {
+    "selfie_full": 16.8,
+    "selfie_half": 12.0,
+    "multiclass_full": 184.6,
+    "multiclass_half": 130.7
+  },
+  "matte_pass": {
+    "selfie": {
+      "frames": 180,
+      "seconds": 4.4,
+      "ms_per_frame": 24.6,
+      "mb": 4.9,
+      "stored_at": "720x1280"
+    },
+    "multiclass": {
+      "frames": 180,
+      "seconds": 26.0,
+      "ms_per_frame": 144.4,
+      "mb": 6.8,
+      "stored_at": "720x1280"
+    }
+  },
+  "preflight": {
+    "free_ram_gb": 14.0,
+    "need_ram_gb": 3.7,
+    "free_disk_gb": 23.8,
+    "need_disk_gb": 10.0,
+    "source_gb": 0.0
+  },
+  "composite_render": {
+    "seconds": 19.3,
+    "fps": 9.3,
+    "est_seconds_per_output_minute": 193,
+    "ffmpeg_peak_ram_gb": 1.19,
+    "path": "out/phase3-test_person_layers.mp4"
+  }
+}

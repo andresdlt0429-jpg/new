@@ -1,0 +1,79 @@
+{
+  "schema": "dlt-plan/0.1",
+  "id": "example-own-ad",
+  "ad_type": "own",
+  "client": null,
+  "platform": "meta",
+  "status": "draft",
+  "lock": null,
+  "script": {"path": "spec/scripts/example-own-ad.md", "parsed": "plans/example-own-ad/script.json"},
+  "sources": {
+    "a": {"path": "raw/andy-talking-head.mp4", "ingest": "work/andy-talking-head/", "role": "talking_head"},
+    "b": {"path": "raw/broll-roof-wash.mp4", "ingest": "work/broll-roof-wash/", "role": "broll"}
+  },
+  "output": {
+    "master": {"w": 1440, "h": 2560},
+    "delivery": {"w": 1080, "h": 1920},
+    "fps": 30,
+    "max_duration_s": null
+  },
+  "parts": [
+    {"id": "h1", "group": "hook:H1", "beat": "HOOK", "src": "a", "in": 0.40, "out": 3.10,
+     "say": "Still waiting on referrals to fill your schedule?",
+     "reframe": {"mode": "face"}},
+    {"id": "h2", "group": "hook:H2", "beat": "HOOK", "src": "a", "in": 12.80, "out": 15.60,
+     "say": "Your crew is fast. Your phone is slow.",
+     "reframe": {"mode": "face"}},
+    {"id": "bodyA", "group": "body:A", "beat": "PROOF", "src": "a", "in": 4.00, "out": 11.20,
+     "say": "We run your Meta ads and send you booked jobs, not just leads.",
+     "broll": {"src": "b", "in": 2.0}},
+    {"id": "bodyB", "group": "body:B", "beat": "PROOF", "src": "a", "in": 17.00, "out": 24.50,
+     "say": "Every lead gets a text back in under five minutes.",
+     "reframe": {"mode": "face", "zoom": 1.1}},
+    {"id": "cta", "group": "cta", "beat": "CTA", "src": "a", "in": 26.00, "out": 30.50,
+     "say": "Book a fifteen minute call. Link below.",
+     "reframe": {"mode": "face"}}
+  ],
+  "variants": [
+    {"id": "H1-A", "hook": "H1", "body": "A"},
+    {"id": "H1-B", "hook": "H1", "body": "B"},
+    {"id": "H2-A", "hook": "H2", "body": "A"},
+    {"id": "H2-B", "hook": "H2", "body": "B"}
+  ],
+  "layers": {
+    "titles": [
+      {"id": "t-h1", "text": "STILL WAITING?", "style": "headline",
+       "at": {"word": "a:0"}, "until": {"part": "h1", "edge": "end"}, "y_pct": 16,
+       "anim": {"in": "pop", "out": "cut"}},
+      {"id": "t-h2", "text": "PHONE IS SLOW", "style": "headline",
+       "at": {"word": "a:41"}, "until": {"part": "h2", "edge": "end"}, "y_pct": 16}
+    ],
+    "graphics": [
+      {"id": "g-5min", "kind": "text", "text": "Text back in under 5 min", "style": "lower_third",
+       "at": {"word": "a:61"}, "until": {"part": "bodyB", "edge": "end"},
+       "box": {"x_pct": 6, "y_pct": 56, "w_pct": 60}, "anim": {"in": "slide_up", "out": "fade"}},
+      {"id": "g-cta", "kind": "text", "text": "Book a 15-min call", "style": "cta_button",
+       "at": {"word": "a:72"}, "until": {"part": "cta", "edge": "end"},
+       "box": {"x_pct": 15, "y_pct": 60, "w_pct": 70}, "anim": {"in": "pop"}},
+      {"id": "g-end", "kind": "end_card", "src": "cards/example-own-ad/end.png",
+       "at": {"part": "cta", "edge": "end", "offset": -1.5}, "until": {"part": "cta", "edge": "end"}}
+    ],
+    "captions": {
+      "style": "auto",
+      "emphasis": ["a:3", "a:61"],
+      "fixes": [],
+      "hide": []
+    }
+  },
+  "audio": {"loudness_lufs": null, "music": null},
+  "checks": {
+    "schema": {"status": "pending"},
+    "numbers_rule": {"status": "pending"},
+    "script_match": {"status": "pending"},
+    "speaker_for_titles": {"status": "pending"},
+    "caption_rules": {"status": "pending"},
+    "safe_zones": {"status": "pending"},
+    "meta_policy_scan": {"status": "pending"},
+    "duration": {"status": "pending"}
+  }
+}

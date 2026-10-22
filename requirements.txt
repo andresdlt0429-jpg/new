@@ -8,3 +8,5 @@ mediapipe==1.1.1
 pillow==12.3.0
 numpy==2.5.3
 onnxruntime==1.29.0
+# plan.json schema validation (Phase 3)
+jsonschema==4.26.0
