@@ -50,7 +50,9 @@
     "segment_fade_ms": 12,
     "segment_match_lufs": -23.0,
     "segment_gain_limit_db": 30.0,
-    "codec_headroom_db": 0.5
+    "codec_headroom_db": 0.5,
+    "pre_limit_dbfs": -11.0,
+    "_pre_limit_why": "Speech peaks sit ~18 dB over its loudness; loudnorm cannot reach -14 LUFS under a -1.5 dBTP ceiling with plain gain, and silently falls back to dynamic mode (undershoots). A limiter first lowers the peaks so the gain can be linear."
   },
   "export_sop_5": {
     "master": {

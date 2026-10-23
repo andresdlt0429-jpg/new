@@ -16,3 +16,7 @@ out/phase*-proof/*.png
 # Model weights are downloaded by the engines on first run.
 engines/models/
 engines/machine_limits.json
+# Render QA reports (numbers only, no footage) are committed
+!out/*/
+out/*/*
+!out/*/*_qa.json

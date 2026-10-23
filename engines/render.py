@@ -294,7 +294,9 @@ def audio_chain(segs, measured=None):
                f":measured_LRA={measured['input_lra']}:measured_thresh={measured['input_thresh']}"
                f":offset={measured['target_offset']}:linear=true")
     ln += ":print_format=json"
-    clean = f"[acat]highpass=f={AUD['highpass_hz']},afftdn=nr={AUD['denoise_nr_db']},{ln},aresample=48000"
+    lim = 10 ** (AUD["pre_limit_dbfs"] / 20)
+    clean = (f"[acat]highpass=f={AUD['highpass_hz']},afftdn=nr={AUD['denoise_nr_db']},"
+             f"alimiter=limit={lim:.4f}:attack=5:release=60:level=0,{ln},aresample=48000")
     return parts, cat, clean
 
 
@@ -453,7 +455,17 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
             "-threads", str(L["encode_threads"]), *common_a, "-movflags", "+faststart", delivery])
     with open(os.path.join(wd, f"{stem}.ffmpeg.txt"), "w") as f:
         f.write(" ".join(cmd))
+    peak_file = os.path.join(wd, "last_render_peak.json")
+    need = None
+    if os.path.exists(peak_file):
+        with open(peak_file) as f:
+            need = round(json.load(f)["ffmpeg_peak_ram_gb"] * 1.2, 1)
+        _, avail = si.ram_bytes()
+        if avail / si.GB < need:
+            sys.exit(f"PREFLIGHT FAIL: last render of this ad peaked at {need / 1.2:.1f} GB; "
+                     f"need {need} GB free, have {avail / si.GB:.1f} GB")
     with preflight.render_slot(os.path.join(ROOT, segs[0]["proxy"])) as pf:
+        pf["need_ram_gb_this_ad"] = need
         R["preflight"] = pf
         t = time.time()
         peak = si.run_measured(cmd, cwd=wd)
@@ -461,6 +473,8 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
     R["render"] = {"seconds": round(dt, 1), "x_realtime": round(dt / total, 2),
                    "ffmpeg_peak_ram_gb": round(peak / si.GB, 2)}
     print(f"render: {R['render']}")
+    with open(peak_file, "w") as f:
+        json.dump(R["render"], f)
     qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out_dir, stem)
 
 

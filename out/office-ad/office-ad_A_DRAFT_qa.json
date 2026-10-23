@@ -1,0 +1,183 @@
+{
+  "plan": "plans/office-ad/plan.json",
+  "variant": "A",
+  "draft": true,
+  "parts": 13,
+  "duration_planned_s": 36.24,
+  "captions": 35,
+  "segments": [
+    {
+      "part": "B1_1",
+      "src": "img_8627",
+      "in": 0.895,
+      "out": 3.215,
+      "t0": 0.0,
+      "lufs_in": -43.6,
+      "gain_db": 20.6
+    },
+    {
+      "part": "B2_1",
+      "src": "img_8627",
+      "in": 3.395,
+      "out": 12.485,
+      "t0": 2.32,
+      "lufs_in": -43.4,
+      "gain_db": 20.4
+    },
+    {
+      "part": "B3_1",
+      "src": "img_8628",
+      "in": 50.705,
+      "out": 53.155,
+      "t0": 11.41,
+      "lufs_in": -42.0,
+      "gain_db": 19.0
+    },
+    {
+      "part": "B3_2",
+      "src": "img_8628",
+      "in": 53.155,
+      "out": 54.295,
+      "t0": 13.86,
+      "lufs_in": -43.9,
+      "gain_db": 20.9
+    },
+    {
+      "part": "B4_1",
+      "src": "img_8636",
+      "in": 3.445,
+      "out": 5.085,
+      "t0": 15.0,
+      "lufs_in": -37.2,
+      "gain_db": 14.2
+    },
+    {
+      "part": "B4_2",
+      "src": "img_8636",
+      "in": 5.165,
+      "out": 6.125,
+      "t0": 16.64,
+      "lufs_in": -44.0,
+      "gain_db": 21.0
+    },
+    {
+      "part": "B4_3",
+      "src": "img_8636",
+      "in": 6.165,
+      "out": 7.215,
+      "t0": 17.6,
+      "lufs_in": -41.1,
+      "gain_db": 18.1
+    },
+    {
+      "part": "B4_4",
+      "src": "img_8636",
+      "in": 7.345,
+      "out": 8.385,
+      "t0": 18.65,
+      "lufs_in": -41.0,
+      "gain_db": 18.0
+    },
+    {
+      "part": "B4_5",
+      "src": "img_8636",
+      "in": 8.445,
+      "out": 11.355,
+      "t0": 19.69,
+      "lufs_in": -40.6,
+      "gain_db": 17.6
+    },
+    {
+      "part": "B5_1",
+      "src": "img_8640",
+      "in": 4.635,
+      "out": 7.835,
+      "t0": 22.6,
+      "lufs_in": -42.5,
+      "gain_db": 19.5
+    },
+    {
+      "part": "B5_2",
+      "src": "img_8640",
+      "in": 7.925,
+      "out": 10.535,
+      "t0": 25.8,
+      "lufs_in": -41.8,
+      "gain_db": 18.8
+    },
+    {
+      "part": "B6_1",
+      "src": "img_8641",
+      "in": 0.185,
+      "out": 6.175,
+      "t0": 28.41,
+      "lufs_in": -43.0,
+      "gain_db": 20.0
+    },
+    {
+      "part": "B6_2",
+      "src": "img_8641",
+      "in": 6.555,
+      "out": 8.395,
+      "t0": 34.4,
+      "lufs_in": -44.8,
+      "gain_db": 21.8
+    }
+  ],
+  "loudness_pass1": {
+    "input_i": "-24.57",
+    "input_tp": "-11.00",
+    "input_lra": "2.90"
+  },
+  "preflight": {
+    "free_ram_gb": 14.6,
+    "need_ram_gb": 3.7,
+    "free_disk_gb": 21.0,
+    "need_disk_gb": 10.0,
+    "source_gb": 0.03,
+    "need_ram_gb_this_ad": 9.7
+  },
+  "render": {
+    "seconds": 152.9,
+    "x_realtime": 4.22,
+    "ffmpeg_peak_ram_gb": 8.0
+  },
+  "master_file": {
+    "path": "out/office-ad/office-ad_A_DRAFT_master_1440x2560.mp4",
+    "mb": 54.3
+  },
+  "delivery_file": {
+    "path": "out/office-ad/office-ad_A_DRAFT_1080x1920.mp4",
+    "mb": 24.6
+  },
+  "qa": {
+    "master_size": {
+      "status": "pass",
+      "value": "1440x2560 @ 30/1"
+    },
+    "master_duration": {
+      "status": "pass",
+      "value": "36.50s (target 35-50s)"
+    },
+    "delivery_size": {
+      "status": "pass",
+      "value": "1080x1920 @ 30/1"
+    },
+    "delivery_duration": {
+      "status": "pass",
+      "value": "36.50s (target 35-50s)"
+    },
+    "loudness": {
+      "status": "pass",
+      "value": "-14.5 LUFS (target -14.0), TP -1.1 dBTP, LRA 3.4"
+    },
+    "numbers_rule_final": {
+      "status": "pass",
+      "value": "every number on screen was spoken"
+    },
+    "no_profanity": {
+      "status": "pass",
+      "value": "no profanity in the kept audio or captions"
+    }
+  }
+}
