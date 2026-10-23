@@ -49,7 +49,8 @@
     "denoise_nr_db": 10,
     "segment_fade_ms": 12,
     "segment_match_lufs": -23.0,
-    "segment_gain_limit_db": 30.0
+    "segment_gain_limit_db": 30.0,
+    "codec_headroom_db": 0.5
   },
   "export_sop_5": {
     "master": {
@@ -94,5 +95,10 @@
       "crap"
     ],
     "_profanity_source": "Andy's 'Launchpad Ads: Policy-Safe One-Pagers': swearing, even masked, is banned in Meta ads."
+  },
+  "graphics_sop_5": {
+    "_what": "On-screen text timing and placement (placeholder).",
+    "min_on_screen_s": 1.5,
+    "title_head_overlap": 0.35
   }
 }

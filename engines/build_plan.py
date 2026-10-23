@@ -117,9 +117,15 @@ def build(ad_dir, target=(35, 50)):
             fs, rate = faces_in(srcs[c["src"]], c["start"], c["end"])
             y = 28.0
             if fs:
-                cy = sum(f["cy_pct"] for f in fs) / len(fs)
+                # head top = highest face-box top in the range, plus hair (~0.3 face heights).
+                # The block's bottom sits title_head_overlap face heights below it, so the head
+                # covers only the bottom edge of the last line.
                 fh = sum(f["h_pct"] for f in fs) / len(fs)
-                y = round(cy - 0.9 * fh, 1)  # title block sits on the top of the head
+                head_top = min(f["cy_pct"] - f["h_pct"] / 2 for f in fs) - 0.3 * fh
+                ov = load(os.path.join(ROOT, "spec", "sop-defaults.json"))["graphics_sop_5"]["title_head_overlap"]
+                import render
+                _, _, block_px = render.title_block(ln["on_screen"], 1440)
+                y = round(head_top + ov * fh - block_px / 2560 * 100 / 2, 1)
             titles.append({"id": f"t-{ln['id']}", "text": ln["on_screen"], "style": "headline",
                            "at": {"part": line_parts[ln["id"]][0], "edge": "start"}, "until": end_anchor,
                            "y_pct": y, "anim": {"in": "pop", "out": "cut"}})

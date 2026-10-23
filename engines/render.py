@@ -114,7 +114,10 @@ def graphic_png(item, W, H, path):
     for i, ln in enumerate(lines):
         lw = d.textlength(ln, font=font)
         d.text((bx + (bw - lw) / 2, by + pad * 0.8 + i * lh), ln, font=font, fill=hex_rgb(g["text_color"]))
-    img.save(path)
+    x0, y0, x1, y1 = img.getbbox()
+    x0, y0 = x0 // 2 * 2, y0 // 2 * 2
+    img.crop((x0, y0, x1, y1)).save(path)  # only the box: far less to decode and blend every frame
+    return x0, y0
 
 
 def title_png(item, W, H, path):
@@ -137,6 +140,16 @@ def title_png(item, W, H, path):
     Image.alpha_composite(shadow, img).save(path)
 
 
+def title_block(text, W):
+    """(font_px, lines, block_height_px) for a behind-head title at master width W."""
+    g = BRAND["graphics"]
+    font = ImageFont.truetype(fontfile(BRAND["fonts"]["headline"] or BRAND["fonts"]["fallback_headline"]),
+                              round(W * g["title_size_pct_of_width"] / 100))
+    d = ImageDraw.Draw(Image.new("RGBA", (8, 8)))
+    lines = wrap(d, text, font, W * 0.92)
+    return font.size, lines, font.size * 1.02 * len(lines)
+
+
 def matte_for(title, ts, te, segs, W, H, path):
     """Speaker matte (multiclass, half size, smoothed) for the title's time range only."""
     s = next(x for x in segs if x["t0"] - 0.001 <= ts < x["t1"])
@@ -157,6 +170,20 @@ def matte_for(title, ts, te, segs, W, H, path):
     enc.wait()
     seg.close()
     return {"frames": n, "seconds": round(time.time() - t, 1)}
+
+
+def enforce_min_on_screen(graphics, total):
+    """Every graphic stays up at least min_on_screen_s: extend into the gap after it; if the
+    video ends first, start it earlier and shorten the graphic before it."""
+    mn = SOP["graphics_sop_5"]["min_on_screen_s"]
+    graphics.sort(key=lambda g: g["ts"])
+    for i, g in enumerate(graphics):
+        nxt = graphics[i + 1]["ts"] if i + 1 < len(graphics) else total
+        if g["te"] - g["ts"] < mn:
+            g["te"] = round(min(nxt, g["ts"] + mn, total), 3)
+        if g["te"] - g["ts"] < mn and i > 0:
+            g["ts"] = round(max(graphics[i - 1]["ts"] + mn, g["te"] - mn), 3)
+            graphics[i - 1]["te"] = min(graphics[i - 1]["te"], g["ts"])
 
 
 # ---------- captions (L5) ----------
@@ -259,7 +286,9 @@ def audio_chain(segs, measured=None):
         parts.append(f"[{i}:a]aresample=48000,asetpts=PTS-STARTPTS,volume={s.get('gain_db', 0)}dB,afade=t=in:st=0:d={F},"
                      f"afade=t=out:st={max(0, d - F):.3f}:d={F}[a{i}]")
     cat = "".join(f"[a{i}]" for i in range(len(segs))) + f"concat=n={len(segs)}:v=0:a=1[acat]"
-    ln = f"loudnorm=I={AUD['loudness_lufs']}:TP={AUD['true_peak_dbtp']}:LRA={AUD['loudness_range_lu']}"
+    # aim below the true-peak limit: AAC encoding overshoots by a few tenths of a dB
+    ln = (f"loudnorm=I={AUD['loudness_lufs']}:TP={AUD['true_peak_dbtp'] - AUD['codec_headroom_db']}"
+          f":LRA={AUD['loudness_range_lu']}")
     if measured:
         ln += (f":measured_I={measured['input_i']}:measured_TP={measured['input_tp']}"
                f":measured_LRA={measured['input_lra']}:measured_thresh={measured['input_thresh']}"
@@ -346,9 +375,12 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
             continue
         a, b = sp
         p = os.path.join(cards, f"{g['id']}.png")
-        graphic_png(g, W, H, p)
-        graphics.append({"id": g["id"], "text": g["text"], "ts": a, "te": b, "png": p})
+        gx, gy = graphic_png(g, W, H, p)
+        graphics.append({"id": g["id"], "text": g["text"], "ts": a, "te": b, "png": p, "x": gx, "y": gy})
         print(f"graphic {g['id']} {a:.2f}-{b:.2f}s  {g['text']!r}")
+    enforce_min_on_screen(graphics, total)
+    for x in graphics:
+        print(f"graphic {x['id']} on screen {x['ts']:.2f}-{x['te']:.2f}s ({x['te'] - x['ts']:.2f}s)")
     style = BRAND["captions"]["own_ads" if plan["ad_type"] == "own" else "client_ads"]
     caps = caption_lines(segs, srcs, set(plan["layers"]["captions"].get("emphasis", [])),
                          style["max_words_per_line"])
@@ -388,14 +420,16 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
         fl += [f"[{cur}]split[tb{k}][tf{k}]",
                f"[{x['gi']}:v]format=rgba,fade=t=in:st={ts:.3f}:d=0.12:alpha=1[tp{k}]",
                f"[tb{k}][tp{k}]overlay=0:0:enable='between(t,{ts:.3f},{te:.3f})'[tt{k}]",
-               f"[tf{k}]trim=start={ts:.3f}:end={te:.3f},setpts=PTS-STARTPTS[fv{k}]",
-               f"[{x['mi']}:v]format=gray,scale={W}:{H}:flags=bicubic,setpts=PTS-STARTPTS[mm{k}]",
-               f"[fv{k}][mm{k}]alphamerge,setpts=PTS+{ts:.3f}/TB[fg{k}]",
-               f"[tt{k}][fg{k}]overlay=0:0:eof_action=pass:enable='between(t,{ts:.3f},{te:.3f})'[l3_{k}]"]
+               # matte padded with black (alpha 0) to the full length, so both branches stay in step
+               f"[{x['mi']}:v]format=gray,scale={W}:{H}:flags=bicubic,setpts=PTS-STARTPTS,"
+               f"tpad=start_duration={ts:.3f}:start_mode=add:color=black:stop_duration={total - te + 1:.3f}"
+               f":stop_mode=add:color=black[mm{k}]",
+               f"[tf{k}][mm{k}]alphamerge[fg{k}]",
+               f"[tt{k}][fg{k}]overlay=0:0:shortest=1:enable='between(t,{ts:.3f},{te:.3f})'[l3_{k}]"]
         cur = f"l3_{k}"
     for j, x in enumerate(graphics):
         fl += [f"[{x['gi']}:v]format=rgba,fade=t=in:st={x['ts']:.3f}:d=0.12:alpha=1[gp{j}]",
-               f"[{cur}][gp{j}]overlay=0:0:enable='between(t,{x['ts']:.3f},{x['te']:.3f})'[g{j}]"]
+               f"[{cur}][gp{j}]overlay={x['x']}:{x['y']}:enable='between(t,{x['ts']:.3f},{x['te']:.3f})'[g{j}]"]
         cur = f"g{j}"
     fl.append(f"[{cur}]ass={os.path.basename(ass)}[cap]")
     cur = "cap"
