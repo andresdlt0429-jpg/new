@@ -4,59 +4,163 @@
   "title": "DLT auto-editor plan",
   "description": "One ad (all its hook/body variants). The renderer reads only this file plus brand.json and the ingest outputs. Times inside layers are anchors, not seconds, so re-cutting never desyncs text from speech.",
   "type": "object",
-  "required": ["schema", "id", "ad_type", "status", "sources", "output", "parts", "variants", "layers"],
+  "required": [
+    "schema",
+    "id",
+    "ad_type",
+    "status",
+    "sources",
+    "output",
+    "parts",
+    "variants",
+    "layers"
+  ],
   "additionalProperties": false,
   "properties": {
-    "schema": {"const": "dlt-plan/0.1"},
-    "id": {"$ref": "#/$defs/slug"},
-    "ad_type": {"enum": ["own", "client"], "description": "own = DLT's ad (own caption style); client = a client's ad (plain white captions)."},
-    "client": {"type": ["string", "null"]},
-    "platform": {"enum": ["meta"], "default": "meta"},
-    "status": {"enum": ["draft", "locked"]},
+    "schema": {
+      "const": "dlt-plan/0.1"
+    },
+    "id": {
+      "$ref": "#/$defs/slug"
+    },
+    "ad_type": {
+      "enum": [
+        "own",
+        "client"
+      ],
+      "description": "own = DLT's ad (own caption style); client = a client's ad (plain white captions)."
+    },
+    "client": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "platform": {
+      "enum": [
+        "meta"
+      ],
+      "default": "meta"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "locked"
+      ]
+    },
     "lock": {
       "description": "Written by the lock step, never by hand. hash covers plan (minus lock/checks) + script + brand.json; any edit after lock breaks the hash and the renderer refuses.",
-      "type": ["object", "null"],
-      "required": ["by", "at", "hash"],
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "by",
+        "at",
+        "hash"
+      ],
       "additionalProperties": false,
       "properties": {
-        "by": {"type": "string"},
-        "at": {"type": "string", "format": "date-time"},
-        "hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+        "by": {
+          "type": "string"
+        },
+        "at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "hash": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
       }
     },
     "script": {
-      "type": ["object", "null"],
-      "required": ["path"],
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "path"
+      ],
       "additionalProperties": false,
       "properties": {
-        "path": {"type": "string", "pattern": "^spec/scripts/.+"},
-        "parsed": {"type": "string", "description": "plans/<ad>/script.json from the script parser"}
+        "path": {
+          "type": "string",
+          "pattern": "^spec/scripts/.+"
+        },
+        "parsed": {
+          "type": "string",
+          "description": "plans/<ad>/script.json from the script parser"
+        }
       }
     },
     "sources": {
       "type": "object",
       "minProperties": 1,
-      "propertyNames": {"$ref": "#/$defs/srckey"},
+      "propertyNames": {
+        "$ref": "#/$defs/srckey"
+      },
       "additionalProperties": {
         "type": "object",
-        "required": ["path", "ingest"],
+        "required": [
+          "path",
+          "ingest"
+        ],
         "additionalProperties": false,
         "properties": {
-          "path": {"type": "string", "pattern": "^raw/.+"},
-          "ingest": {"type": "string", "pattern": "^work/.+/$"},
-          "role": {"enum": ["talking_head", "broll", "voiceover"]}
+          "path": {
+            "type": "string",
+            "pattern": "^raw/.+"
+          },
+          "ingest": {
+            "type": "string",
+            "pattern": "^work/.+/$"
+          },
+          "role": {
+            "enum": [
+              "talking_head",
+              "broll",
+              "voiceover"
+            ]
+          }
         }
       }
     },
     "output": {
       "type": "object",
-      "required": ["master", "delivery", "fps"],
+      "required": [
+        "master",
+        "delivery",
+        "fps"
+      ],
       "additionalProperties": false,
       "properties": {
-        "master": {"$ref": "#/$defs/size", "description": "1440x2560 (Andy rule 1)"},
-        "delivery": {"$ref": "#/$defs/size"},
-        "fps": {"const": 30},
-        "max_duration_s": {"type": ["number", "null"], "description": "pending SOP"}
+        "master": {
+          "$ref": "#/$defs/size",
+          "description": "1440x2560 (Andy rule 1)"
+        },
+        "delivery": {
+          "$ref": "#/$defs/size"
+        },
+        "fps": {
+          "const": 30
+        },
+        "max_duration_s": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "pending SOP"
+        },
+        "target_duration_s": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "[min, max] seconds for every variant (Andy rule 2: 35-50 s for the office ad)"
+        }
       }
     },
     "parts": {
@@ -65,45 +169,112 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["id", "group", "src", "in", "out"],
+        "required": [
+          "id",
+          "group",
+          "src",
+          "in",
+          "out"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": {"$ref": "#/$defs/slug"},
-          "group": {"type": "string", "pattern": "^(shared|cta|hook:[A-Za-z0-9]+|body:[A-Za-z0-9]+)$",
-                    "description": "shared/cta = in every variant; hook:H1 / body:A = only in variants that pick them"},
-          "beat": {"type": "string", "description": "TIME/BEAT label from the script, e.g. HOOK, PROBLEM, PROOF, CTA"},
-          "say": {"type": "string", "description": "The script's SAY line for this part; validator diffs it against the transcript"},
-          "src": {"$ref": "#/$defs/srckey"},
-          "in": {"type": "number", "minimum": 0, "description": "source seconds"},
-          "out": {"type": "number", "minimum": 0, "description": "source seconds, > in"},
+          "id": {
+            "$ref": "#/$defs/slug"
+          },
+          "group": {
+            "type": "string",
+            "pattern": "^(shared|cta|hook:[A-Za-z0-9]+|body:[A-Za-z0-9]+)$",
+            "description": "shared/cta = in every variant; hook:H1 / body:A = only in variants that pick them"
+          },
+          "beat": {
+            "type": "string",
+            "description": "TIME/BEAT label from the script, e.g. HOOK, PROBLEM, PROOF, CTA"
+          },
+          "say": {
+            "type": "string",
+            "description": "The script's SAY line for this part; validator diffs it against the transcript"
+          },
+          "src": {
+            "$ref": "#/$defs/srckey"
+          },
+          "in": {
+            "type": "number",
+            "minimum": 0,
+            "description": "source seconds"
+          },
+          "out": {
+            "type": "number",
+            "minimum": 0,
+            "description": "source seconds, > in"
+          },
           "broll": {
             "description": "Cover the picture with other footage while the voice keeps playing from src. Timing still comes from the speech.",
             "type": "object",
-            "required": ["src", "in"],
+            "required": [
+              "src",
+              "in"
+            ],
             "additionalProperties": false,
             "properties": {
-              "src": {"$ref": "#/$defs/srckey"},
-              "in": {"type": "number", "minimum": 0, "description": "where the b-roll starts in its own source; length = this part's length"}
+              "src": {
+                "$ref": "#/$defs/srckey"
+              },
+              "in": {
+                "type": "number",
+                "minimum": 0,
+                "description": "where the b-roll starts in its own source; length = this part's length"
+              }
             }
           },
           "reframe": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
-              "mode": {"enum": ["face", "center", "manual"], "description": "face = crop follows faces.json, smoothed"},
-              "cx_pct": {"type": "number", "minimum": 0, "maximum": 100},
-              "cy_pct": {"type": "number", "minimum": 0, "maximum": 100},
-              "zoom": {"type": "number", "minimum": 1, "maximum": 2}
+              "mode": {
+                "enum": [
+                  "face",
+                  "center",
+                  "manual"
+                ],
+                "description": "face = crop follows faces.json, smoothed"
+              },
+              "cx_pct": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "cy_pct": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "zoom": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 2
+              }
             }
           },
           "background": {
             "description": "L1. Default: the footage itself.",
             "type": "object",
-            "required": ["kind"],
+            "required": [
+              "kind"
+            ],
             "additionalProperties": false,
             "properties": {
-              "kind": {"enum": ["footage", "blur_fill", "color"]},
-              "color": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$", "description": "brand.json color key (e.g. primary), never a hex in the plan"}
+              "kind": {
+                "enum": [
+                  "footage",
+                  "blur_fill",
+                  "color"
+                ]
+              },
+              "color": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$",
+                "description": "brand.json color key (e.g. primary), never a hex in the plan"
+              }
             }
           }
         }
@@ -114,18 +285,30 @@
       "minItems": 1,
       "items": {
         "type": "object",
-        "required": ["id"],
+        "required": [
+          "id"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": {"$ref": "#/$defs/slug"},
-          "hook": {"type": "string"},
-          "body": {"type": "string"}
+          "id": {
+            "$ref": "#/$defs/slug"
+          },
+          "hook": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          }
         }
       }
     },
     "layers": {
       "type": "object",
-      "required": ["titles", "graphics", "captions"],
+      "required": [
+        "titles",
+        "graphics",
+        "captions"
+      ],
       "additionalProperties": false,
       "properties": {
         "titles": {
@@ -133,16 +316,41 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["id", "text", "at", "until"],
+            "required": [
+              "id",
+              "text",
+              "at",
+              "until"
+            ],
             "additionalProperties": false,
             "properties": {
-              "id": {"$ref": "#/$defs/slug"},
-              "text": {"type": "string", "minLength": 1},
-              "style": {"type": "string", "default": "headline", "description": "brand.json text style key"},
-              "at": {"$ref": "#/$defs/anchor"},
-              "until": {"$ref": "#/$defs/anchor"},
-              "y_pct": {"type": "number", "minimum": 0, "maximum": 100, "description": "vertical center of the title block"},
-              "anim": {"$ref": "#/$defs/anim"}
+              "id": {
+                "$ref": "#/$defs/slug"
+              },
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "style": {
+                "type": "string",
+                "default": "headline",
+                "description": "brand.json text style key"
+              },
+              "at": {
+                "$ref": "#/$defs/anchor"
+              },
+              "until": {
+                "$ref": "#/$defs/anchor"
+              },
+              "y_pct": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100,
+                "description": "vertical center of the title block"
+              },
+              "anim": {
+                "$ref": "#/$defs/anim"
+              }
             }
           }
         },
@@ -151,59 +359,173 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["id", "kind", "at", "until"],
+            "required": [
+              "id",
+              "kind",
+              "at",
+              "until"
+            ],
             "additionalProperties": false,
             "properties": {
-              "id": {"$ref": "#/$defs/slug"},
-              "kind": {"enum": ["text", "image", "card", "end_card"]},
-              "text": {"type": "string"},
-              "style": {"type": "string"},
-              "src": {"type": "string", "pattern": "^cards/.+\\.png$"},
-              "at": {"$ref": "#/$defs/anchor"},
-              "until": {"$ref": "#/$defs/anchor"},
+              "id": {
+                "$ref": "#/$defs/slug"
+              },
+              "kind": {
+                "enum": [
+                  "text",
+                  "image",
+                  "card",
+                  "end_card"
+                ]
+              },
+              "text": {
+                "type": "string"
+              },
+              "style": {
+                "type": "string"
+              },
+              "src": {
+                "type": "string",
+                "pattern": "^cards/.+\\.png$"
+              },
+              "at": {
+                "$ref": "#/$defs/anchor"
+              },
+              "until": {
+                "$ref": "#/$defs/anchor"
+              },
               "box": {
                 "type": "object",
-                "required": ["x_pct", "y_pct", "w_pct"],
+                "required": [
+                  "x_pct",
+                  "y_pct",
+                  "w_pct"
+                ],
                 "additionalProperties": false,
                 "properties": {
-                  "x_pct": {"type": "number", "minimum": 0, "maximum": 100},
-                  "y_pct": {"type": "number", "minimum": 0, "maximum": 100},
-                  "w_pct": {"type": "number", "exclusiveMinimum": 0, "maximum": 100}
+                  "x_pct": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "y_pct": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  },
+                  "w_pct": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 100
+                  }
                 }
               },
-              "anim": {"$ref": "#/$defs/anim"}
+              "anim": {
+                "$ref": "#/$defs/anim"
+              }
             },
             "allOf": [
-              {"if": {"properties": {"kind": {"const": "text"}}}, "then": {"required": ["text"]}},
-              {"if": {"properties": {"kind": {"enum": ["image", "card", "end_card"]}}}, "then": {"required": ["src"]}}
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "const": "text"
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "text"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "image",
+                        "card",
+                        "end_card"
+                      ]
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "src"
+                  ]
+                }
+              }
             ]
           }
         },
         "captions": {
           "description": "L5. Built from the words inside the kept parts.",
           "type": "object",
-          "required": ["style"],
+          "required": [
+            "style"
+          ],
           "additionalProperties": false,
           "properties": {
-            "style": {"enum": ["auto", "own", "client"], "description": "auto = follow ad_type"},
-            "emphasis": {"type": "array", "items": {"$ref": "#/$defs/wordref"},
-                         "description": "own style only: words shown in CAPS (validator: max 2 per line)"},
+            "style": {
+              "enum": [
+                "auto",
+                "own",
+                "client"
+              ],
+              "description": "auto = follow ad_type"
+            },
+            "emphasis": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/wordref"
+              },
+              "description": "own style only: words shown in CAPS (validator: max 2 per line)"
+            },
             "fixes": {
               "description": "Correct a misheard word. A fix that adds or changes a number also changes the rule 4 ledger, so it must say who heard it.",
               "type": "array",
               "items": {
                 "type": "object",
-                "required": ["word", "text", "heard_by"],
+                "required": [
+                  "word",
+                  "text",
+                  "heard_by"
+                ],
                 "additionalProperties": false,
                 "properties": {
-                  "word": {"$ref": "#/$defs/wordref"},
-                  "text": {"type": "string"},
-                  "heard_by": {"type": "string"}
+                  "word": {
+                    "$ref": "#/$defs/wordref"
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "heard_by": {
+                    "type": "string"
+                  }
                 }
               }
             },
-            "hide": {"type": "array", "items": {"type": "object", "required": ["at", "until"], "additionalProperties": false,
-                     "properties": {"at": {"$ref": "#/$defs/anchor"}, "until": {"$ref": "#/$defs/anchor"}}}}
+            "hide": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "at",
+                  "until"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "at": {
+                    "$ref": "#/$defs/anchor"
+                  },
+                  "until": {
+                    "$ref": "#/$defs/anchor"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -212,15 +534,33 @@
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "loudness_lufs": {"type": ["number", "null"], "description": "pending SOP"},
+        "loudness_lufs": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "pending SOP"
+        },
         "music": {
-          "type": ["object", "null"],
-          "required": ["path"],
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "path"
+          ],
           "additionalProperties": false,
           "properties": {
-            "path": {"type": "string"},
-            "gain_db": {"type": "number"},
-            "duck_db": {"type": "number", "description": "music drop under speech"}
+            "path": {
+              "type": "string"
+            },
+            "gain_db": {
+              "type": "number"
+            },
+            "duck_db": {
+              "type": "number",
+              "description": "music drop under speech"
+            }
           }
         }
       }
@@ -230,35 +570,125 @@
       "type": "object",
       "additionalProperties": {
         "type": "object",
-        "required": ["status"],
+        "required": [
+          "status"
+        ],
         "properties": {
-          "status": {"enum": ["pass", "warn", "fail", "pending"]},
-          "notes": {"type": "array", "items": {"type": "string"}}
+          "status": {
+            "enum": [
+              "pass",
+              "warn",
+              "fail",
+              "pending"
+            ]
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
         }
       }
     }
   },
   "$defs": {
-    "slug": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"},
-    "srckey": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
-    "wordref": {"type": "string", "pattern": "^[a-z][a-z0-9_]*:\\d+$", "description": "source key : index into that source's words.json"},
-    "size": {"type": "object", "required": ["w", "h"], "additionalProperties": false,
-             "properties": {"w": {"type": "integer"}, "h": {"type": "integer"}}},
+    "slug": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "srckey": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "wordref": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*:\\d+$",
+      "description": "source key : index into that source's words.json"
+    },
+    "size": {
+      "type": "object",
+      "required": [
+        "w",
+        "h"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "w": {
+          "type": "integer"
+        },
+        "h": {
+          "type": "integer"
+        }
+      }
+    },
     "anchor": {
       "description": "When something starts/ends, tied to the edit instead of a clock. Preferred: a spoken word. Resolved to output seconds by the compiler; if the anchor was cut out, validation fails.",
       "oneOf": [
-        {"type": "object", "required": ["word"], "additionalProperties": false,
-         "properties": {"word": {"$ref": "#/$defs/wordref"}, "edge": {"enum": ["start", "end"]}, "offset": {"type": "number"}}},
-        {"type": "object", "required": ["part"], "additionalProperties": false,
-         "properties": {"part": {"$ref": "#/$defs/slug"}, "edge": {"enum": ["start", "end"]}, "offset": {"type": "number"}}}
+        {
+          "type": "object",
+          "required": [
+            "word"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "word": {
+              "$ref": "#/$defs/wordref"
+            },
+            "edge": {
+              "enum": [
+                "start",
+                "end"
+              ]
+            },
+            "offset": {
+              "type": "number"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "part"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "part": {
+              "$ref": "#/$defs/slug"
+            },
+            "edge": {
+              "enum": [
+                "start",
+                "end"
+              ]
+            },
+            "offset": {
+              "type": "number"
+            }
+          }
+        }
       ]
     },
     "anim": {
       "type": "object",
       "additionalProperties": false,
       "properties": {
-        "in": {"enum": ["cut", "fade", "pop", "slide_up"]},
-        "out": {"enum": ["cut", "fade", "pop", "slide_down"]}
+        "in": {
+          "enum": [
+            "cut",
+            "fade",
+            "pop",
+            "slide_up"
+          ]
+        },
+        "out": {
+          "enum": [
+            "cut",
+            "fade",
+            "pop",
+            "slide_down"
+          ]
+        }
       }
     }
   }

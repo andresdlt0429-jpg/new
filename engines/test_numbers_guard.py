@@ -28,6 +28,7 @@ class SpokenForms(unittest.TestCase):
         self.assertEqual(vals("a hundred thousand dollars"), [(100000, "money")])
         self.assertEqual(vals("ten thousand bucks"), [(10000, "money")])
         self.assertEqual(vals("fifteen per cent"), [(15, "percent")])
+        self.assertEqual(vals("still doing 20 grand a month"), [(20000, "money")])
 
     def test_hyphens_split(self):
         self.assertEqual(vals("a fifteen-minute call"), [(15, None)])
@@ -89,6 +90,11 @@ class ScreenCheck(unittest.TestCase):
     def test_unreadable_digits_fail_closed(self):
         self.assertEqual(len(check("Call 555.123.4567", self.ledger)["block"]), 1)
         self.assertEqual(len(check("Top 5ive", self.ledger)["block"]), 1)
+
+    def test_grand_matches_dollar_overlay(self):
+        ledger = spoken_ledger(words("exterior cleaners still doing 20 grand a month"))
+        r = check("$20K a month?", ledger)
+        self.assertEqual((r["block"], r["warn"], len(r["ok"])), ([], [], 1))
 
     def test_text_without_numbers_passes(self):
         r = check("Clean roof. Happy home.", self.ledger)

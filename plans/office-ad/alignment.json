@@ -1,0 +1,327 @@
+{
+ "script": "spec/scripts/office-ad-v1-DRAFT.md",
+ "sources": [
+  {
+   "key": "img_8627",
+   "dir": "work/IMG_8627/",
+   "raw": "raw/office/IMG_8627.MOV",
+   "proxy": "proxy/IMG_8627_work.mp4",
+   "duration": 13.496667
+  },
+  {
+   "key": "img_8628",
+   "dir": "work/IMG_8628/",
+   "raw": "raw/office/IMG_8628.MOV",
+   "proxy": "proxy/IMG_8628_work.mp4",
+   "duration": 58.303333
+  },
+  {
+   "key": "img_8636",
+   "dir": "work/IMG_8636/",
+   "raw": "raw/office/IMG_8636.MOV",
+   "proxy": "proxy/IMG_8636_work.mp4",
+   "duration": 12.441667
+  },
+  {
+   "key": "img_8640",
+   "dir": "work/IMG_8640/",
+   "raw": "raw/office/IMG_8640.MOV",
+   "proxy": "proxy/IMG_8640_work.mp4",
+   "duration": 11.808333
+  },
+  {
+   "key": "img_8641",
+   "dir": "work/IMG_8641/",
+   "raw": "raw/office/IMG_8641.MOV",
+   "proxy": "proxy/IMG_8641_work.mp4",
+   "duration": 10.771667
+  }
+ ],
+ "lines": [
+  {
+   "id": "B1",
+   "kind": "beat",
+   "beat": "HOOK",
+   "say": "Exterior cleaners stuck at 20 grand a month?",
+   "on_screen": "$20K A MONTH?",
+   "on_screen_kind": "graphic",
+   "protected_pauses": [],
+   "chosen": {
+    "src": "img_8627",
+    "w0": 6,
+    "w1": 9,
+    "start": 2.26,
+    "end": 3.14,
+    "coverage": 0.5,
+    "heard": "20 grand a month.",
+    "wording": [
+     "delete: script \"exterior cleaners stuck at\" / heard \"\""
+    ]
+   },
+   "takes": [
+    {
+     "src": "img_8627",
+     "w0": 6,
+     "w1": 9,
+     "start": 2.26,
+     "end": 3.14,
+     "coverage": 0.5,
+     "heard": "20 grand a month.",
+     "wording": [
+      "delete: script \"exterior cleaners stuck at\" / heard \"\""
+     ]
+    }
+   ],
+   "flags": [
+    "PARTIAL: best take covers 50% of the line"
+   ]
+  },
+  {
+   "id": "B2",
+   "kind": "beat",
+   "beat": "PAIN",
+   "say": "Are you sick and tired of knocking doors all day just for a couple extra deals, when really you want exclusive qualified leads that are ready to buy? Then this is for you.",
+   "on_screen": null,
+   "on_screen_kind": null,
+   "protected_pauses": [
+    {
+     "before": "Then this is for you",
+     "why": "Pause before \"Then this is for you.\""
+    }
+   ],
+   "chosen": {
+    "src": "img_8627",
+    "w0": 10,
+    "w1": 42,
+    "start": 3.46,
+    "end": 12.44,
+    "coverage": 1.0,
+    "heard": "Are you sick and tired of knocking doors all day just for a couple extra deals, when really you want exclusive qualified leads that are ready to buy? Then this is for you."
+   },
+   "takes": [
+    {
+     "src": "img_8627",
+     "w0": 10,
+     "w1": 42,
+     "start": 3.46,
+     "end": 12.44,
+     "coverage": 1.0,
+     "heard": "Are you sick and tired of knocking doors all day just for a couple extra deals, when really you want exclusive qualified leads that are ready to buy? Then this is for you."
+    }
+   ],
+   "flags": []
+  },
+  {
+   "id": "B3",
+   "kind": "beat",
+   "beat": "SYSTEM",
+   "say": "We built the exact system you're missing. Here's what I mean.",
+   "on_screen": "THE SYSTEM YOU'RE MISSING",
+   "on_screen_kind": "title",
+   "protected_pauses": [],
+   "chosen": {
+    "src": "img_8628",
+    "w0": 82,
+    "w1": 92,
+    "start": 49.94,
+    "end": 54.16,
+    "coverage": 1.0,
+    "heard": "We built the exact system. You're missing. Here's what I mean"
+   },
+   "takes": [
+    {
+     "src": "img_8628",
+     "w0": 15,
+     "w1": 26,
+     "start": 17.08,
+     "end": 21.32,
+     "coverage": 0.91,
+     "heard": "we built the exact system. You are missing. Here's what I mean"
+    },
+    {
+     "src": "img_8628",
+     "w0": 42,
+     "w1": 52,
+     "start": 32.58,
+     "end": 36.54,
+     "coverage": 1.0,
+     "heard": "We built the exact system. You're missing. Here's what I mean"
+    },
+    {
+     "src": "img_8628",
+     "w0": 53,
+     "w1": 63,
+     "start": 37.22,
+     "end": 41.64,
+     "coverage": 1.0,
+     "heard": "We built the exact system. You're missing. Here's what I mean"
+    },
+    {
+     "src": "img_8628",
+     "w0": 64,
+     "w1": 74,
+     "start": 42.32,
+     "end": 46.13,
+     "coverage": 1.0,
+     "heard": "We built the exact system. You're missing. Here's what I mean"
+    },
+    {
+     "src": "img_8628",
+     "w0": 75,
+     "w1": 81,
+     "start": 46.68,
+     "end": 49.94,
+     "coverage": 0.64,
+     "heard": "We built the exact system. You're missing"
+    },
+    {
+     "src": "img_8628",
+     "w0": 82,
+     "w1": 92,
+     "start": 49.94,
+     "end": 54.16,
+     "coverage": 1.0,
+     "heard": "We built the exact system. You're missing. Here's what I mean"
+    }
+   ],
+   "flags": []
+  },
+  {
+   "id": "B4",
+   "kind": "beat",
+   "beat": "OFFER",
+   "say": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it.",
+   "on_screen": "LIVE IN 4 DAYS",
+   "on_screen_kind": "graphic",
+   "protected_pauses": [
+    {
+     "before": "All of it",
+     "why": "Pause before \"All of it.\""
+    }
+   ],
+   "chosen": {
+    "src": "img_8636",
+    "w0": 0,
+    "w1": 21,
+    "start": 3.6,
+    "end": 11.54,
+    "coverage": 1.0,
+    "heard": "We build the offer write the scripts edit the videos run your ads all live within just four days all of it"
+   },
+   "takes": [
+    {
+     "src": "img_8636",
+     "w0": 0,
+     "w1": 21,
+     "start": 3.6,
+     "end": 11.54,
+     "coverage": 1.0,
+     "heard": "We build the offer write the scripts edit the videos run your ads all live within just four days all of it"
+    }
+   ],
+   "flags": []
+  },
+  {
+   "id": "B5",
+   "kind": "beat",
+   "beat": "FUTURE",
+   "say": "So instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar.",
+   "on_screen": null,
+   "on_screen_kind": null,
+   "protected_pauses": [],
+   "chosen": {
+    "src": "img_8640",
+    "w0": 0,
+    "w1": 20,
+    "start": 4.75,
+    "end": 10.43,
+    "coverage": 1.0,
+    "heard": "So, instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar."
+   },
+   "takes": [
+    {
+     "src": "img_8640",
+     "w0": 0,
+     "w1": 20,
+     "start": 4.75,
+     "end": 10.43,
+     "coverage": 1.0,
+     "heard": "So, instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar."
+    }
+   ],
+   "flags": []
+  },
+  {
+   "id": "B6",
+   "kind": "beat",
+   "beat": "CTA",
+   "say": "So if you want 20 more jobs completely guaranteed on your calendar every single month, click the link below and see if you qualify.",
+   "on_screen": "20 MORE JOBS A MONTH / SEE IF YOU QUALIFY",
+   "on_screen_kind": "graphic",
+   "protected_pauses": [
+    {
+     "before": null,
+     "why": "slowest moment / stand still: keep breathing room before this line"
+    }
+   ],
+   "chosen": {
+    "src": "img_8641",
+    "w0": 0,
+    "w1": 23,
+    "start": 0.78,
+    "end": 8.26,
+    "coverage": 1.0,
+    "heard": "So if you want 20 more jobs completely guaranteed on your calendar every single month click the link below and see if you qualify"
+   },
+   "takes": [
+    {
+     "src": "img_8641",
+     "w0": 0,
+     "w1": 23,
+     "start": 0.78,
+     "end": 8.26,
+     "coverage": 1.0,
+     "heard": "So if you want 20 more jobs completely guaranteed on your calendar every single month click the link below and see if you qualify"
+    }
+   ],
+   "flags": []
+  }
+ ],
+ "off_script": [
+  {
+   "src": "img_8627",
+   "w0": 0,
+   "w1": 5,
+   "start": 0.62,
+   "end": 2.26,
+   "text": "X to your cleaner still got",
+   "kind": "off_script"
+  },
+  {
+   "src": "img_8628",
+   "w0": 0,
+   "w1": 14,
+   "start": 1.3,
+   "end": 13.56,
+   "text": "Tell me when we won't say won't say we built the exact system Okay, go",
+   "kind": "cue"
+  },
+  {
+   "src": "img_8628",
+   "w0": 27,
+   "w1": 41,
+   "start": 22.8,
+   "end": 32.56,
+   "text": "Okay Keep it going We built the exact system you miss Okay, ready set go.",
+   "kind": "cue"
+  }
+ ],
+ "summary": {
+  "lines": 6,
+  "missing": 0,
+  "partial": 1,
+  "number_mismatch": 0,
+  "off_script_spans": 1,
+  "cue_spans": 2
+ }
+}

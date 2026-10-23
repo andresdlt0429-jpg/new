@@ -1,0 +1,107 @@
+{
+ "source": "spec/scripts/office-ad-v1-DRAFT.md",
+ "title": "Office Ad v1: Exterior Cleaners, 20 More Jobs (DRAFT)",
+ "draft": true,
+ "beats": [
+  {
+   "say": "Exterior cleaners stuck at 20 grand a month?",
+   "on_screen": "$20K A MONTH?",
+   "on_screen_kind": "graphic",
+   "show": "Andy walking toward camera",
+   "delivery": "Punchy, no breath into the pain line",
+   "protected_pauses": [],
+   "id": "B1",
+   "time": "0:00",
+   "time_end": null,
+   "beat": "HOOK"
+  },
+  {
+   "say": "Are you sick and tired of knocking doors all day just for a couple extra deals, when really you want exclusive qualified leads that are ready to buy? Then this is for you.",
+   "on_screen": null,
+   "on_screen_kind": null,
+   "show": "Keep walking",
+   "delivery": "Pause before \"Then this is for you.\"",
+   "protected_pauses": [
+    {
+     "before": "Then this is for you",
+     "why": "Pause before \"Then this is for you.\""
+    }
+   ],
+   "id": "B2",
+   "time": "0:03",
+   "time_end": null,
+   "beat": "PAIN"
+  },
+  {
+   "say": "We built the exact system you're missing. Here's what I mean.",
+   "on_screen": "THE SYSTEM YOU'RE MISSING",
+   "on_screen_kind": "title",
+   "show": "Andy stops, square to camera",
+   "delivery": "Confident",
+   "protected_pauses": [],
+   "id": "B3",
+   "time": "0:13",
+   "time_end": null,
+   "beat": "SYSTEM"
+  },
+  {
+   "say": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it.",
+   "on_screen": "LIVE IN 4 DAYS",
+   "on_screen_kind": "graphic",
+   "show": "Count on fingers",
+   "delivery": "Fast. Pause before \"All of it.\"",
+   "protected_pauses": [
+    {
+     "before": "All of it",
+     "why": "Pause before \"All of it.\""
+    }
+   ],
+   "id": "B4",
+   "time": "0:17",
+   "time_end": null,
+   "beat": "OFFER"
+  },
+  {
+   "say": "So instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar.",
+   "on_screen": null,
+   "on_screen_kind": null,
+   "show": "Calm walk",
+   "delivery": "Calm, relief",
+   "protected_pauses": [],
+   "id": "B5",
+   "time": "0:26",
+   "time_end": null,
+   "beat": "FUTURE"
+  },
+  {
+   "say": "So if you want 20 more jobs completely guaranteed on your calendar every single month, click the link below and see if you qualify.",
+   "on_screen": "20 MORE JOBS A MONTH / SEE IF YOU QUALIFY",
+   "on_screen_kind": "graphic",
+   "show": "Point down at \"link below\"",
+   "delivery": "Slowest moment on \"completely guaranteed\"",
+   "protected_pauses": [
+    {
+     "before": null,
+     "why": "slowest moment / stand still: keep breathing room before this line"
+    }
+   ],
+   "id": "B6",
+   "time": "0:32",
+   "time_end": null,
+   "beat": "CTA"
+  }
+ ],
+ "hooks": [],
+ "lock_items": [
+  "Andy confirms the hook wording by ear (Whisper heard \"X to your cleaner still got 20 grand a month\").",
+  "The guarantee terms for \"20 more jobs completely guaranteed\" are written on the landing page.",
+  "\"All live within just four days\" is true for a new client.",
+  "Andy accepts or fixes each Meta policy scan item above."
+ ],
+ "meta_scan": [
+  "MEDIUM: Hook \"stuck at 20 grand a month\" names the viewer's revenue. Meta's personal-attributes rule rejects ads that imply they know the viewer's financial situation. Safer: \"Exterior cleaners who want more booked jobs.\"",
+  "MEDIUM: \"$20K A MONTH?\" on screen is a money figure. Money on screen can read as an income claim.",
+  "MEDIUM: \"20 more jobs completely guaranteed ... every single month\" is a guarantee. It is a jobs guarantee, not income, but the terms (\"booked\" means what, which conditions) must exist on the landing page."
+ ],
+ "problems": []
+}

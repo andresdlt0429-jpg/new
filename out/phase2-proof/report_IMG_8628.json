@@ -1,0 +1,50 @@
+{
+  "source": "raw/office/IMG_8628.MOV",
+  "source_info": {
+    "w": 2160,
+    "h": 3840,
+    "fps": "30000/1001",
+    "codec": "hevc",
+    "duration": 58.303333,
+    "has_audio": true
+  },
+  "working_copy": {
+    "path": "proxy/IMG_8628_work.mp4",
+    "w": 1440,
+    "h": 2560,
+    "scale": 0.667,
+    "seconds": 181.8,
+    "reused": false
+  },
+  "whisper": {
+    "model": "medium",
+    "load_s": 3.6,
+    "transcribe_s": 96.1,
+    "rtf": 1.65,
+    "words": 93,
+    "mean_word_prob": 0.9
+  },
+  "loudness": {
+    "integrated_lufs": -43.9,
+    "loudness_range_lu": 17.6,
+    "true_peak_dbtp": -23.3
+  },
+  "faces": {
+    "frames_sampled": 117,
+    "frames_with_face": 117,
+    "face_rate": 1.0,
+    "seconds": 10.6,
+    "mean_center_x_pct": 50.5,
+    "mean_center_y_pct": 36.1,
+    "mean_face_height_pct": 7.8
+  },
+  "words": 93,
+  "numbers_spoken": 0,
+  "pauses": 13,
+  "lead_in_s": 1.3,
+  "tail_s": 4.14,
+  "flags": [
+    "5 low-confidence words, check by ear: we @ 6.43s (p=0.379); Okay, @ 12.68s (p=0.498); Okay, @ 29.04s (p=0.114); set @ 31.16s (p=0.127); We @ 42.32s (p=0.123)"
+  ],
+  "outputs": "work/IMG_8628"
+}

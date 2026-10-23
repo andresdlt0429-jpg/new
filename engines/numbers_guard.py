@@ -116,6 +116,8 @@ def parse_numbers(tokens):
             elif kd == "scale" and last in ("unit", "teen", "tens", "hundred", "digit"):
                 total += current * SCALES[t]
                 current, last = 0.0, "scale"
+                if t == "grand":  # "20 grand" is always money in speech
+                    unit = "money"
             elif t == "and" and last in ("hundred", "scale") and j + 1 < n and _kind(tokens[j + 1]["t"]) in ("unit", "teen", "tens"):
                 last = "and"
             else:

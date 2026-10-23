@@ -16,17 +16,44 @@
   "captions": {
     "own_ads": {
       "case": "sentence",
-      "caps_key_words_per_line": [1, 2],
-      "rule": "Own-ad captions: sentence case, caps on 1-2 key words per line"
+      "caps_key_words_per_line": [
+        1,
+        2
+      ],
+      "rule": "Own-ad captions: sentence case, caps on 1-2 key words per line",
+      "_placeholder": [
+        "size_pct_of_height",
+        "margin_bottom_pct",
+        "max_words_per_line",
+        "emphasis_color"
+      ],
+      "size_pct_of_height": 3.6,
+      "margin_bottom_pct": 28,
+      "max_words_per_line": 4,
+      "emphasis_color": null
     },
     "client_ads": {
       "color": "#FFFFFF",
       "color_coding": false,
       "rule": "Client ad captions: plain white, no color coding",
-      "_placeholder": ["size_pct_of_height", "margin_bottom_pct", "max_words_per_line"],
+      "_placeholder": [
+        "size_pct_of_height",
+        "margin_bottom_pct",
+        "max_words_per_line"
+      ],
       "size_pct_of_height": 3.6,
       "margin_bottom_pct": 28,
       "max_words_per_line": 4
     }
+  },
+  "graphics": {
+    "_placeholder": "Neutral look until Andy supplies DLT colors and fonts.",
+    "text_color": "#FFFFFF",
+    "box_color": "#000000",
+    "box_alpha": 0.6,
+    "title_color": "#FFFFFF",
+    "title_shadow_alpha": 0.45,
+    "graphic_size_pct_of_height": 3.4,
+    "title_size_pct_of_width": 13
   }
 }

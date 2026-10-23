@@ -78,26 +78,40 @@ def load_audio_16k(path):
     return np.frombuffer(pcm, np.float32)
 
 
+NO_SPEECH_DROP = 0.6   # segment-level: Whisper's own "this is not speech" probability
+LOGPROB_DROP = -1.0    # ...and low confidence in its own words
+
+
 def transcribe(audio, model_name, duration):
     from faster_whisper import WhisperModel
     t = time.time()
     model = WhisperModel(model_name, device="cpu", compute_type="int8")
     load = time.time() - t
     t = time.time()
-    segments, info = model.transcribe(audio, word_timestamps=True, vad_filter=True, language="en")
+    # No VAD: on Andy's office take IMG_8627 the VAD clipped speech that starts 0.6 s in
+    # ("Exterior cleaners" came out "X to your cleaner"). Instead, drop only segments
+    # Whisper itself rates as probably-not-speech (guards against invented words in silence).
+    segments, info = model.transcribe(audio, word_timestamps=True, vad_filter=False, language="en",
+                                      condition_on_previous_text=False)
+    kept = [s for s in segments if not (s.no_speech_prob > NO_SPEECH_DROP and s.avg_logprob < LOGPROB_DROP)]
     # float(): Whisper returns numpy scalars, which json cannot write.
     words = [{"w": w.word.strip(), "start": round(float(w.start), 2), "end": round(float(w.end), 2),
-              "p": round(float(w.probability), 3)} for s in segments for w in s.words]
+              "p": round(float(w.probability), 3)} for s in kept for w in s.words]
     run = time.time() - t
     return words, {"model": model_name, "load_s": round(load, 1), "transcribe_s": round(run, 1),
                    "rtf": round(run / duration, 2), "words": len(words),
                    "mean_word_prob": round(float(np.mean([w["p"] for w in words])), 3) if words else None}
 
 
-def read_frames(path, w, h, fps, limit=None):
+def read_frames(path, w, h, fps, limit=None, start=None, dur=None):
     """Yield (t, rgb) at w x h (ffmpeg scales if the file differs). limit = max frames,
     applied inside ffmpeg so the pipe is never cut mid-write."""
-    cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-i", path,
+    cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error"]
+    if start is not None:
+        cmd += ["-ss", f"{start:.3f}"]
+    if dur is not None:
+        cmd += ["-t", f"{dur:.3f}"]
+    cmd += ["-i", path,
            "-vf", f"fps={fps},scale={w}:{h}:flags=bilinear"]
     if limit:
         cmd += ["-frames:v", str(limit)]
