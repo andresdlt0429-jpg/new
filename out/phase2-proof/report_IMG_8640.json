@@ -1,0 +1,48 @@
+{
+  "source": "raw/office/IMG_8640.MOV",
+  "source_info": {
+    "w": 2160,
+    "h": 3840,
+    "fps": "30000/1001",
+    "codec": "hevc",
+    "duration": 11.808333,
+    "has_audio": true
+  },
+  "working_copy": {
+    "path": "proxy/IMG_8640_work.mp4",
+    "w": 1440,
+    "h": 2560,
+    "scale": 0.667,
+    "seconds": 43.2,
+    "reused": false
+  },
+  "whisper": {
+    "model": "medium",
+    "load_s": 4.4,
+    "transcribe_s": 10.4,
+    "rtf": 0.88,
+    "words": 21,
+    "mean_word_prob": 0.98
+  },
+  "loudness": {
+    "integrated_lufs": -42.1,
+    "loudness_range_lu": 3.6,
+    "true_peak_dbtp": -24.3
+  },
+  "faces": {
+    "frames_sampled": 24,
+    "frames_with_face": 3,
+    "face_rate": 0.12,
+    "seconds": 2.8,
+    "mean_center_x_pct": 43.1,
+    "mean_center_y_pct": 27.0,
+    "mean_face_height_pct": 14.0
+  },
+  "words": 21,
+  "numbers_spoken": 0,
+  "pauses": 1,
+  "lead_in_s": 4.75,
+  "tail_s": 1.38,
+  "flags": [],
+  "outputs": "work/IMG_8640"
+}

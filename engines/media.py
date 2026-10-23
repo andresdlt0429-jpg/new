@@ -14,11 +14,13 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import sysinfo as si  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FACE_MODEL = os.path.join(ROOT, "engines", "models", "blaze_face_short_range.tflite")
+# Full-range, not short-range: on Andy's real walk-and-talk footage (face ~5% of frame
+# height) short-range found 3/24 frames, full-range 24/24; close-ups 12/12 either way.
+FACE_MODEL = os.path.join(ROOT, "engines", "models", "blaze_face_full_range.tflite")
 # Phase 2: a no-person window-cleaning frame scored 0.533; a real face scored 0.97.
 FACE_MIN_SCORE = 0.6
 FACE_MODEL_URL = ("https://storage.googleapis.com/mediapipe-models/face_detector/"
-                  "blaze_face_short_range/float16/latest/blaze_face_short_range.tflite")
+                  "blaze_face_full_range/float16/latest/blaze_face_full_range.tflite")
 
 
 def sh(cmd):
