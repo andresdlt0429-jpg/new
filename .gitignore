@@ -4,6 +4,10 @@ __pycache__/
 raw/*
 proxy/*
 work/*
+# ...except transcript fixes (what was misheard, the evidence, who confirmed it)
+!work/*/
+work/*/*
+!work/*/fixes.json
 out/*
 !*/.gitkeep
 # Phase proof reports (numbers) are committed; stills stay local (test fixtures).
