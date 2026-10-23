@@ -27,7 +27,6 @@ with open(os.path.join(ROOT, "spec", "sop-defaults.json")) as f:
     SOP = json.load(f)
 CUT, PP = SOP["cutting_sop_5"], SOP["protected_pauses_sop_2_6"]
 FRAME = 0.01  # RMS window for quiet-point snapping
-CUE_TOKENS = {align.norm(t) for c in CUT["cue_phrases"] for t in c.split()}
 
 
 def rms_track(proxy):
@@ -124,12 +123,22 @@ def floor_list(src, keeps, alignment):
                if tk["src"] == src["key"] and tk is not ln["chosen"] and
                not (ln["chosen"] and tk["start"] == ln["chosen"]["start"] and tk["src"] == ln["chosen"]["src"])]
     offs = [(o["start"], o["end"], o["kind"]) for o in alignment["off_script"] if o["src"] == src["key"]]
+    # words that form a whole cue phrase ("ready set go"), not just share a word with one
+    toks = [align.norm(w["w"]) for w in words]
+    cue_idx = set()
+    for c in CUT["cue_phrases"]:
+        ct = [align.norm(t) for t in c.split()]
+        for i in range(len(toks) - len(ct) + 1):
+            if toks[i:i + len(ct)] == ct:
+                cue_idx.update(range(i, i + len(ct)))
+    pos = {id(w): i for i, w in enumerate(words)}
+
     def label(w):
         mid = (w["start"] + w["end"]) / 2
         for st, e, kind in offs:
             if st <= mid <= e:
-                if kind == "cue" and align.norm(w["w"]) not in CUE_TOKENS:
-                    return "false start"  # a half line said between cues
+                if kind == "cue" and pos[id(w)] not in cue_idx:
+                    return "false start"  # said between cues, not a cue itself
                 return "cue chatter" if kind == "cue" else "OFF-SCRIPT"
         for st, e, lid in retakes:
             if st <= mid <= e:

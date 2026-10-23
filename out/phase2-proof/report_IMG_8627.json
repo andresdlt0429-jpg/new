@@ -12,17 +12,15 @@
     "path": "proxy/IMG_8627_work.mp4",
     "w": 1440,
     "h": 2560,
-    "scale": 0.667,
-    "seconds": 45.1,
-    "reused": false
+    "reused": true
   },
   "whisper": {
     "model": "medium",
-    "load_s": 3.4,
-    "transcribe_s": 18.1,
-    "rtf": 1.34,
+    "load_s": 3.6,
+    "transcribe_s": 12.9,
+    "rtf": 0.96,
     "words": 43,
-    "mean_word_prob": 0.935
+    "mean_word_prob": 0.929
   },
   "loudness": {
     "integrated_lufs": -43.5,
@@ -40,11 +38,11 @@
   },
   "words": 43,
   "numbers_spoken": 1,
-  "pauses": 3,
-  "lead_in_s": 0.62,
-  "tail_s": 1.06,
+  "pauses": 2,
+  "lead_in_s": 0.9,
+  "tail_s": 1.08,
   "flags": [
-    "2 low-confidence words, check by ear: X @ 0.62s (p=0.231); still @ 1.86s (p=0.448)"
+    "3 low-confidence words, check by ear: X @ 0.9s (p=0.334); still @ 1.86s (p=0.472); when @ 7.34s (p=0.396)"
   ],
   "outputs": "work/IMG_8627"
 }

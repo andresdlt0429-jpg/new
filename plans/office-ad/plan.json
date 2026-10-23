@@ -1,0 +1,504 @@
+{
+ "schema": "dlt-plan/0.1",
+ "id": "office-ad",
+ "ad_type": "own",
+ "client": null,
+ "platform": "meta",
+ "status": "draft",
+ "lock": null,
+ "script": {
+  "path": "spec/scripts/office-ad-v1-DRAFT.md",
+  "parsed": "plans/office-ad/script.json"
+ },
+ "sources": {
+  "img_8627": {
+   "path": "raw/office/IMG_8627.MOV",
+   "ingest": "work/IMG_8627/",
+   "role": "talking_head"
+  },
+  "img_8628": {
+   "path": "raw/office/IMG_8628.MOV",
+   "ingest": "work/IMG_8628/",
+   "role": "talking_head"
+  },
+  "img_8636": {
+   "path": "raw/office/IMG_8636.MOV",
+   "ingest": "work/IMG_8636/",
+   "role": "talking_head"
+  },
+  "img_8640": {
+   "path": "raw/office/IMG_8640.MOV",
+   "ingest": "work/IMG_8640/",
+   "role": "talking_head"
+  },
+  "img_8641": {
+   "path": "raw/office/IMG_8641.MOV",
+   "ingest": "work/IMG_8641/",
+   "role": "talking_head"
+  },
+  "img_8479": {
+   "path": "raw/office/IMG_8479.MOV",
+   "ingest": "work/IMG_8479/",
+   "role": "talking_head"
+  }
+ },
+ "output": {
+  "master": {
+   "w": 1440,
+   "h": 2560
+  },
+  "delivery": {
+   "w": 1080,
+   "h": 1920
+  },
+  "fps": 30,
+  "max_duration_s": null,
+  "target_duration_s": [
+   35,
+   50
+  ]
+ },
+ "parts": [
+  {
+   "id": "B1_1",
+   "group": "shared",
+   "beat": "HOOK",
+   "say": "Exterior cleaners still got 20 grand a month?",
+   "src": "img_8627",
+   "in": 0.895,
+   "out": 3.215,
+   "reframe": {
+    "mode": "center"
+   }
+  },
+  {
+   "id": "B2_1",
+   "group": "shared",
+   "beat": "PAIN",
+   "say": "Are you sick and tired of knocking doors all day just for a couple extra deals, when really you want exclusive qualified leads that are ready to buy? Then this is for you.",
+   "src": "img_8627",
+   "in": 3.395,
+   "out": 12.485,
+   "reframe": {
+    "mode": "center"
+   }
+  },
+  {
+   "id": "B3_1",
+   "group": "shared",
+   "beat": "SYSTEM",
+   "say": "We built the exact system you're missing. Here's what I mean.",
+   "src": "img_8628",
+   "in": 50.705,
+   "out": 53.155,
+   "reframe": {
+    "mode": "center"
+   }
+  },
+  {
+   "id": "B3_2",
+   "group": "shared",
+   "beat": "SYSTEM",
+   "say": "We built the exact system you're missing. Here's what I mean.",
+   "src": "img_8628",
+   "in": 53.155,
+   "out": 54.295,
+   "reframe": {
+    "mode": "center"
+   }
+  },
+  {
+   "id": "B4_1",
+   "group": "shared",
+   "beat": "OFFER",
+   "say": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it.",
+   "src": "img_8636",
+   "in": 3.445,
+   "out": 5.085,
+   "reframe": {
+    "mode": "center"
+   }
+  },
+  {
+   "id": "B4_2",
+   "group": "shared",
+   "beat": "OFFER",
+   "say": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it.",
+   "src": "img_8636",
+   "in": 5.165,
+   "out": 6.125,
+   "reframe": {
+    "mode": "center"
+   }
+  },
+  {
+   "id": "B4_3",
+   "group": "shared",
+   "beat": "OFFER",
+   "say": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it.",
+   "src": "img_8636",
+   "in": 6.165,
+   "out": 7.215,
+   "reframe": {
+    "mode": "center"
+   }
+  },
+  {
+   "id": "B4_4",
+   "group": "shared",
+   "beat": "OFFER",
+   "say": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it.",
+   "src": "img_8636",
+   "in": 7.345,
+   "out": 8.385,
+   "reframe": {
+    "mode": "center"
+   }
+  },
+  {
+   "id": "B4_5",
+   "group": "shared",
+   "beat": "OFFER",
+   "say": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it.",
+   "src": "img_8636",
+   "in": 8.445,
+   "out": 11.355,
+   "reframe": {
+    "mode": "center"
+   }
+  },
+  {
+   "id": "B5_1",
+   "group": "shared",
+   "beat": "FUTURE",
+   "say": "So instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar.",
+   "src": "img_8640",
+   "in": 4.635,
+   "out": 7.835,
+   "reframe": {
+    "mode": "center"
+   }
+  },
+  {
+   "id": "B5_2",
+   "group": "shared",
+   "beat": "FUTURE",
+   "say": "So instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar.",
+   "src": "img_8640",
+   "in": 7.925,
+   "out": 10.535,
+   "reframe": {
+    "mode": "center"
+   }
+  },
+  {
+   "id": "B6_1",
+   "group": "body:A",
+   "beat": "CTA",
+   "say": "So if you want 20 more jobs completely guaranteed on your calendar every single month, click the link below and see if you qualify.",
+   "src": "img_8641",
+   "in": 0.185,
+   "out": 6.175,
+   "reframe": {
+    "mode": "center"
+   }
+  },
+  {
+   "id": "B6_2",
+   "group": "body:A",
+   "beat": "CTA",
+   "say": "So if you want 20 more jobs completely guaranteed on your calendar every single month, click the link below and see if you qualify.",
+   "src": "img_8641",
+   "in": 6.555,
+   "out": 8.395,
+   "reframe": {
+    "mode": "center"
+   }
+  },
+  {
+   "id": "C2_1",
+   "group": "body:C2",
+   "beat": "CTA",
+   "say": "If you're sick of chasing referrals and want actual jobs on autopilot, tap get offer below and see if you qualify.",
+   "src": "img_8479",
+   "in": 314.19,
+   "out": 318.655,
+   "reframe": {
+    "mode": "center"
+   }
+  },
+  {
+   "id": "C2_2",
+   "group": "body:C2",
+   "beat": "CTA",
+   "say": "If you're sick of chasing referrals and want actual jobs on autopilot, tap get offer below and see if you qualify.",
+   "src": "img_8479",
+   "in": 319.065,
+   "out": 321.425,
+   "reframe": {
+    "mode": "center"
+   }
+  }
+ ],
+ "variants": [
+  {
+   "id": "A",
+   "body": "A"
+  },
+  {
+   "id": "C2",
+   "body": "C2"
+  }
+ ],
+ "layers": {
+  "titles": [
+   {
+    "id": "t-B3",
+    "text": "THE SYSTEM YOU'RE MISSING",
+    "style": "headline",
+    "at": {
+     "part": "B3_1",
+     "edge": "start"
+    },
+    "until": {
+     "part": "B3_2",
+     "edge": "end"
+    },
+    "y_pct": 29.6,
+    "anim": {
+     "in": "pop",
+     "out": "cut"
+    }
+   }
+  ],
+  "graphics": [
+   {
+    "id": "g-B1-1",
+    "kind": "text",
+    "text": "$20K A MONTH?",
+    "style": "graphic",
+    "at": {
+     "word": "img_8627:4"
+    },
+    "until": {
+     "part": "B1_1",
+     "edge": "end"
+    },
+    "box": {
+     "x_pct": 8,
+     "y_pct": 15,
+     "w_pct": 84
+    },
+    "anim": {
+     "in": "pop",
+     "out": "cut"
+    }
+   },
+   {
+    "id": "g-B4-1",
+    "kind": "text",
+    "text": "LIVE IN 4 DAYS",
+    "style": "graphic",
+    "at": {
+     "word": "img_8636:17"
+    },
+    "until": {
+     "part": "B4_5",
+     "edge": "end"
+    },
+    "box": {
+     "x_pct": 8,
+     "y_pct": 58,
+     "w_pct": 84
+    },
+    "anim": {
+     "in": "pop",
+     "out": "cut"
+    }
+   },
+   {
+    "id": "g-B6-1",
+    "kind": "text",
+    "text": "20 MORE JOBS A MONTH",
+    "style": "graphic",
+    "at": {
+     "word": "img_8641:4"
+    },
+    "until": {
+     "word": "img_8641:20"
+    },
+    "box": {
+     "x_pct": 8,
+     "y_pct": 58,
+     "w_pct": 84
+    },
+    "anim": {
+     "in": "pop",
+     "out": "cut"
+    }
+   },
+   {
+    "id": "g-B6-2",
+    "kind": "text",
+    "text": "SEE IF YOU QUALIFY",
+    "style": "graphic",
+    "at": {
+     "word": "img_8641:20"
+    },
+    "until": {
+     "part": "B6_2",
+     "edge": "end"
+    },
+    "box": {
+     "x_pct": 8,
+     "y_pct": 58,
+     "w_pct": 84
+    },
+    "anim": {
+     "in": "pop",
+     "out": "cut"
+    }
+   },
+   {
+    "id": "g-C2-1",
+    "kind": "text",
+    "text": "TAP GET OFFER",
+    "style": "graphic",
+    "at": {
+     "word": "img_8479:599"
+    },
+    "until": {
+     "word": "img_8479:604"
+    },
+    "box": {
+     "x_pct": 8,
+     "y_pct": 58,
+     "w_pct": 84
+    },
+    "anim": {
+     "in": "pop",
+     "out": "cut"
+    }
+   },
+   {
+    "id": "g-C2-2",
+    "kind": "text",
+    "text": "SEE IF YOU QUALIFY",
+    "style": "graphic",
+    "at": {
+     "word": "img_8479:604"
+    },
+    "until": {
+     "part": "C2_2",
+     "edge": "end"
+    },
+    "box": {
+     "x_pct": 8,
+     "y_pct": 58,
+     "w_pct": 84
+    },
+    "anim": {
+     "in": "pop",
+     "out": "cut"
+    }
+   }
+  ],
+  "captions": {
+   "style": "auto",
+   "emphasis": [
+    "img_8479:599",
+    "img_8479:601",
+    "img_8479:607",
+    "img_8627:7",
+    "img_8636:14",
+    "img_8636:17",
+    "img_8636:18",
+    "img_8641:14",
+    "img_8641:23",
+    "img_8641:4",
+    "img_8641:6"
+   ],
+   "hide": [],
+   "fixes": [
+    {
+     "word": "img_8627:0",
+     "text": "Exterior",
+     "heard_by": "PENDING: Andy to confirm by ear"
+    },
+    {
+     "word": "img_8627:1",
+     "text": "cleaners",
+     "heard_by": "PENDING: Andy to confirm by ear"
+    },
+    {
+     "word": "img_8479:601",
+     "text": "offer",
+     "heard_by": "PENDING: Andy to confirm by ear"
+    }
+   ]
+  }
+ },
+ "audio": {
+  "loudness_lufs": null,
+  "music": null
+ },
+ "checks": {
+  "no_missing_lines": {
+   "status": "pass",
+   "notes": []
+  },
+  "no_unresolved_off_script": {
+   "status": "pass",
+   "notes": []
+  },
+  "numbers_rule": {
+   "status": "pass",
+   "notes": []
+  },
+  "say_numbers_match_transcript": {
+   "status": "pass",
+   "notes": []
+  },
+  "duration_in_range": {
+   "status": "pass",
+   "notes": [
+    "variant A: 36.24s (target 35-50s, Andy rule 2)",
+    "variant C2: 35.23s (target 35-50s, Andy rule 2)"
+   ]
+  },
+  "speaker_present_for_titles": {
+   "status": "pass",
+   "notes": []
+  },
+  "script_lock_items": {
+   "status": "pending",
+   "notes": [
+    "Andy confirms the hook wording by ear (medium and large-v3 both hear \"Exterior cleaners still got 20 grand a month\"; \"still got\" may be \"still at\").",
+    "The guarantee terms for \"20 more jobs completely guaranteed\" are written on the landing page.",
+    "\"All live within just four days\" is true for a new client.",
+    "Andy accepts or fixes each Meta policy scan item above."
+   ]
+  },
+  "meta_policy_items": {
+   "status": "pending",
+   "notes": [
+    "MEDIUM: Hook \"still got 20 grand a month\" names the viewer's revenue. Meta's personal-attributes rule rejects ads that imply they know the viewer's financial situation. Safer: \"Exterior cleaners who want more booked jobs.\"",
+    "MEDIUM: \"$20K A MONTH?\" on screen is a money figure. Money on screen can read as an income claim.",
+    "MEDIUM: \"20 more jobs completely guaranteed ... every single month\" is a guarantee. It is a jobs guarantee, not income, but the terms (\"booked\" means what, which conditions) must exist on the landing page."
+   ]
+  },
+  "caption_word_fixes": {
+   "status": "pending",
+   "notes": [
+    "img_8627: heard \"X to your cleaner\" -> \"Exterior cleaners\" (PENDING: Andy to confirm by ear)",
+    "img_8479: heard \"off or\" -> \"offer\" (PENDING: Andy to confirm by ear)"
+   ]
+  },
+  "script_is_final": {
+   "status": "pending",
+   "notes": [
+    "spec/scripts/office-ad-v1-DRAFT.md is a DRAFT reconstructed from the takes"
+   ]
+  }
+ }
+}

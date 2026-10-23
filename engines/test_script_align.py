@@ -13,7 +13,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def src(text, key="a", t0=0.0, step=0.4):
     words = [{"w": w, "start": round(t0 + i * step, 2), "end": round(t0 + i * step + 0.3, 2), "p": 0.95}
              for i, w in enumerate(text.split())]
-    return {"key": key, "dir": "work/x/", "raw": "raw/x", "proxy": "proxy/x", "duration": 99,
+    return {"key": key, "dir": "work/x/", "raw": "raw/x", "proxy": "proxy/x", "duration": 99, "recorded": "2026",
             "words": words, "toks": align.tokenize_words(words)}
 
 

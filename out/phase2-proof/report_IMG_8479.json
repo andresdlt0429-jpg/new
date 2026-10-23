@@ -12,17 +12,15 @@
     "path": "proxy/IMG_8479_work.mp4",
     "w": 1440,
     "h": 2560,
-    "scale": 0.667,
-    "seconds": 950.0,
-    "reused": false
+    "reused": true
   },
   "whisper": {
     "model": "medium",
-    "load_s": 3.6,
-    "transcribe_s": 355.6,
-    "rtf": 1.09,
-    "words": 505,
-    "mean_word_prob": 0.868
+    "load_s": 3.4,
+    "transcribe_s": 272.4,
+    "rtf": 0.84,
+    "words": 619,
+    "mean_word_prob": 0.866
   },
   "loudness": {
     "integrated_lufs": -16.8,
@@ -33,20 +31,18 @@
     "frames_sampled": 652,
     "frames_with_face": 652,
     "face_rate": 1.0,
-    "seconds": 53.7,
+    "seconds": 54.9,
     "mean_center_x_pct": 49.8,
     "mean_center_y_pct": 37.6,
     "mean_face_height_pct": 16.4
   },
-  "words": 505,
-  "numbers_spoken": 4,
-  "pauses": 52,
-  "lead_in_s": 2.19,
-  "tail_s": 4.9,
+  "words": 619,
+  "numbers_spoken": 3,
+  "pauses": 42,
+  "lead_in_s": 2.1,
+  "tail_s": 0.95,
   "flags": [
-    "49 low-confidence words, check by ear: So @ 2.19s (p=0.394); let @ 10.75s (p=0.47); and @ 26.69s (p=0.476); Tap @ 37.12s (p=0.066); decent @ 46.75s (p=0.066); Okay @ 47.95s (p=0.285); I'm @ 61.25s (p=0.449); get @ 73.0s (p=0.176); tap @ 76.0s (p=0.478); Tap @ 85.96s (p=0.265); So @ 103.28s (p=0.371); the @ 110.72s (p=0.27); tap @ 111.02s (p=0.179); get. @ 111.18s (p=0.442); So @ 113.1s (p=0.281); Want @ 118.8s (p=0.126); So @ 134.55s (p=0.375); tired @ 134.79s (p=0.368); Like @ 137.87s (p=0.42); fur @ 138.77s (p=0.499); so @ 139.53s (p=0.414); So @ 155.71s (p=0.397); I @ 156.15s (p=0.403); so @ 157.65s (p=0.334); Sick @ 159.89s (p=0.102); then @ 162.35s (p=0.251); what @ 162.63s (p=0.409); want @ 164.03s (p=0.496); Oh @ 165.59s (p=0.327); tap @ 166.33s (p=0.139); offer @ 166.89s (p=0.158); they @ 178.29s (p=0.45); on @ 178.87s (p=0.451); say @ 179.71s (p=0.36); say @ 185.61s (p=0.089); tap @ 189.41s (p=0.302); For @ 195.66s (p=0.212); you're @ 198.8s (p=0.306); chase @ 204.84s (p=0.077); So @ 218.66s (p=0.201); so @ 219.8s (p=0.013); Funny @ 227.34s (p=0.0); So @ 232.5s (p=0.196); Tap @ 249.25s (p=0.024); So @ 254.96s (p=0.051); So @ 281.49s (p=0.436); So @ 284.59s (p=0.285); and @ 299.17s (p=0.408); If @ 310.28s (p=0.023)",
-    "number \"one\" @ 11.09s has p=0.625: confirm by ear before it goes on screen",
-    "number \"oh\" @ 165.59s has p=0.327: confirm by ear before it goes on screen",
+    "61 low-confidence words, check by ear: so @ 29.72s (p=0.122); I @ 54.48s (p=0.453); this @ 59.22s (p=0.225); more. @ 69.0s (p=0.339); tap @ 76.02s (p=0.305); qualify. @ 78.52s (p=0.233); and @ 87.26s (p=0.31); if @ 87.66s (p=0.05); I @ 100.28s (p=0.408); right @ 102.46s (p=0.435); tab @ 111.02s (p=0.331); get @ 111.14s (p=0.42); - @ 111.34s (p=0.182); chasing @ 114.35s (p=0.0); so @ 114.49s (p=0.431); yeah @ 123.01s (p=0.418); so @ 123.57s (p=0.471); tired @ 134.87s (p=0.464); for @ 138.79s (p=0.31); so @ 139.49s (p=0.472); chasing @ 140.65s (p=0.0); Wait, @ 154.01s (p=0.431); chasing @ 160.05s (p=0.173); real @ 164.91s (p=0.436); type, @ 166.63s (p=0.319); of @ 167.03s (p=0.433); a @ 167.15s (p=0.241); So @ 169.47s (p=0.307); do @ 169.97s (p=0.466); so @ 171.51s (p=0.361); There's @ 177.75s (p=0.386); they @ 178.31s (p=0.383); on @ 178.85s (p=0.415); say @ 179.71s (p=0.487); tap @ 189.41s (p=0.351); off @ 190.01s (p=0.453); sick @ 197.17s (p=0.212); you're @ 198.85s (p=0.405); if @ 199.91s (p=0.416); if @ 204.91s (p=0.299); of @ 212.87s (p=0.381); why @ 214.01s (p=0.454); love @ 215.43s (p=0.015); So @ 219.49s (p=0.252); if @ 220.33s (p=0.305); So @ 241.09s (p=0.043); So @ 255.43s (p=0.463); Okay. @ 268.03s (p=0.41); So, @ 268.79s (p=0.295); off @ 275.97s (p=0.218); if @ 282.27s (p=0.224); ugh, @ 284.01s (p=0.336); of @ 287.93s (p=0.362); I @ 289.11s (p=0.127); is @ 290.23s (p=0.342); The @ 293.87s (p=0.448); off @ 302.97s (p=0.226); That @ 306.37s (p=0.07); like... @ 311.99s (p=0.446); That @ 323.11s (p=0.416); Thanks @ 323.73s (p=0.004)",
     "true peak 1.3 dBTP: clipping risk in source audio"
   ],
   "outputs": "work/IMG_8479"

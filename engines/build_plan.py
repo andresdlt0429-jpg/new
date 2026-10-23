@@ -21,7 +21,8 @@ import align  # noqa: E402
 import numbers_guard  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STOP = set("a an the and or of to in on for your you is are it this that at all just with".split())
+STOP = set("a an the and or of to in on for your you youre is are it this that at all just with if so we i "
+           "be do get see more my me our us not no".split())
 
 
 def load(p):
@@ -47,7 +48,21 @@ def anchor_word(piece, line_words):
                 if abs(s["value"] - n["value"]) < 1e-9:
                     return line_words[next(i for i, w in enumerate(line_words)
                                            if w["start"] == s["start"])]["ref"]
-    toks = [align.norm(t) for t in piece.split() if align.norm(t) and align.norm(t) not in STOP]
+    # the place in the line where the most of the graphic's words match in order (last wins on ties)
+    pt = [t for w in piece.split() for t in align.pieces(w)]
+    lt = [(t, i) for i, w in enumerate(line_words) for t in align.pieces(w["w"])]
+    best, best_i = 0, None
+    for start in range(len(lt)):
+        k = n = 0
+        for t, _ in lt[start:start + len(pt) + 2]:
+            if k < len(pt) and t == pt[k]:
+                n += 1
+                k += 1
+        if n and n >= best and lt[start][0] == pt[0]:
+            best, best_i = n, lt[start][1]
+    if best_i is not None:
+        return line_words[best_i]["ref"]
+    toks = [t for t in pt if t not in STOP]
     for w in line_words:
         if align.norm(w["w"]) in toks:
             return w["ref"]
@@ -129,7 +144,9 @@ def build(ad_dir, target=(35, 50)):
         "parts": parts,
         "variants": variants,
         "layers": {"titles": titles, "graphics": graphics,
-                   "captions": {"style": "auto", "emphasis": sorted(set(emphasis)), "fixes": [], "hide": []}},
+                   "captions": {"style": "auto", "emphasis": sorted(set(emphasis)), "hide": [],
+                                "fixes": [{"word": f"{k}:{i}", "text": w["w"], "heard_by": w["heard_by"]}
+                                          for k, sr in srcs.items() for i, w in enumerate(sr["words"]) if w.get("fixed")]}},
         "audio": {"loudness_lufs": None, "music": None},
     }
     plan["checks"] = lock_checks(plan, script, al, words, srcs, target)
@@ -173,8 +190,15 @@ def lock_checks(plan, script, al, words, srcs, target):
     c["speaker_present_for_titles"] = {"status": "fail" if sp else "pass", "notes": sp}
     c["script_lock_items"] = {"status": "pending", "notes": script["lock_items"]}
     c["meta_policy_items"] = {"status": "pending", "notes": script["meta_scan"]}
-    fixes = [f"{ln['id']}: {d}" for ln in al["lines"] if ln["chosen"] for d in ln["chosen"].get("wording", [])]
-    c["caption_word_fixes"] = {"status": "pending" if fixes else "pass", "notes": fixes}
+    notes = [f"{ln['id']}: wording {d}" for ln in al["lines"] if ln["chosen"] for d in ln["chosen"].get("wording", [])]
+    groups = {}
+    for f in plan["layers"]["captions"]["fixes"]:
+        k, i = f["word"].split(":")
+        w = srcs[k]["words"][int(i)]
+        groups.setdefault((k, w["was"], f["heard_by"]), []).append(f["text"])
+    notes += [f"{k}: heard \"{was}\" -> \"{' '.join(t)}\" ({hb})" for (k, was, hb), t in groups.items()]
+    pending = any(hb.startswith("PENDING") for (_, _, hb) in groups)
+    c["caption_word_fixes"] = {"status": "pending" if pending else "pass", "notes": notes}
     if script.get("draft"):
         c["script_is_final"] = {"status": "pending", "notes": [f"{script['source']} is a DRAFT reconstructed from the takes"]}
     return c

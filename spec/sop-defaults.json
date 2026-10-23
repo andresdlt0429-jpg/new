@@ -82,6 +82,17 @@
       "script_lock_items",
       "meta_policy_items",
       "caption_word_fixes"
-    ]
+    ],
+    "profanity": [
+      "fuck",
+      "fucking",
+      "shit",
+      "damn",
+      "bitch",
+      "ass",
+      "hell",
+      "crap"
+    ],
+    "_profanity_source": "Andy's 'Launchpad Ads: Policy-Safe One-Pagers': swearing, even masked, is banned in Meta ads."
   }
 }

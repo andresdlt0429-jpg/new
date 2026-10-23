@@ -1,0 +1,1321 @@
+{
+ "keeps": [
+  {
+   "src": "img_8627",
+   "in": 0.895,
+   "out": 3.215,
+   "w0": 0,
+   "w1": 7,
+   "protected_before": null,
+   "text": "Exterior cleaners still got 20 grand a month,",
+   "line": "B1"
+  },
+  {
+   "src": "img_8627",
+   "in": 3.395,
+   "out": 12.485,
+   "w0": 8,
+   "w1": 40,
+   "protected_before": null,
+   "text": "are you sick and tired of knocking doors all day just for a couple extra deals when really you want exclusive qualified leads that are ready to buy, then this is for you.",
+   "line": "B2"
+  },
+  {
+   "src": "img_8628",
+   "in": 50.705,
+   "out": 53.155,
+   "w0": 86,
+   "w1": 92,
+   "protected_before": null,
+   "text": "We built the exact system, you're missing.",
+   "line": "B3"
+  },
+  {
+   "src": "img_8628",
+   "in": 53.155,
+   "out": 54.295,
+   "w0": 93,
+   "w1": 96,
+   "protected_before": null,
+   "text": "Here's what I mean.",
+   "line": "B3"
+  },
+  {
+   "src": "img_8636",
+   "in": 3.445,
+   "out": 5.085,
+   "w0": 0,
+   "w1": 3,
+   "protected_before": null,
+   "text": "We build the offer,",
+   "line": "B4"
+  },
+  {
+   "src": "img_8636",
+   "in": 5.165,
+   "out": 6.125,
+   "w0": 4,
+   "w1": 6,
+   "protected_before": null,
+   "text": "write the scripts,",
+   "line": "B4"
+  },
+  {
+   "src": "img_8636",
+   "in": 6.165,
+   "out": 7.215,
+   "w0": 7,
+   "w1": 9,
+   "protected_before": null,
+   "text": "edit the videos,",
+   "line": "B4"
+  },
+  {
+   "src": "img_8636",
+   "in": 7.345,
+   "out": 8.385,
+   "w0": 10,
+   "w1": 12,
+   "protected_before": null,
+   "text": "run your ads,",
+   "line": "B4"
+  },
+  {
+   "src": "img_8636",
+   "in": 8.445,
+   "out": 11.355,
+   "w0": 13,
+   "w1": 21,
+   "protected_before": null,
+   "text": "all live within just four days, all of it.",
+   "line": "B4"
+  },
+  {
+   "src": "img_8640",
+   "in": 4.635,
+   "out": 7.835,
+   "w0": 0,
+   "w1": 10,
+   "protected_before": null,
+   "text": "So instead of wondering where next month's jobs are coming from,",
+   "line": "B5"
+  },
+  {
+   "src": "img_8640",
+   "in": 7.925,
+   "out": 10.535,
+   "w0": 11,
+   "w1": 20,
+   "protected_before": null,
+   "text": "you're just fulfilling jobs that are already on your calendar.",
+   "line": "B5"
+  },
+  {
+   "src": "img_8641",
+   "in": 0.185,
+   "out": 6.175,
+   "w0": 0,
+   "w1": 14,
+   "protected_before": "slowest moment / stand still: keep breathing room before this line",
+   "text": "So if you want 20 more jobs completely guaranteed on your calendar every single month,",
+   "line": "B6"
+  },
+  {
+   "src": "img_8641",
+   "in": 6.555,
+   "out": 8.395,
+   "w0": 15,
+   "w1": 23,
+   "protected_before": null,
+   "text": "click the link below and see if you qualify.",
+   "line": "B6"
+  },
+  {
+   "src": "img_8479",
+   "in": 314.19,
+   "out": 318.655,
+   "w0": 587,
+   "w1": 598,
+   "protected_before": null,
+   "text": "if you're sick of chasing referrals and want actual jobs on autopilot,",
+   "line": "C2"
+  },
+  {
+   "src": "img_8479",
+   "in": 319.065,
+   "out": 321.425,
+   "w0": 599,
+   "w1": 607,
+   "protected_before": null,
+   "text": "tap get offer below and see if you qualify.",
+   "line": "C2"
+  }
+ ],
+ "floor": [
+  {
+   "src": "img_8479",
+   "start": 0.0,
+   "end": 2.1,
+   "reason": "lead-in silence",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 2.1,
+   "end": 3.02,
+   "reason": "OFF-SCRIPT",
+   "text": "So stop"
+  },
+  {
+   "src": "img_8479",
+   "start": 3.02,
+   "end": 6.06,
+   "reason": "retake of C2",
+   "text": "chasing referrals, get real jobs on autopilot,"
+  },
+  {
+   "src": "img_8479",
+   "start": 6.06,
+   "end": 6.42,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 6.42,
+   "end": 8.62,
+   "reason": "retake of C2",
+   "text": "tap get offer below and see if you qualify."
+  },
+  {
+   "src": "img_8479",
+   "start": 8.62,
+   "end": 10.48,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 10.48,
+   "end": 11.6,
+   "reason": "OFF-SCRIPT",
+   "text": "Okay, I'm trying one more time."
+  },
+  {
+   "src": "img_8479",
+   "start": 11.6,
+   "end": 12.1,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 12.1,
+   "end": 12.66,
+   "reason": "OFF-SCRIPT",
+   "text": "So stop"
+  },
+  {
+   "src": "img_8479",
+   "start": 12.66,
+   "end": 13.66,
+   "reason": "retake of C2",
+   "text": "chasing referrals,"
+  },
+  {
+   "src": "img_8479",
+   "start": 13.66,
+   "end": 14.06,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 14.06,
+   "end": 16.28,
+   "reason": "retake of C2",
+   "text": "get real jobs on autopilot,"
+  },
+  {
+   "src": "img_8479",
+   "start": 16.28,
+   "end": 16.68,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 16.68,
+   "end": 19.32,
+   "reason": "retake of C2",
+   "text": "tap get offer below and see if you qualify."
+  },
+  {
+   "src": "img_8479",
+   "start": 19.32,
+   "end": 23.02,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 23.02,
+   "end": 23.98,
+   "reason": "OFF-SCRIPT",
+   "text": "So stop"
+  },
+  {
+   "src": "img_8479",
+   "start": 23.98,
+   "end": 29.72,
+   "reason": "retake of C2",
+   "text": "chasing referrals, get actual real jobs and tap get offer below and see if qualify"
+  },
+  {
+   "src": "img_8479",
+   "start": 29.72,
+   "end": 33.64,
+   "reason": "OFF-SCRIPT",
+   "text": "so stop"
+  },
+  {
+   "src": "img_8479",
+   "start": 33.64,
+   "end": 40.92,
+   "reason": "retake of C2",
+   "text": "chasing referrals get real jobs on autopilot tap get offer below and see if you qualify"
+  },
+  {
+   "src": "img_8479",
+   "start": 40.92,
+   "end": 54.04,
+   "reason": "OFF-SCRIPT",
+   "text": "how are those decent okay do you think doing this or having more hand movement helps."
+  },
+  {
+   "src": "img_8479",
+   "start": 54.04,
+   "end": 54.48,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 54.48,
+   "end": 70.36,
+   "reason": "OFF-SCRIPT",
+   "text": "I think it definitely does especially for like this ending when you're this is when you're like you're pitching them. I'm pitching them right. So you want it to be like you don't want to be super blinded more. Yeah that's true."
+  },
+  {
+   "src": "img_8479",
+   "start": 70.36,
+   "end": 71.58,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 71.58,
+   "end": 72.12,
+   "reason": "OFF-SCRIPT",
+   "text": "So stop"
+  },
+  {
+   "src": "img_8479",
+   "start": 72.12,
+   "end": 79.32,
+   "reason": "retake of C2",
+   "text": "chasing referrals get actual real jobs on autopilot tap get offer below and see if you qualify."
+  },
+  {
+   "src": "img_8479",
+   "start": 79.32,
+   "end": 81.28,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 81.28,
+   "end": 82.22,
+   "reason": "OFF-SCRIPT",
+   "text": "So stop"
+  },
+  {
+   "src": "img_8479",
+   "start": 82.22,
+   "end": 85.68,
+   "reason": "retake of C2",
+   "text": "chasing referrals, get actual real jobs on autopilot,"
+  },
+  {
+   "src": "img_8479",
+   "start": 85.68,
+   "end": 86.14,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 86.14,
+   "end": 88.86,
+   "reason": "retake of C2",
+   "text": "tap get offer below and if you qualify."
+  },
+  {
+   "src": "img_8479",
+   "start": 88.86,
+   "end": 93.26,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 93.26,
+   "end": 93.98,
+   "reason": "OFF-SCRIPT",
+   "text": "What do you think?"
+  },
+  {
+   "src": "img_8479",
+   "start": 93.98,
+   "end": 100.28,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 100.28,
+   "end": 103.54,
+   "reason": "OFF-SCRIPT",
+   "text": "I feel like there needs to be a better transition right here."
+  },
+  {
+   "src": "img_8479",
+   "start": 103.54,
+   "end": 103.82,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 103.82,
+   "end": 107.32,
+   "reason": "OFF-SCRIPT",
+   "text": "So stop chasing referrals and get real jobs on autopilot."
+  },
+  {
+   "src": "img_8479",
+   "start": 107.32,
+   "end": 108.0,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 108.0,
+   "end": 112.74,
+   "reason": "OFF-SCRIPT",
+   "text": "I think there should either be more of a gap between the tab get - Oh, what about this?"
+  },
+  {
+   "src": "img_8479",
+   "start": 112.74,
+   "end": 113.76,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 113.76,
+   "end": 120.75,
+   "reason": "OFF-SCRIPT",
+   "text": "So if you're chasing so if you're tired chasing referrals and want real jobs on autopilot"
+  },
+  {
+   "src": "img_8479",
+   "start": 120.75,
+   "end": 122.45,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 122.45,
+   "end": 141.49,
+   "reason": "OFF-SCRIPT",
+   "text": "yeah yeah so if you're so if you're tired or if you're sick which one's better you think so if you're tired like the for the original so stop chasing referrals."
+  },
+  {
+   "src": "img_8479",
+   "start": 141.49,
+   "end": 142.89,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 142.89,
+   "end": 145.25,
+   "reason": "OFF-SCRIPT",
+   "text": "So if you're sick, chasing referrals."
+  },
+  {
+   "src": "img_8479",
+   "start": 145.25,
+   "end": 154.01,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 154.01,
+   "end": 155.37,
+   "reason": "OFF-SCRIPT",
+   "text": "Wait, so what was your question?"
+  },
+  {
+   "src": "img_8479",
+   "start": 155.37,
+   "end": 155.91,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 155.91,
+   "end": 157.63,
+   "reason": "OFF-SCRIPT",
+   "text": "So I was like, you know how we're doing."
+  },
+  {
+   "src": "img_8479",
+   "start": 157.63,
+   "end": 157.97,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 157.97,
+   "end": 165.67,
+   "reason": "OFF-SCRIPT",
+   "text": "So if you're sick chasing referrals and want actual real job or want to get real job, blah,"
+  },
+  {
+   "src": "img_8479",
+   "start": 165.67,
+   "end": 166.25,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 166.25,
+   "end": 175.81,
+   "reason": "OFF-SCRIPT",
+   "text": "blah, blah, type, get off of a low, you know how we're doing that. Yeah. I was. So do you think it's better to say so if you're sick or so if you're tired or am I just thinking too much?"
+  },
+  {
+   "src": "img_8479",
+   "start": 175.81,
+   "end": 177.75,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 177.75,
+   "end": 181.13,
+   "reason": "OFF-SCRIPT",
+   "text": "There's they both work on so if you're say chasing referrals"
+  },
+  {
+   "src": "img_8479",
+   "start": 181.13,
+   "end": 184.19,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 184.19,
+   "end": 191.79,
+   "reason": "retake of B6",
+   "text": "So if you're say chasing referrals and want actual jobs on autopilot tap get off or below and see if you qualify"
+  },
+  {
+   "src": "img_8479",
+   "start": 191.79,
+   "end": 196.05,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 196.05,
+   "end": 220.33,
+   "reason": "OFF-SCRIPT",
+   "text": "For what sick of you're sick if you're sick if you're sick if you're sick if you're sick if you're sick okay so if you're sick of why am I missing the love so So"
+  },
+  {
+   "src": "img_8479",
+   "start": 220.33,
+   "end": 239.49,
+   "reason": "retake of C2",
+   "text": "if you're sick of chasing referrals and want actual jobs on autopilot,"
+  },
+  {
+   "src": "img_8479",
+   "start": 239.49,
+   "end": 240.39,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 240.39,
+   "end": 241.51,
+   "reason": "OFF-SCRIPT",
+   "text": "real jobs. So"
+  },
+  {
+   "src": "img_8479",
+   "start": 241.51,
+   "end": 249.75,
+   "reason": "retake of C2",
+   "text": "if you're sick of chasing referrals and want actual real jobs on autopilot,"
+  },
+  {
+   "src": "img_8479",
+   "start": 249.75,
+   "end": 250.11,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 250.11,
+   "end": 252.69,
+   "reason": "retake of C2",
+   "text": "tap get offer below and see if you qualify."
+  },
+  {
+   "src": "img_8479",
+   "start": 252.69,
+   "end": 255.43,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 255.43,
+   "end": 255.81,
+   "reason": "OFF-SCRIPT",
+   "text": "So"
+  },
+  {
+   "src": "img_8479",
+   "start": 255.81,
+   "end": 260.89,
+   "reason": "retake of C2",
+   "text": "if you're sick of chasing referrals and want actual real jobs on autopilot,"
+  },
+  {
+   "src": "img_8479",
+   "start": 260.89,
+   "end": 261.39,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 261.39,
+   "end": 263.79,
+   "reason": "retake of C2",
+   "text": "tap get offer below and see if you qualify."
+  },
+  {
+   "src": "img_8479",
+   "start": 263.79,
+   "end": 266.35,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 266.35,
+   "end": 266.81,
+   "reason": "OFF-SCRIPT",
+   "text": "Better?"
+  },
+  {
+   "src": "img_8479",
+   "start": 266.81,
+   "end": 268.03,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 268.03,
+   "end": 268.83,
+   "reason": "OFF-SCRIPT",
+   "text": "Okay. So,"
+  },
+  {
+   "src": "img_8479",
+   "start": 268.83,
+   "end": 275.19,
+   "reason": "retake of C2",
+   "text": "if you're sick of chasing referrals and want actual real jobs on autopilot,"
+  },
+  {
+   "src": "img_8479",
+   "start": 275.19,
+   "end": 275.45,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 275.45,
+   "end": 278.29,
+   "reason": "retake of C2",
+   "text": "tap get off or below and see if you qualify."
+  },
+  {
+   "src": "img_8479",
+   "start": 278.29,
+   "end": 282.13,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 282.13,
+   "end": 283.73,
+   "reason": "OFF-SCRIPT",
+   "text": "So if you're sick of chasing,"
+  },
+  {
+   "src": "img_8479",
+   "start": 283.73,
+   "end": 284.01,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 284.01,
+   "end": 284.29,
+   "reason": "OFF-SCRIPT",
+   "text": "ugh,"
+  },
+  {
+   "src": "img_8479",
+   "start": 284.29,
+   "end": 285.07,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 285.07,
+   "end": 285.87,
+   "reason": "OFF-SCRIPT",
+   "text": "so if you're sick,"
+  },
+  {
+   "src": "img_8479",
+   "start": 285.87,
+   "end": 287.17,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 287.17,
+   "end": 292.59,
+   "reason": "OFF-SCRIPT",
+   "text": "if you're sick of chasing referrals. I think the enthusiasm is good though. You think this? This is good? Yeah,"
+  },
+  {
+   "src": "img_8479",
+   "start": 292.59,
+   "end": 293.07,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 293.07,
+   "end": 293.07,
+   "reason": "OFF-SCRIPT",
+   "text": "yeah,"
+  },
+  {
+   "src": "img_8479",
+   "start": 293.07,
+   "end": 293.35,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 293.35,
+   "end": 293.39,
+   "reason": "OFF-SCRIPT",
+   "text": "yeah."
+  },
+  {
+   "src": "img_8479",
+   "start": 293.39,
+   "end": 293.87,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 293.87,
+   "end": 295.57,
+   "reason": "OFF-SCRIPT",
+   "text": "The point of the camera, that's good."
+  },
+  {
+   "src": "img_8479",
+   "start": 295.57,
+   "end": 296.81,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 296.81,
+   "end": 297.33,
+   "reason": "OFF-SCRIPT",
+   "text": "So,"
+  },
+  {
+   "src": "img_8479",
+   "start": 297.33,
+   "end": 302.07,
+   "reason": "retake of C2",
+   "text": "if you're sick of chasing referrals and want actual real jobs on autopilot,"
+  },
+  {
+   "src": "img_8479",
+   "start": 302.07,
+   "end": 302.57,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 302.57,
+   "end": 304.75,
+   "reason": "retake of C2",
+   "text": "tap get off or below and see if you qualify."
+  },
+  {
+   "src": "img_8479",
+   "start": 304.75,
+   "end": 306.37,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 306.37,
+   "end": 306.91,
+   "reason": "OFF-SCRIPT",
+   "text": "That was good."
+  },
+  {
+   "src": "img_8479",
+   "start": 306.91,
+   "end": 307.47,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 307.47,
+   "end": 309.13,
+   "reason": "OFF-SCRIPT",
+   "text": "Okay. Can I move on, bro, or nah?"
+  },
+  {
+   "src": "img_8479",
+   "start": 309.13,
+   "end": 309.41,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 309.41,
+   "end": 309.85,
+   "reason": "OFF-SCRIPT",
+   "text": "One more?"
+  },
+  {
+   "src": "img_8479",
+   "start": 309.85,
+   "end": 310.31,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 310.31,
+   "end": 313.61,
+   "reason": "OFF-SCRIPT",
+   "text": "I think just one more to like... Steal it? Steal it."
+  },
+  {
+   "src": "img_8479",
+   "start": 313.61,
+   "end": 313.93,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 313.93,
+   "end": 314.19,
+   "reason": "OFF-SCRIPT",
+   "text": "So,"
+  },
+  {
+   "src": "img_8479",
+   "start": 318.65,
+   "end": 319.06,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 321.43,
+   "end": 321.91,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 321.91,
+   "end": 322.85,
+   "reason": "OFF-SCRIPT",
+   "text": "That was good. Okay."
+  },
+  {
+   "src": "img_8479",
+   "start": 322.85,
+   "end": 323.11,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8479",
+   "start": 323.11,
+   "end": 325.23,
+   "reason": "OFF-SCRIPT",
+   "text": "That was good. Thanks for watching!"
+  },
+  {
+   "src": "img_8479",
+   "start": 325.23,
+   "end": 326.18,
+   "reason": "tail",
+   "text": ""
+  },
+  {
+   "src": "img_8627",
+   "start": 0.0,
+   "end": 0.9,
+   "reason": "lead-in silence",
+   "text": ""
+  },
+  {
+   "src": "img_8627",
+   "start": 3.21,
+   "end": 3.4,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8627",
+   "start": 12.48,
+   "end": 13.5,
+   "reason": "tail",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 0.0,
+   "end": 1.28,
+   "reason": "lead-in silence",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 1.28,
+   "end": 4.32,
+   "reason": "cue chatter",
+   "text": "Tell me when."
+  },
+  {
+   "src": "img_8628",
+   "start": 4.32,
+   "end": 6.66,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 6.66,
+   "end": 8.48,
+   "reason": "false start",
+   "text": "Wait, wait, wait. One sec, one sec."
+  },
+  {
+   "src": "img_8628",
+   "start": 8.48,
+   "end": 10.46,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 10.46,
+   "end": 11.78,
+   "reason": "false start",
+   "text": "We built the exact system."
+  },
+  {
+   "src": "img_8628",
+   "start": 11.78,
+   "end": 13.14,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 13.14,
+   "end": 13.56,
+   "reason": "cue chatter",
+   "text": "Okay, go."
+  },
+  {
+   "src": "img_8628",
+   "start": 13.56,
+   "end": 17.52,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 17.52,
+   "end": 20.08,
+   "reason": "retake of B3",
+   "text": "We built the exact system you are missing."
+  },
+  {
+   "src": "img_8628",
+   "start": 20.08,
+   "end": 20.42,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 20.42,
+   "end": 21.38,
+   "reason": "retake of B3",
+   "text": "Here's what I mean."
+  },
+  {
+   "src": "img_8628",
+   "start": 21.38,
+   "end": 22.88,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 22.88,
+   "end": 23.28,
+   "reason": "false start",
+   "text": "Okay."
+  },
+  {
+   "src": "img_8628",
+   "start": 23.28,
+   "end": 24.52,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 24.52,
+   "end": 25.0,
+   "reason": "cue chatter",
+   "text": "Keep it going."
+  },
+  {
+   "src": "img_8628",
+   "start": 25.0,
+   "end": 26.06,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 26.06,
+   "end": 29.82,
+   "reason": "false start",
+   "text": "We built the exact system you miss. Ah, fuck, okay."
+  },
+  {
+   "src": "img_8628",
+   "start": 29.82,
+   "end": 30.42,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 30.42,
+   "end": 30.92,
+   "reason": "cue chatter",
+   "text": "Ready,"
+  },
+  {
+   "src": "img_8628",
+   "start": 30.92,
+   "end": 31.3,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 31.3,
+   "end": 31.94,
+   "reason": "cue chatter",
+   "text": "set,"
+  },
+  {
+   "src": "img_8628",
+   "start": 31.94,
+   "end": 32.2,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 32.2,
+   "end": 32.56,
+   "reason": "cue chatter",
+   "text": "go."
+  },
+  {
+   "src": "img_8628",
+   "start": 32.56,
+   "end": 33.18,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 33.18,
+   "end": 35.18,
+   "reason": "retake of B3",
+   "text": "We built the exact system, you're missing."
+  },
+  {
+   "src": "img_8628",
+   "start": 35.18,
+   "end": 35.52,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 35.52,
+   "end": 36.54,
+   "reason": "retake of B3",
+   "text": "Here's what I mean."
+  },
+  {
+   "src": "img_8628",
+   "start": 36.54,
+   "end": 37.38,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 37.38,
+   "end": 40.32,
+   "reason": "retake of B3",
+   "text": "We built the exact system, you're missing."
+  },
+  {
+   "src": "img_8628",
+   "start": 40.32,
+   "end": 40.6,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 40.6,
+   "end": 41.6,
+   "reason": "retake of B3",
+   "text": "Here's what I mean."
+  },
+  {
+   "src": "img_8628",
+   "start": 41.6,
+   "end": 42.66,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 42.66,
+   "end": 46.08,
+   "reason": "retake of B3",
+   "text": "We built the exact system, you're missing. Here's what I mean."
+  },
+  {
+   "src": "img_8628",
+   "start": 46.08,
+   "end": 46.98,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 46.98,
+   "end": 49.46,
+   "reason": "retake of B3",
+   "text": "We built the exact system, you're missing."
+  },
+  {
+   "src": "img_8628",
+   "start": 49.46,
+   "end": 50.7,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 54.3,
+   "end": 56.68,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 56.68,
+   "end": 58.3,
+   "reason": "OFF-SCRIPT",
+   "text": "I think one of those should be."
+  },
+  {
+   "src": "img_8636",
+   "start": 0.0,
+   "end": 3.44,
+   "reason": "lead-in silence",
+   "text": ""
+  },
+  {
+   "src": "img_8636",
+   "start": 5.08,
+   "end": 5.17,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8636",
+   "start": 6.12,
+   "end": 6.17,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8636",
+   "start": 7.21,
+   "end": 7.34,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8636",
+   "start": 8.38,
+   "end": 8.45,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8636",
+   "start": 11.36,
+   "end": 12.44,
+   "reason": "tail",
+   "text": ""
+  },
+  {
+   "src": "img_8640",
+   "start": 0.0,
+   "end": 4.63,
+   "reason": "lead-in silence",
+   "text": ""
+  },
+  {
+   "src": "img_8640",
+   "start": 7.83,
+   "end": 7.92,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8640",
+   "start": 10.54,
+   "end": 11.81,
+   "reason": "tail",
+   "text": ""
+  },
+  {
+   "src": "img_8641",
+   "start": 0.0,
+   "end": 0.18,
+   "reason": "lead-in silence",
+   "text": ""
+  },
+  {
+   "src": "img_8641",
+   "start": 6.17,
+   "end": 6.55,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8641",
+   "start": 8.39,
+   "end": 10.77,
+   "reason": "tail",
+   "text": ""
+  }
+ ],
+ "notes": [
+  "B2: protected pause before \"then\" is only 0.38s in the take (SOP min 0.4s); kept as recorded, not stretched",
+  "B4: protected pause before \"all\" is only 0.38s in the take (SOP min 0.4s); kept as recorded, not stretched"
+ ],
+ "summary": {
+  "source_s": 433.0,
+  "kept_s": 43.06,
+  "floor_s": 389.93,
+  "keeps": 15
+ }
+}

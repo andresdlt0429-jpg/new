@@ -17,6 +17,7 @@ import difflib
 import json
 import os
 import re
+import subprocess
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -108,14 +109,43 @@ def smith_waterman(s, t, mask):
     return score, j, j_end, matched
 
 
+def apply_fixes(words, fixes):
+    """work/<clip>/fixes.json: [{start, end, text, heard_by, evidence}]. Words inside
+    [start, end] are replaced by the fix text (time split evenly), marked with heard_by."""
+    for fx in sorted(fixes, key=lambda f: -f["start"]):
+        idx = [i for i, w in enumerate(words) if w["start"] >= fx["start"] - 0.01 and w["end"] <= fx["end"] + 0.01]
+        if not idx:
+            continue
+        a, b = idx[0], idx[-1]
+        t0, t1 = words[a]["start"], words[b]["end"]
+        new = fx["text"].split()
+        step = (t1 - t0) / len(new)
+        repl = [{"w": w, "start": round(t0 + k * step, 2), "end": round(t0 + (k + 1) * step, 2), "p": 1.0,
+                 "fixed": True, "heard_by": fx["heard_by"], "was": " ".join(x["w"] for x in words[a:b + 1])}
+                for k, w in enumerate(new)]
+        words[a:b + 1] = repl
+    return words
+
+
+def recorded_at(raw):
+    out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format_tags=creation_time", "-of",
+                          "csv=p=0", os.path.join(ROOT, raw)], capture_output=True, text=True).stdout.strip()
+    return out or "9999"
+
+
 def load_source(d):
     d = d.rstrip("/")
     with open(os.path.join(d, "words.json")) as f:
         words = json.load(f)
+    fx = os.path.join(d, "fixes.json")
+    if os.path.exists(fx):
+        with open(fx) as f:
+            words = apply_fixes(words, json.load(f))
     with open(os.path.join(d, "ingest.json")) as f:
         ing = json.load(f)
     key = re.sub(r"[^a-z0-9_]", "_", os.path.basename(d).lower())
     return {"key": key, "dir": os.path.relpath(d, ROOT) + "/", "raw": ing["source"],
+            "recorded": recorded_at(ing["source"]),
             "proxy": ing["working_copy"]["path"], "duration": ing["source_info"]["duration"],
             "words": words, "toks": tokenize_words(words)}
 
@@ -155,8 +185,9 @@ def align(script, sources):
     out_lines = []
     for ln in lines:
         toks = [t for w in ln["say"].split() for t in pieces(w)]
+        rec = {s["key"]: s["recorded"] for s in sources}
         takes = sorted((t for s in sources for t in find_takes(toks, s)),
-                       key=lambda t: (t["src"], t["start"]))
+                       key=lambda t: (rec[t["src"]], t["start"]))  # recording order
         complete = [t for t in takes if t["coverage"] >= CUT["match_min_coverage"]]
         flags, chosen = [], None
         if complete:
@@ -205,7 +236,7 @@ def align(script, sources):
             off.append({"src": s["key"], "w0": k, "w1": j, "start": words[k]["start"], "end": words[j]["end"],
                         "text": " ".join(w["w"] for w in words[k:j + 1]), "kind": kind})
             k = j + 1
-    return {"script": script["source"], "sources": [{k: s[k] for k in ("key", "dir", "raw", "proxy", "duration")}
+    return {"script": script["source"], "sources": [{k: s[k] for k in ("key", "dir", "raw", "proxy", "duration", "recorded")}
                                                      for s in sources],
             "lines": out_lines, "off_script": off,
             "summary": {"lines": len(out_lines),

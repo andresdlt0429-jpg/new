@@ -12,17 +12,15 @@
     "path": "proxy/IMG_8628_work.mp4",
     "w": 1440,
     "h": 2560,
-    "scale": 0.667,
-    "seconds": 181.8,
-    "reused": false
+    "reused": true
   },
   "whisper": {
     "model": "medium",
-    "load_s": 3.6,
-    "transcribe_s": 96.1,
-    "rtf": 1.65,
-    "words": 93,
-    "mean_word_prob": 0.9
+    "load_s": 3.3,
+    "transcribe_s": 154.7,
+    "rtf": 2.65,
+    "words": 104,
+    "mean_word_prob": 0.92
   },
   "loudness": {
     "integrated_lufs": -43.9,
@@ -33,18 +31,18 @@
     "frames_sampled": 117,
     "frames_with_face": 117,
     "face_rate": 1.0,
-    "seconds": 10.6,
+    "seconds": 10.5,
     "mean_center_x_pct": 50.5,
     "mean_center_y_pct": 36.1,
     "mean_face_height_pct": 7.8
   },
-  "words": 93,
-  "numbers_spoken": 0,
-  "pauses": 13,
-  "lead_in_s": 1.3,
-  "tail_s": 4.14,
+  "words": 104,
+  "numbers_spoken": 3,
+  "pauses": 17,
+  "lead_in_s": 1.28,
+  "tail_s": 0.02,
   "flags": [
-    "5 low-confidence words, check by ear: we @ 6.43s (p=0.379); Okay, @ 12.68s (p=0.498); Okay, @ 29.04s (p=0.114); set @ 31.16s (p=0.127); We @ 42.32s (p=0.123)"
+    "6 low-confidence words, check by ear: Tell @ 1.28s (p=0.326); Wait, @ 6.66s (p=0.465); Okay, @ 13.14s (p=0.39); you @ 19.22s (p=0.434); Ah, @ 28.26s (p=0.162); be. @ 58.28s (p=0.473)"
   ],
   "outputs": "work/IMG_8628"
 }

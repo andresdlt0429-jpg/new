@@ -181,7 +181,8 @@ def caption_lines(segs, srcs, emphasis, max_words):
         lines.append(cur)
     out, sentence_start = [], True
     for ln in lines:
-        emph = [w for w in ln if w["ref"] in emphasis][:2]
+        cand = [w for w in ln if w["ref"] in emphasis and align.norm(w["w"]) not in STOP]
+        emph = sorted(cand, key=lambda w: (not re.search(r"\d", w["w"]), -len(w["w"])))[:2]
         if not emph:  # rule: caps on 1-2 key words per line
             cands = [w for w in ln if align.norm(w["w"]) not in STOP and len(align.norm(w["w"])) >= 4]
             emph = sorted(cands, key=lambda w: -len(w["w"]))[:1]
@@ -453,6 +454,10 @@ def qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out
     for c in caps:
         blocks += [f"caption {c['text']!r}: {b}" for b in numbers_guard.check(c["text"], led)["block"]]
     checks["numbers_rule_final"] = {"status": "fail" if blocks else "pass", "value": blocks or "every number on screen was spoken"}
+    bad = set(SOP["lock_sop_2_1"]["profanity"])
+    heard = [w["w"] for w in kept if align.norm(w["w"]) in bad]
+    checks["no_profanity"] = {"status": "fail" if heard else "pass",
+                              "value": heard or "no profanity in the kept audio or captions"}
     R["qa"] = checks
     # proof stills: each title/graphic midpoint + contact sheet
     shots = [((x["ts"] + x["te"]) / 2, x["id"]) for x in titles + graphics]

@@ -6,35 +6,48 @@
    "dir": "work/IMG_8627/",
    "raw": "raw/office/IMG_8627.MOV",
    "proxy": "proxy/IMG_8627_work.mp4",
-   "duration": 13.496667
+   "duration": 13.496667,
+   "recorded": "2026-10-10T00:40:46.000000Z"
   },
   {
    "key": "img_8628",
    "dir": "work/IMG_8628/",
    "raw": "raw/office/IMG_8628.MOV",
    "proxy": "proxy/IMG_8628_work.mp4",
-   "duration": 58.303333
+   "duration": 58.303333,
+   "recorded": "2026-10-06T07:57:50.000000Z"
   },
   {
    "key": "img_8636",
    "dir": "work/IMG_8636/",
    "raw": "raw/office/IMG_8636.MOV",
    "proxy": "proxy/IMG_8636_work.mp4",
-   "duration": 12.441667
+   "duration": 12.441667,
+   "recorded": "2026-10-06T08:11:42.000000Z"
   },
   {
    "key": "img_8640",
    "dir": "work/IMG_8640/",
    "raw": "raw/office/IMG_8640.MOV",
    "proxy": "proxy/IMG_8640_work.mp4",
-   "duration": 11.808333
+   "duration": 11.808333,
+   "recorded": "2026-10-06T08:14:57.000000Z"
   },
   {
    "key": "img_8641",
    "dir": "work/IMG_8641/",
    "raw": "raw/office/IMG_8641.MOV",
    "proxy": "proxy/IMG_8641_work.mp4",
-   "duration": 10.771667
+   "duration": 10.771667,
+   "recorded": "2026-10-10T00:40:55.000000Z"
+  },
+  {
+   "key": "img_8479",
+   "dir": "work/IMG_8479/",
+   "raw": "raw/office/IMG_8479.MOV",
+   "proxy": "proxy/IMG_8479_work.mp4",
+   "duration": 326.176667,
+   "recorded": "2026-09-18T10:36:29.000000Z"
   }
  ],
  "lines": [
@@ -42,45 +55,39 @@
    "id": "B1",
    "kind": "beat",
    "beat": "HOOK",
-   "say": "Exterior cleaners stuck at 20 grand a month?",
+   "say": "Exterior cleaners still got 20 grand a month?",
+   "replaces": null,
    "on_screen": "$20K A MONTH?",
    "on_screen_kind": "graphic",
    "protected_pauses": [],
    "chosen": {
     "src": "img_8627",
-    "w0": 6,
-    "w1": 9,
-    "start": 2.26,
+    "w0": 0,
+    "w1": 7,
+    "start": 0.9,
     "end": 3.14,
-    "coverage": 0.5,
-    "heard": "20 grand a month.",
-    "wording": [
-     "delete: script \"exterior cleaners stuck at\" / heard \"\""
-    ]
+    "coverage": 1.0,
+    "heard": "Exterior cleaners still got 20 grand a month,"
    },
    "takes": [
     {
      "src": "img_8627",
-     "w0": 6,
-     "w1": 9,
-     "start": 2.26,
+     "w0": 0,
+     "w1": 7,
+     "start": 0.9,
      "end": 3.14,
-     "coverage": 0.5,
-     "heard": "20 grand a month.",
-     "wording": [
-      "delete: script \"exterior cleaners stuck at\" / heard \"\""
-     ]
+     "coverage": 1.0,
+     "heard": "Exterior cleaners still got 20 grand a month,"
     }
    ],
-   "flags": [
-    "PARTIAL: best take covers 50% of the line"
-   ]
+   "flags": []
   },
   {
    "id": "B2",
    "kind": "beat",
    "beat": "PAIN",
    "say": "Are you sick and tired of knocking doors all day just for a couple extra deals, when really you want exclusive qualified leads that are ready to buy? Then this is for you.",
+   "replaces": null,
    "on_screen": null,
    "on_screen_kind": null,
    "protected_pauses": [
@@ -91,22 +98,22 @@
    ],
    "chosen": {
     "src": "img_8627",
-    "w0": 10,
-    "w1": 42,
-    "start": 3.46,
-    "end": 12.44,
+    "w0": 8,
+    "w1": 40,
+    "start": 3.48,
+    "end": 12.42,
     "coverage": 1.0,
-    "heard": "Are you sick and tired of knocking doors all day just for a couple extra deals, when really you want exclusive qualified leads that are ready to buy? Then this is for you."
+    "heard": "are you sick and tired of knocking doors all day just for a couple extra deals when really you want exclusive qualified leads that are ready to buy, then this is for you."
    },
    "takes": [
     {
      "src": "img_8627",
-     "w0": 10,
-     "w1": 42,
-     "start": 3.46,
-     "end": 12.44,
+     "w0": 8,
+     "w1": 40,
+     "start": 3.48,
+     "end": 12.42,
      "coverage": 1.0,
-     "heard": "Are you sick and tired of knocking doors all day just for a couple extra deals, when really you want exclusive qualified leads that are ready to buy? Then this is for you."
+     "heard": "are you sick and tired of knocking doors all day just for a couple extra deals when really you want exclusive qualified leads that are ready to buy, then this is for you."
     }
    ],
    "flags": []
@@ -116,72 +123,73 @@
    "kind": "beat",
    "beat": "SYSTEM",
    "say": "We built the exact system you're missing. Here's what I mean.",
+   "replaces": null,
    "on_screen": "THE SYSTEM YOU'RE MISSING",
    "on_screen_kind": "title",
    "protected_pauses": [],
    "chosen": {
     "src": "img_8628",
-    "w0": 82,
-    "w1": 92,
-    "start": 49.94,
-    "end": 54.16,
+    "w0": 86,
+    "w1": 96,
+    "start": 50.76,
+    "end": 54.12,
     "coverage": 1.0,
-    "heard": "We built the exact system. You're missing. Here's what I mean"
+    "heard": "We built the exact system, you're missing. Here's what I mean."
    },
    "takes": [
     {
      "src": "img_8628",
-     "w0": 15,
-     "w1": 26,
-     "start": 17.08,
-     "end": 21.32,
-     "coverage": 0.91,
-     "heard": "we built the exact system. You are missing. Here's what I mean"
+     "w0": 17,
+     "w1": 28,
+     "start": 17.52,
+     "end": 21.38,
+     "coverage": 1.0,
+     "heard": "We built the exact system you are missing. Here's what I mean."
     },
     {
      "src": "img_8628",
-     "w0": 42,
-     "w1": 52,
-     "start": 32.58,
+     "w0": 46,
+     "w1": 56,
+     "start": 33.18,
      "end": 36.54,
      "coverage": 1.0,
-     "heard": "We built the exact system. You're missing. Here's what I mean"
+     "heard": "We built the exact system, you're missing. Here's what I mean."
     },
     {
      "src": "img_8628",
-     "w0": 53,
-     "w1": 63,
-     "start": 37.22,
-     "end": 41.64,
+     "w0": 57,
+     "w1": 67,
+     "start": 37.38,
+     "end": 41.6,
      "coverage": 1.0,
-     "heard": "We built the exact system. You're missing. Here's what I mean"
+     "heard": "We built the exact system, you're missing. Here's what I mean."
     },
     {
      "src": "img_8628",
-     "w0": 64,
-     "w1": 74,
-     "start": 42.32,
-     "end": 46.13,
+     "w0": 68,
+     "w1": 78,
+     "start": 42.66,
+     "end": 46.08,
      "coverage": 1.0,
-     "heard": "We built the exact system. You're missing. Here's what I mean"
+     "heard": "We built the exact system, you're missing. Here's what I mean."
     },
     {
      "src": "img_8628",
-     "w0": 75,
-     "w1": 81,
-     "start": 46.68,
-     "end": 49.94,
-     "coverage": 0.64,
-     "heard": "We built the exact system. You're missing"
+     "w0": 79,
+     "w1": 85,
+     "start": 46.98,
+     "end": 49.46,
+     "coverage": 0.62,
+     "heard": "We built the exact system, you're missing."
     },
     {
      "src": "img_8628",
-     "w0": 82,
-     "w1": 92,
-     "start": 49.94,
-     "end": 54.16,
+     "w0": 86,
+     "w1": 96,
+     "start": 50.76,
+     "end": 54.12,
      "coverage": 1.0,
-     "heard": "We built the exact system. You're missing. Here's what I mean"
+     "heard": "We built the exact system, you're missing. Here's what I mean."
     }
    ],
    "flags": []
@@ -191,6 +199,7 @@
    "kind": "beat",
    "beat": "OFFER",
    "say": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it.",
+   "replaces": null,
    "on_screen": "LIVE IN 4 DAYS",
    "on_screen_kind": "graphic",
    "protected_pauses": [
@@ -203,20 +212,20 @@
     "src": "img_8636",
     "w0": 0,
     "w1": 21,
-    "start": 3.6,
-    "end": 11.54,
+    "start": 3.56,
+    "end": 11.24,
     "coverage": 1.0,
-    "heard": "We build the offer write the scripts edit the videos run your ads all live within just four days all of it"
+    "heard": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days, all of it."
    },
    "takes": [
     {
      "src": "img_8636",
      "w0": 0,
      "w1": 21,
-     "start": 3.6,
-     "end": 11.54,
+     "start": 3.56,
+     "end": 11.24,
      "coverage": 1.0,
-     "heard": "We build the offer write the scripts edit the videos run your ads all live within just four days all of it"
+     "heard": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days, all of it."
     }
    ],
    "flags": []
@@ -226,6 +235,7 @@
    "kind": "beat",
    "beat": "FUTURE",
    "say": "So instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar.",
+   "replaces": null,
    "on_screen": null,
    "on_screen_kind": null,
    "protected_pauses": [],
@@ -233,20 +243,20 @@
     "src": "img_8640",
     "w0": 0,
     "w1": 20,
-    "start": 4.75,
-    "end": 10.43,
+    "start": 4.7,
+    "end": 10.42,
     "coverage": 1.0,
-    "heard": "So, instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar."
+    "heard": "So instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar."
    },
    "takes": [
     {
      "src": "img_8640",
      "w0": 0,
      "w1": 20,
-     "start": 4.75,
-     "end": 10.43,
+     "start": 4.7,
+     "end": 10.42,
      "coverage": 1.0,
-     "heard": "So, instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar."
+     "heard": "So instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar."
     }
    ],
    "flags": []
@@ -256,6 +266,7 @@
    "kind": "beat",
    "beat": "CTA",
    "say": "So if you want 20 more jobs completely guaranteed on your calendar every single month, click the link below and see if you qualify.",
+   "replaces": null,
    "on_screen": "20 MORE JOBS A MONTH / SEE IF YOU QUALIFY",
    "on_screen_kind": "graphic",
    "protected_pauses": [
@@ -268,20 +279,168 @@
     "src": "img_8641",
     "w0": 0,
     "w1": 23,
-    "start": 0.78,
-    "end": 8.26,
+    "start": 0.66,
+    "end": 8.32,
     "coverage": 1.0,
-    "heard": "So if you want 20 more jobs completely guaranteed on your calendar every single month click the link below and see if you qualify"
+    "heard": "So if you want 20 more jobs completely guaranteed on your calendar every single month, click the link below and see if you qualify."
    },
    "takes": [
+    {
+     "src": "img_8479",
+     "w0": 355,
+     "w1": 376,
+     "start": 184.19,
+     "end": 191.79,
+     "coverage": 0.5,
+     "heard": "So if you're say chasing referrals and want actual jobs on autopilot tap get off or below and see if you qualify"
+    },
     {
      "src": "img_8641",
      "w0": 0,
      "w1": 23,
-     "start": 0.78,
-     "end": 8.26,
+     "start": 0.66,
+     "end": 8.32,
      "coverage": 1.0,
-     "heard": "So if you want 20 more jobs completely guaranteed on your calendar every single month click the link below and see if you qualify"
+     "heard": "So if you want 20 more jobs completely guaranteed on your calendar every single month, click the link below and see if you qualify."
+    }
+   ],
+   "flags": []
+  },
+  {
+   "id": "C2",
+   "kind": "alt",
+   "beat": "CTA",
+   "say": "If you're sick of chasing referrals and want actual jobs on autopilot, tap get offer below and see if you qualify.",
+   "replaces": "CTA",
+   "on_screen": "TAP GET OFFER / SEE IF YOU QUALIFY",
+   "on_screen_kind": "graphic",
+   "protected_pauses": [],
+   "chosen": {
+    "src": "img_8479",
+    "w0": 587,
+    "w1": 607,
+    "start": 314.19,
+    "end": 321.25,
+    "coverage": 1.0,
+    "heard": "if you're sick of chasing referrals and want actual jobs on autopilot, tap get offer below and see if you qualify."
+   },
+   "takes": [
+    {
+     "src": "img_8479",
+     "w0": 2,
+     "w1": 17,
+     "start": 3.02,
+     "end": 8.62,
+     "coverage": 0.64,
+     "heard": "chasing referrals, get real jobs on autopilot, tap get offer below and see if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 26,
+     "w1": 41,
+     "start": 12.66,
+     "end": 19.32,
+     "coverage": 0.64,
+     "heard": "chasing referrals, get real jobs on autopilot, tap get offer below and see if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 44,
+     "w1": 58,
+     "start": 23.98,
+     "end": 29.72,
+     "coverage": 0.55,
+     "heard": "chasing referrals, get actual real jobs and tap get offer below and see if qualify"
+    },
+    {
+     "src": "img_8479",
+     "w0": 61,
+     "w1": 76,
+     "start": 33.64,
+     "end": 40.92,
+     "coverage": 0.64,
+     "heard": "chasing referrals get real jobs on autopilot tap get offer below and see if you qualify"
+    },
+    {
+     "src": "img_8479",
+     "w0": 137,
+     "w1": 153,
+     "start": 72.12,
+     "end": 79.32,
+     "coverage": 0.68,
+     "heard": "chasing referrals get actual real jobs on autopilot tap get offer below and see if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 156,
+     "w1": 171,
+     "start": 82.22,
+     "end": 88.86,
+     "coverage": 0.64,
+     "heard": "chasing referrals, get actual real jobs on autopilot, tap get offer below and if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 356,
+     "w1": 376,
+     "start": 184.75,
+     "end": 191.79,
+     "coverage": 0.86,
+     "heard": "if you're say chasing referrals and want actual jobs on autopilot tap get off or below and see if you qualify"
+    },
+    {
+     "src": "img_8479",
+     "w0": 412,
+     "w1": 423,
+     "start": 220.33,
+     "end": 239.49,
+     "coverage": 0.59,
+     "heard": "if you're sick of chasing referrals and want actual jobs on autopilot,"
+    },
+    {
+     "src": "img_8479",
+     "w0": 427,
+     "w1": 448,
+     "start": 241.51,
+     "end": 252.69,
+     "coverage": 1.0,
+     "heard": "if you're sick of chasing referrals and want actual real jobs on autopilot, tap get offer below and see if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 450,
+     "w1": 471,
+     "start": 255.81,
+     "end": 263.79,
+     "coverage": 1.0,
+     "heard": "if you're sick of chasing referrals and want actual real jobs on autopilot, tap get offer below and see if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 475,
+     "w1": 497,
+     "start": 268.83,
+     "end": 278.29,
+     "coverage": 0.95,
+     "heard": "if you're sick of chasing referrals and want actual real jobs on autopilot, tap get off or below and see if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 539,
+     "w1": 561,
+     "start": 297.49,
+     "end": 304.75,
+     "coverage": 0.95,
+     "heard": "if you're sick of chasing referrals and want actual real jobs on autopilot, tap get off or below and see if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 587,
+     "w1": 607,
+     "start": 314.19,
+     "end": 321.25,
+     "coverage": 1.0,
+     "heard": "if you're sick of chasing referrals and want actual jobs on autopilot, tap get offer below and see if you qualify."
     }
    ],
    "flags": []
@@ -289,39 +448,165 @@
  ],
  "off_script": [
   {
-   "src": "img_8627",
+   "src": "img_8628",
    "w0": 0,
-   "w1": 5,
-   "start": 0.62,
-   "end": 2.26,
-   "text": "X to your cleaner still got",
+   "w1": 16,
+   "start": 1.28,
+   "end": 13.56,
+   "text": "Tell me when. Wait, wait, wait. One sec, one sec. We built the exact system. Okay, go.",
+   "kind": "cue"
+  },
+  {
+   "src": "img_8628",
+   "w0": 29,
+   "w1": 45,
+   "start": 22.88,
+   "end": 32.56,
+   "text": "Okay. Keep it going. We built the exact system you miss. Ah, fuck, okay. Ready, set, go.",
+   "kind": "cue"
+  },
+  {
+   "src": "img_8628",
+   "w0": 97,
+   "w1": 103,
+   "start": 56.68,
+   "end": 58.28,
+   "text": "I think one of those should be.",
    "kind": "off_script"
   },
   {
-   "src": "img_8628",
+   "src": "img_8479",
    "w0": 0,
-   "w1": 14,
-   "start": 1.3,
-   "end": 13.56,
-   "text": "Tell me when we won't say won't say we built the exact system Okay, go",
-   "kind": "cue"
+   "w1": 1,
+   "start": 2.1,
+   "end": 3.02,
+   "text": "So stop",
+   "kind": "off_script"
   },
   {
-   "src": "img_8628",
-   "w0": 27,
-   "w1": 41,
-   "start": 22.8,
-   "end": 32.56,
-   "text": "Okay Keep it going We built the exact system you miss Okay, ready set go.",
-   "kind": "cue"
+   "src": "img_8479",
+   "w0": 18,
+   "w1": 25,
+   "start": 10.48,
+   "end": 12.66,
+   "text": "Okay, I'm trying one more time. So stop",
+   "kind": "off_script"
+  },
+  {
+   "src": "img_8479",
+   "w0": 42,
+   "w1": 43,
+   "start": 23.02,
+   "end": 23.98,
+   "text": "So stop",
+   "kind": "off_script"
+  },
+  {
+   "src": "img_8479",
+   "w0": 59,
+   "w1": 60,
+   "start": 29.72,
+   "end": 33.64,
+   "text": "so stop",
+   "kind": "off_script"
+  },
+  {
+   "src": "img_8479",
+   "w0": 77,
+   "w1": 136,
+   "start": 40.92,
+   "end": 72.12,
+   "text": "how are those decent okay do you think doing this or having more hand movement helps. I think it definitely does especially for like this ending when you're this is when you're like you're pitching them. I'm pitching them right. So you want it to be like you don't want to be super blinded more. Yeah that's true. So stop",
+   "kind": "off_script"
+  },
+  {
+   "src": "img_8479",
+   "w0": 154,
+   "w1": 155,
+   "start": 81.28,
+   "end": 82.22,
+   "text": "So stop",
+   "kind": "off_script"
+  },
+  {
+   "src": "img_8479",
+   "w0": 172,
+   "w1": 354,
+   "start": 93.26,
+   "end": 181.13,
+   "text": "What do you think? I feel like there needs to be a better transition right here. So stop chasing referrals and get real jobs on autopilot. I think there should either be more of a gap between the tab get - Oh, what about this? So if you're chasing so if you're tired chasing referrals and want real jobs on autopilot yeah yeah so if you're so if you're tired or if you're sick which one's better you think so if you're tired like the for the original so stop chasing referrals. So if you're sick, chasing referrals. Wait, so what was your question? So I was like, you know how we're doing. So if you're sick chasing referrals and want actual real job or want to get real job, blah, blah, blah, type, get off of a low, you know how we're doing that. Yeah. I was. So do you think it's better to say so if you're sick or so if you're tired or am I just thinking too much? There's they both work on so if you're say chasing referrals",
+   "kind": "off_script"
+  },
+  {
+   "src": "img_8479",
+   "w0": 377,
+   "w1": 411,
+   "start": 196.05,
+   "end": 220.33,
+   "text": "For what sick of you're sick if you're sick if you're sick if you're sick if you're sick if you're sick okay so if you're sick of why am I missing the love so So",
+   "kind": "off_script"
+  },
+  {
+   "src": "img_8479",
+   "w0": 424,
+   "w1": 426,
+   "start": 240.39,
+   "end": 241.51,
+   "text": "real jobs. So",
+   "kind": "off_script"
+  },
+  {
+   "src": "img_8479",
+   "w0": 449,
+   "w1": 449,
+   "start": 255.43,
+   "end": 255.81,
+   "text": "So",
+   "kind": "off_script"
+  },
+  {
+   "src": "img_8479",
+   "w0": 472,
+   "w1": 474,
+   "start": 266.35,
+   "end": 268.83,
+   "text": "Better? Okay. So,",
+   "kind": "off_script"
+  },
+  {
+   "src": "img_8479",
+   "w0": 498,
+   "w1": 538,
+   "start": 282.13,
+   "end": 297.33,
+   "text": "So if you're sick of chasing, ugh, so if you're sick, if you're sick of chasing referrals. I think the enthusiasm is good though. You think this? This is good? Yeah, yeah, yeah. The point of the camera, that's good. So,",
+   "kind": "off_script"
+  },
+  {
+   "src": "img_8479",
+   "w0": 562,
+   "w1": 586,
+   "start": 306.37,
+   "end": 314.19,
+   "text": "That was good. Okay. Can I move on, bro, or nah? One more? I think just one more to like... Steal it? Steal it. So,",
+   "kind": "off_script"
+  },
+  {
+   "src": "img_8479",
+   "w0": 608,
+   "w1": 617,
+   "start": 321.91,
+   "end": 325.23,
+   "text": "That was good. Okay. That was good. Thanks for watching!",
+   "kind": "off_script"
   }
  ],
  "summary": {
-  "lines": 6,
+  "lines": 7,
   "missing": 0,
-  "partial": 1,
+  "partial": 0,
   "number_mismatch": 0,
-  "off_script_spans": 1,
+  "off_script_spans": 15,
   "cue_spans": 2
  }
 }

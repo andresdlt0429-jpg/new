@@ -1,0 +1,306 @@
+{
+ "keeps": [
+  {
+   "src": "img_8628",
+   "in": 50.705,
+   "out": 53.155,
+   "w0": 86,
+   "w1": 92,
+   "protected_before": null,
+   "text": "We built the exact system, you're missing.",
+   "line": "B3"
+  },
+  {
+   "src": "img_8628",
+   "in": 53.155,
+   "out": 54.295,
+   "w0": 93,
+   "w1": 96,
+   "protected_before": null,
+   "text": "Here's what I mean.",
+   "line": "B3"
+  }
+ ],
+ "floor": [
+  {
+   "src": "img_8628",
+   "start": 0.0,
+   "end": 1.28,
+   "reason": "lead-in silence",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 1.28,
+   "end": 4.32,
+   "reason": "cue chatter",
+   "text": "Tell me when."
+  },
+  {
+   "src": "img_8628",
+   "start": 4.32,
+   "end": 6.66,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 6.66,
+   "end": 8.48,
+   "reason": "false start",
+   "text": "Wait, wait, wait. One sec, one sec."
+  },
+  {
+   "src": "img_8628",
+   "start": 8.48,
+   "end": 10.46,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 10.46,
+   "end": 11.78,
+   "reason": "false start",
+   "text": "We built the exact system."
+  },
+  {
+   "src": "img_8628",
+   "start": 11.78,
+   "end": 13.14,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 13.14,
+   "end": 13.56,
+   "reason": "cue chatter",
+   "text": "Okay, go."
+  },
+  {
+   "src": "img_8628",
+   "start": 13.56,
+   "end": 17.52,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 17.52,
+   "end": 20.08,
+   "reason": "retake of B3",
+   "text": "We built the exact system you are missing."
+  },
+  {
+   "src": "img_8628",
+   "start": 20.08,
+   "end": 20.42,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 20.42,
+   "end": 21.38,
+   "reason": "retake of B3",
+   "text": "Here's what I mean."
+  },
+  {
+   "src": "img_8628",
+   "start": 21.38,
+   "end": 22.88,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 22.88,
+   "end": 23.28,
+   "reason": "false start",
+   "text": "Okay."
+  },
+  {
+   "src": "img_8628",
+   "start": 23.28,
+   "end": 24.52,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 24.52,
+   "end": 25.0,
+   "reason": "cue chatter",
+   "text": "Keep it going."
+  },
+  {
+   "src": "img_8628",
+   "start": 25.0,
+   "end": 26.06,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 26.06,
+   "end": 29.82,
+   "reason": "false start",
+   "text": "We built the exact system you miss. Ah, fuck, okay."
+  },
+  {
+   "src": "img_8628",
+   "start": 29.82,
+   "end": 30.42,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 30.42,
+   "end": 30.92,
+   "reason": "cue chatter",
+   "text": "Ready,"
+  },
+  {
+   "src": "img_8628",
+   "start": 30.92,
+   "end": 31.3,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 31.3,
+   "end": 31.94,
+   "reason": "cue chatter",
+   "text": "set,"
+  },
+  {
+   "src": "img_8628",
+   "start": 31.94,
+   "end": 32.2,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 32.2,
+   "end": 32.56,
+   "reason": "cue chatter",
+   "text": "go."
+  },
+  {
+   "src": "img_8628",
+   "start": 32.56,
+   "end": 33.18,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 33.18,
+   "end": 35.18,
+   "reason": "retake of B3",
+   "text": "We built the exact system, you're missing."
+  },
+  {
+   "src": "img_8628",
+   "start": 35.18,
+   "end": 35.52,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 35.52,
+   "end": 36.54,
+   "reason": "retake of B3",
+   "text": "Here's what I mean."
+  },
+  {
+   "src": "img_8628",
+   "start": 36.54,
+   "end": 37.38,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 37.38,
+   "end": 40.32,
+   "reason": "retake of B3",
+   "text": "We built the exact system, you're missing."
+  },
+  {
+   "src": "img_8628",
+   "start": 40.32,
+   "end": 40.6,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 40.6,
+   "end": 41.6,
+   "reason": "retake of B3",
+   "text": "Here's what I mean."
+  },
+  {
+   "src": "img_8628",
+   "start": 41.6,
+   "end": 42.66,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 42.66,
+   "end": 46.08,
+   "reason": "retake of B3",
+   "text": "We built the exact system, you're missing. Here's what I mean."
+  },
+  {
+   "src": "img_8628",
+   "start": 46.08,
+   "end": 46.98,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 46.98,
+   "end": 49.46,
+   "reason": "retake of B3",
+   "text": "We built the exact system, you're missing."
+  },
+  {
+   "src": "img_8628",
+   "start": 49.46,
+   "end": 50.7,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 54.3,
+   "end": 56.68,
+   "reason": "dead air",
+   "text": ""
+  },
+  {
+   "src": "img_8628",
+   "start": 56.68,
+   "end": 58.3,
+   "reason": "OFF-SCRIPT",
+   "text": "I think one of those should be."
+  }
+ ],
+ "notes": [],
+ "summary": {
+  "source_s": 58.3,
+  "kept_s": 3.59,
+  "floor_s": 54.71,
+  "keeps": 2
+ }
+}
