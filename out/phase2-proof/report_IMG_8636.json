@@ -12,17 +12,15 @@
     "path": "proxy/IMG_8636_work.mp4",
     "w": 1440,
     "h": 2560,
-    "scale": 0.667,
-    "seconds": 45.0,
-    "reused": false
+    "reused": true
   },
   "whisper": {
     "model": "medium",
-    "load_s": 4.1,
-    "transcribe_s": 9.6,
-    "rtf": 0.77,
+    "load_s": 3.2,
+    "transcribe_s": 9.5,
+    "rtf": 0.76,
     "words": 22,
-    "mean_word_prob": 0.937
+    "mean_word_prob": 0.954
   },
   "loudness": {
     "integrated_lufs": -40.5,
@@ -31,20 +29,20 @@
   },
   "faces": {
     "frames_sampled": 25,
-    "frames_with_face": 5,
-    "face_rate": 0.2,
-    "seconds": 3.3,
-    "mean_center_x_pct": 56.2,
-    "mean_center_y_pct": 49.8,
-    "mean_face_height_pct": 15.2
+    "frames_with_face": 25,
+    "face_rate": 1.0,
+    "seconds": 3.0,
+    "mean_center_x_pct": 51.8,
+    "mean_center_y_pct": 34.1,
+    "mean_face_height_pct": 6.2
   },
   "words": 22,
   "numbers_spoken": 1,
-  "pauses": 0,
-  "lead_in_s": 3.6,
-  "tail_s": 0.9,
+  "pauses": 3,
+  "lead_in_s": 3.56,
+  "tail_s": 1.2,
   "flags": [
-    "1 low-confidence words, check by ear: write @ 5.0s (p=0.245)"
+    "1 low-confidence words, check by ear: We @ 3.56s (p=0.471)"
   ],
   "outputs": "work/IMG_8636"
 }

@@ -75,6 +75,13 @@ def _kind(t):
     return None
 
 
+def _next_to_number(tokens, k):
+    for j in (k - 1, k + 1):
+        if 0 <= j < len(tokens) and tokens[j]["t"] != "oh" and (_digit(tokens[j]) or _kind(tokens[j]["t"]) in ("unit", "teen", "tens")):
+            return True
+    return False
+
+
 def parse_numbers(tokens):
     """Scan sub-tokens and return [{value, unit, text, start, end, p_min, word_idx}]."""
     found, n, k = [], len(tokens), 0
@@ -83,6 +90,9 @@ def parse_numbers(tokens):
         dig = _digit(tok)
         kind = _kind(tok["t"])
         # "a hundred", "a thousand"
+        if tok["t"] == "oh" and not _next_to_number(tokens, k):
+            k += 1  # "oh" is a word, not zero, unless it sits in a digit run ("five oh two")
+            continue
         starts_with_a = tok["t"] == "a" and k + 1 < n and tokens[k + 1]["t"] in ("hundred", "thousand", "million")
         if dig is None and kind in (None, "scale") and not starts_with_a:
             k += 1

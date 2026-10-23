@@ -1,0 +1,53 @@
+{
+  "source": "raw/office/IMG_8479.MOV",
+  "source_info": {
+    "w": 2160,
+    "h": 3840,
+    "fps": "30000/1001",
+    "codec": "hevc",
+    "duration": 326.176667,
+    "has_audio": true
+  },
+  "working_copy": {
+    "path": "proxy/IMG_8479_work.mp4",
+    "w": 1440,
+    "h": 2560,
+    "scale": 0.667,
+    "seconds": 950.0,
+    "reused": false
+  },
+  "whisper": {
+    "model": "medium",
+    "load_s": 3.6,
+    "transcribe_s": 355.6,
+    "rtf": 1.09,
+    "words": 505,
+    "mean_word_prob": 0.868
+  },
+  "loudness": {
+    "integrated_lufs": -16.8,
+    "loudness_range_lu": 18.1,
+    "true_peak_dbtp": 1.3
+  },
+  "faces": {
+    "frames_sampled": 652,
+    "frames_with_face": 652,
+    "face_rate": 1.0,
+    "seconds": 53.7,
+    "mean_center_x_pct": 49.8,
+    "mean_center_y_pct": 37.6,
+    "mean_face_height_pct": 16.4
+  },
+  "words": 505,
+  "numbers_spoken": 4,
+  "pauses": 52,
+  "lead_in_s": 2.19,
+  "tail_s": 4.9,
+  "flags": [
+    "49 low-confidence words, check by ear: So @ 2.19s (p=0.394); let @ 10.75s (p=0.47); and @ 26.69s (p=0.476); Tap @ 37.12s (p=0.066); decent @ 46.75s (p=0.066); Okay @ 47.95s (p=0.285); I'm @ 61.25s (p=0.449); get @ 73.0s (p=0.176); tap @ 76.0s (p=0.478); Tap @ 85.96s (p=0.265); So @ 103.28s (p=0.371); the @ 110.72s (p=0.27); tap @ 111.02s (p=0.179); get. @ 111.18s (p=0.442); So @ 113.1s (p=0.281); Want @ 118.8s (p=0.126); So @ 134.55s (p=0.375); tired @ 134.79s (p=0.368); Like @ 137.87s (p=0.42); fur @ 138.77s (p=0.499); so @ 139.53s (p=0.414); So @ 155.71s (p=0.397); I @ 156.15s (p=0.403); so @ 157.65s (p=0.334); Sick @ 159.89s (p=0.102); then @ 162.35s (p=0.251); what @ 162.63s (p=0.409); want @ 164.03s (p=0.496); Oh @ 165.59s (p=0.327); tap @ 166.33s (p=0.139); offer @ 166.89s (p=0.158); they @ 178.29s (p=0.45); on @ 178.87s (p=0.451); say @ 179.71s (p=0.36); say @ 185.61s (p=0.089); tap @ 189.41s (p=0.302); For @ 195.66s (p=0.212); you're @ 198.8s (p=0.306); chase @ 204.84s (p=0.077); So @ 218.66s (p=0.201); so @ 219.8s (p=0.013); Funny @ 227.34s (p=0.0); So @ 232.5s (p=0.196); Tap @ 249.25s (p=0.024); So @ 254.96s (p=0.051); So @ 281.49s (p=0.436); So @ 284.59s (p=0.285); and @ 299.17s (p=0.408); If @ 310.28s (p=0.023)",
+    "number \"one\" @ 11.09s has p=0.625: confirm by ear before it goes on screen",
+    "number \"oh\" @ 165.59s has p=0.327: confirm by ear before it goes on screen",
+    "true peak 1.3 dBTP: clipping risk in source audio"
+  ],
+  "outputs": "work/IMG_8479"
+}

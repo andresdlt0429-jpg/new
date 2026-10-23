@@ -1,6 +1,5 @@
 {
   "_status": "PLACEHOLDER. spec/SOP-DLT-1-v2-video-standard.md has not been provided (not in the repo, not in Drive). Every value below is an engine default standing in for the SOP section named in its key. When the SOP arrives, its numbers replace these and this note goes away. Code reads only this file, never hard-coded numbers.",
-
   "cutting_sop_5": {
     "pad_before_s": 0.06,
     "pad_after_s": 0.12,
@@ -10,37 +9,79 @@
     "retake_policy": "last_complete",
     "match_min_coverage": 0.8,
     "partial_min_coverage": 0.5,
-    "cue_phrases": ["tell me when", "okay go", "ok go", "ready set go", "keep it going", "one more time", "let me do that again", "from the top", "action", "rolling"],
-    "filler_words": ["um", "uh", "erm", "uhh", "umm"]
+    "cue_phrases": [
+      "tell me when",
+      "okay go",
+      "ok go",
+      "ready set go",
+      "keep it going",
+      "one more time",
+      "let me do that again",
+      "from the top",
+      "action",
+      "rolling"
+    ],
+    "filler_words": [
+      "um",
+      "uh",
+      "erm",
+      "uhh",
+      "umm"
+    ]
   },
-
   "protected_pauses_sop_2_6": {
     "_what": "A pause the script asks for (Delivery column: 'pause before X', 'stand still', 'slowest moment'). The cutter never trims it below min_s, and never stretches it past max_s.",
-    "min_s": 0.40,
-    "max_s": 0.90,
-    "markers": ["pause before", "stand still", "slowest moment", "beat before", "let it land"]
+    "min_s": 0.4,
+    "max_s": 0.9,
+    "markers": [
+      "pause before",
+      "stand still",
+      "slowest moment",
+      "beat before",
+      "let it land"
+    ]
   },
-
   "audio_sop_5": {
     "loudness_lufs": -14.0,
     "true_peak_dbtp": -1.0,
     "loudness_range_lu": 11.0,
     "highpass_hz": 80,
     "denoise_nr_db": 10,
-    "segment_fade_ms": 12
+    "segment_fade_ms": 12,
+    "segment_match_lufs": -23.0,
+    "segment_gain_limit_db": 30.0
   },
-
   "export_sop_5": {
-    "master": {"w": 1440, "h": 2560, "crf": 18, "preset": "medium"},
-    "delivery": {"w": 1080, "h": 1920, "crf": 20, "preset": "medium"},
+    "master": {
+      "w": 1440,
+      "h": 2560,
+      "crf": 18,
+      "preset": "medium"
+    },
+    "delivery": {
+      "w": 1080,
+      "h": 1920,
+      "crf": 20,
+      "preset": "medium"
+    },
     "fps": 30,
     "audio_bitrate": "192k",
     "audio_rate": 48000
   },
-
   "lock_sop_2_1": {
     "_what": "'Lock before this runs': every check must pass (auto) or be confirmed by Andy (manual) before a clean render. Draft renders are allowed but carry a DRAFT tag.",
-    "auto": ["no_missing_lines", "no_unresolved_off_script", "numbers_rule", "say_numbers_match_transcript", "duration_in_range", "speaker_present_for_titles"],
-    "manual": ["script_lock_items", "meta_policy_items", "caption_word_fixes"]
+    "auto": [
+      "no_missing_lines",
+      "no_unresolved_off_script",
+      "numbers_rule",
+      "say_numbers_match_transcript",
+      "duration_in_range",
+      "speaker_present_for_titles"
+    ],
+    "manual": [
+      "script_lock_items",
+      "meta_policy_items",
+      "caption_word_fixes"
+    ]
   }
 }

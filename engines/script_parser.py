@@ -114,7 +114,7 @@ def parse(path):
         text = f.read()
     lines = text.splitlines()
     title = next((ln.lstrip("#").strip().replace("**", "") for ln in lines if ln.startswith("# ")), os.path.basename(path))
-    beats, hooks, problems = [], [], []
+    beats, hooks, alternates, problems = [], [], [], []
     for heading, header, rows in tables(lines):
         fields = {}
         for k, h in enumerate(header):
@@ -125,6 +125,10 @@ def parse(path):
         if "say" not in fields:
             continue  # not a script table (policy table, changelog, ...)
         is_hooks = "id" in fields and "time" not in fields
+        alt_of = None
+        m = re.search(r"\b([A-Za-z]+)\s+alternates?\b", heading or "", re.I)
+        if is_hooks and m and m.group(1).lower() != "hook":
+            alt_of = m.group(1).upper()  # e.g. "CTA alternates": options that replace the CTA beat
         for r in rows:
             def get(name):
                 k = fields.get(name)
@@ -138,7 +142,10 @@ def parse(path):
             item = {"say": say, "on_screen": on_screen, "on_screen_kind": kind,
                     "show": get("show") or None, "delivery": get("delivery") or None,
                     "protected_pauses": protected_pauses(get("delivery"))}
-            if is_hooks:
+            if alt_of:
+                item.update({"id": f"{alt_of[0]}{clean(get('id'))}", "beat": alt_of, "replaces": alt_of})
+                alternates.append(item)
+            elif is_hooks:
                 item.update({"id": f"H{clean(get('id'))}", "hook_type": get("hook_type") or None})
                 hooks.append(item)
             else:
@@ -155,7 +162,7 @@ def parse(path):
     return {
         "source": os.path.relpath(path, ROOT), "title": title,
         "draft": bool(re.search(r"\bDRAFT\b", title)),
-        "beats": beats, "hooks": hooks,
+        "beats": beats, "hooks": hooks, "alternates": alternates,
         "lock_items": bullets_under(lines, LOCK_HEADINGS),
         "meta_scan": bullets_under(lines, META_HEADINGS),
         "problems": problems,
@@ -180,6 +187,8 @@ if __name__ == "__main__":
             print(f"        {'':14s} ON SCREEN ({b['on_screen_kind']}): {b['on_screen']}")
         if pp:
             print(f"        {'':14s} PROTECTED: {pp}")
+    for a in s["alternates"]:
+        print(f"  {a['id']:>5} {a['beat'] + ' alt':14s} SAY: {a['say'][:70]}  | {a['on_screen'] or ''}")
     for h in s["hooks"]:
         print(f"  {h['id']:>5} {'HOOK':14s} SAY: {h['say'][:70]}  | {h['on_screen'] or ''}")
     for x in s["lock_items"]:

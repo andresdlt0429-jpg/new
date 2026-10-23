@@ -12,17 +12,15 @@
     "path": "proxy/IMG_8640_work.mp4",
     "w": 1440,
     "h": 2560,
-    "scale": 0.667,
-    "seconds": 43.2,
-    "reused": false
+    "reused": true
   },
   "whisper": {
     "model": "medium",
-    "load_s": 4.4,
-    "transcribe_s": 10.4,
-    "rtf": 0.88,
+    "load_s": 3.2,
+    "transcribe_s": 8.9,
+    "rtf": 0.76,
     "words": 21,
-    "mean_word_prob": 0.98
+    "mean_word_prob": 0.964
   },
   "loudness": {
     "integrated_lufs": -42.1,
@@ -31,18 +29,18 @@
   },
   "faces": {
     "frames_sampled": 24,
-    "frames_with_face": 3,
-    "face_rate": 0.12,
-    "seconds": 2.8,
-    "mean_center_x_pct": 43.1,
-    "mean_center_y_pct": 27.0,
-    "mean_face_height_pct": 14.0
+    "frames_with_face": 24,
+    "face_rate": 1.0,
+    "seconds": 2.9,
+    "mean_center_x_pct": 56.1,
+    "mean_center_y_pct": 35.4,
+    "mean_face_height_pct": 7.7
   },
   "words": 21,
   "numbers_spoken": 0,
   "pauses": 1,
-  "lead_in_s": 4.75,
-  "tail_s": 1.38,
+  "lead_in_s": 4.7,
+  "tail_s": 1.39,
   "flags": [],
   "outputs": "work/IMG_8640"
 }

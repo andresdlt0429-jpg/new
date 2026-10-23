@@ -34,6 +34,7 @@ class SpokenForms(unittest.TestCase):
         self.assertEqual(vals("a fifteen-minute call"), [(15, None)])
         self.assertEqual(vals("over 250 five-star reviews"), [(250, None), (5, None)])
         self.assertEqual(vals("we answer 24/7"), [(24, None), (7, None)])
+        self.assertEqual(vals("call five oh two"), [(5, None), (0, None), (2, None)])
         self.assertEqual(vals("two hundred and fifty five-star reviews"), [(250, None), (5, None)])
         self.assertEqual(vals("twenty-five dollars"), [(25, "money")])
 
@@ -45,6 +46,7 @@ class SpokenForms(unittest.TestCase):
     def test_no_numbers(self):
         self.assertEqual(vals("we clean roofs and gutters the right way"), [])
         self.assertEqual(vals("a great job"), [])
+        self.assertEqual(vals("oh what about this"), [])
 
     def test_low_confidence_flag(self):
         w = words("save fifteen percent")

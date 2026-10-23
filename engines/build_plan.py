@@ -70,12 +70,28 @@ def build(ad_dir, target=(35, 50)):
     words = kept_words(cuts, srcs)
     parts, titles, graphics, emphasis = [], [], [], []
     line_parts = {}
-    for n, k in enumerate(cuts["keeps"]):
+    # alternates (e.g. CTA options) become body:A (the script's own line) / body:<alt id> groups
+    alts = [x for x in al["lines"] if x["kind"] == "alt"]
+    replaced = {a["replaces"] for a in alts}
+    beats = [x for x in al["lines"] if x["kind"] == "beat"]
+    order = {x["id"]: i for i, x in enumerate(beats)}
+
+    def group_of(ln):
+        if ln["kind"] == "alt":
+            return f"body:{ln['id']}"
+        return "body:A" if (ln["beat"] or "").upper() in replaced else "shared"
+    for a in alts:
+        base = next((b for b in beats if (b["beat"] or "").upper() == a["replaces"]), None)
+        order[a["id"]] = order[base["id"]] + 0.5 if base else len(order)
+    for k in sorted(cuts["keeps"], key=lambda k: (order.get(k["line"], 99), k["in"])):
         ln = next(x for x in al["lines"] if x["id"] == k["line"])
         pid = f"{k['line']}_{sum(1 for p in parts if p['id'].startswith(k['line'] + '_')) + 1}"
-        parts.append({"id": pid, "group": "shared", "beat": ln["beat"] or ln["kind"], "say": ln["say"],
+        parts.append({"id": pid, "group": group_of(ln), "beat": ln["beat"] or ln["kind"], "say": ln["say"],
                       "src": k["src"], "in": k["in"], "out": k["out"], "reframe": {"mode": "center"}})
         line_parts.setdefault(k["line"], []).append(pid)
+    variants = [{"id": "A", "body": "A"}] + [{"id": a["id"], "body": a["id"]} for a in alts if a["id"] in line_parts]
+    if not alts:
+        variants = [{"id": "main"}]
     for ln in al["lines"]:
         if not ln["on_screen"] or ln["id"] not in line_parts:
             continue
@@ -111,7 +127,7 @@ def build(ad_dir, target=(35, 50)):
         "output": {"master": {"w": 1440, "h": 2560}, "delivery": {"w": 1080, "h": 1920}, "fps": 30,
                    "max_duration_s": None, "target_duration_s": list(target)},
         "parts": parts,
-        "variants": [{"id": "main"}],
+        "variants": variants,
         "layers": {"titles": titles, "graphics": graphics,
                    "captions": {"style": "auto", "emphasis": sorted(set(emphasis)), "fixes": [], "hide": []}},
         "audio": {"loudness_lufs": None, "music": None},
@@ -119,6 +135,11 @@ def build(ad_dir, target=(35, 50)):
     plan["checks"] = lock_checks(plan, script, al, words, srcs, target)
     jsonschema.Draft202012Validator(load(os.path.join(ROOT, "plans", "plan.schema.json"))).validate(plan)
     return plan
+
+
+def in_variant(p, v):
+    g = p["group"]
+    return g in ("shared", "cta") or g == f"hook:{v.get('hook')}" or g == f"body:{v.get('body')}"
 
 
 def lock_checks(plan, script, al, words, srcs, target):
@@ -137,9 +158,12 @@ def lock_checks(plan, script, al, words, srcs, target):
     c["numbers_rule"] = {"status": "fail" if blocks else "warn" if warns else "pass", "notes": blocks + warns}
     mm = [f"{ln['id']}: {f}" for ln in al["lines"] for f in ln["flags"] if f.startswith("NUMBER")]
     c["say_numbers_match_transcript"] = {"status": "fail" if mm else "pass", "notes": mm}
-    dur = round(sum(p["out"] - p["in"] for p in plan["parts"]), 2)
-    c["duration_in_range"] = {"status": "pass" if target[0] <= dur <= target[1] else "fail",
-                              "notes": [f"{dur}s (target {target[0]}-{target[1]}s, Andy rule 2)"]}
+    notes, ok = [], True
+    for v in plan["variants"]:
+        dur = round(sum(p["out"] - p["in"] for p in plan["parts"] if in_variant(p, v)), 2)
+        ok &= target[0] <= dur <= target[1]
+        notes.append(f"variant {v['id']}: {dur}s (target {target[0]}-{target[1]}s, Andy rule 2)")
+    c["duration_in_range"] = {"status": "pass" if ok else "fail", "notes": notes}
     sp = []
     for t in plan["layers"]["titles"]:
         p = next(x for x in plan["parts"] if x["id"] == t["at"]["part"])

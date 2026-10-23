@@ -236,12 +236,26 @@ def ingest_ass_time(t):
 
 # ---------- ffmpeg ----------
 
+def segment_gains(segs):
+    """Bring every piece to segment_match_lufs before joining: Andy's office takes sit
+    near -43 LUFS, the second session near -17; one global gain would make them jump."""
+    for s in segs:
+        err = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-ss", f"{s['in']:.3f}", "-t",
+                              f"{s['out'] - s['in']:.3f}", "-i", os.path.join(ROOT, s["proxy"]), "-vn",
+                              "-af", "ebur128", "-f", "null", "-"], capture_output=True, text=True).stderr
+        m = re.search(r"I:\s+(-?[\d.]+) LUFS", err[err.rfind("Summary:"):])
+        lufs = float(m.group(1)) if m else None
+        lim = AUD["segment_gain_limit_db"]
+        s["lufs_in"] = lufs
+        s["gain_db"] = round(max(-lim, min(lim, AUD["segment_match_lufs"] - lufs)), 1) if lufs is not None else 0.0
+
+
 def audio_chain(segs, measured=None):
     F = AUD["segment_fade_ms"] / 1000
     parts = []
     for i, s in enumerate(segs):
         d = s["out"] - s["in"]
-        parts.append(f"[{i}:a]aresample=48000,asetpts=PTS-STARTPTS,afade=t=in:st=0:d={F},"
+        parts.append(f"[{i}:a]aresample=48000,asetpts=PTS-STARTPTS,volume={s.get('gain_db', 0)}dB,afade=t=in:st=0:d={F},"
                      f"afade=t=out:st={max(0, d - F):.3f}:d={F}[a{i}]")
     cat = "".join(f"[a{i}]" for i in range(len(segs))) + f"concat=n={len(segs)}:v=0:a=1[acat]"
     ln = f"loudnorm=I={AUD['loudness_lufs']}:TP={AUD['true_peak_dbtp']}:LRA={AUD['loudness_range_lu']}"
@@ -290,7 +304,14 @@ def main(plan_path, draft):
     wd = os.path.join(ROOT, "work", ad)
     for d in (out_dir, proof, cards, wd):
         os.makedirs(d, exist_ok=True)
-    variant = plan["variants"][0]
+    for variant in plan["variants"]:
+        render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_dir, proof, cards, wd, ad)
+
+
+def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_dir, proof, cards, wd, ad):
+    print(f"\n===== variant {variant['id']} =====")
+    proof = os.path.join(proof, variant["id"])
+    os.makedirs(proof, exist_ok=True)
     segs = build_timeline(plan, variant, srcs)
     total = segs[-1]["t1"]
     tag = "_DRAFT" if draft else ""
@@ -301,8 +322,17 @@ def main(plan_path, draft):
 
     # assets
     titles, graphics = [], []
+    def span(item):
+        try:
+            a = resolve(item["at"], segs, srcs)
+        except ValueError:
+            return None  # belongs to another variant's lines
+        return a, resolve(item["until"], segs, srcs)
     for t in plan["layers"]["titles"]:
-        ts, te = resolve(t["at"], segs, srcs), resolve(t["until"], segs, srcs)
+        sp = span(t)
+        if not sp:
+            continue
+        ts, te = sp
         p = os.path.join(cards, f"{t['id']}.png")
         title_png(t, W, H, p)
         mp = os.path.join(wd, f"matte_{t['id']}.mkv")
@@ -310,7 +340,10 @@ def main(plan_path, draft):
         titles.append({"id": t["id"], "text": t["text"], "ts": ts, "te": te, "png": p, "matte": mp, "matte_stats": stats})
         print(f"title {t['id']} {ts:.2f}-{te:.2f}s  matte {stats}")
     for g in plan["layers"]["graphics"]:
-        a, b = resolve(g["at"], segs, srcs), resolve(g["until"], segs, srcs)
+        sp = span(g)
+        if not sp:
+            continue
+        a, b = sp
         p = os.path.join(cards, f"{g['id']}.png")
         graphic_png(g, W, H, p)
         graphics.append({"id": g["id"], "text": g["text"], "ts": a, "te": b, "png": p})
@@ -322,8 +355,12 @@ def main(plan_path, draft):
     write_ass(caps, W, H, ass, style)
     R["captions"] = len(caps)
 
-    # pass 1: loudness
+    # level-match pieces, then pass 1: loudness
     t = time.time()
+    segment_gains(segs)
+    R["segments"] = [{"part": x["part"], "src": x["src"], "in": x["in"], "out": x["out"], "t0": x["t0"],
+                      "lufs_in": x["lufs_in"], "gain_db": x["gain_db"]} for x in segs]
+    print("piece levels: " + ", ".join(f"{x['part']} {x['lufs_in']}LUFS->{x['gain_db']:+}dB" for x in segs))
     meas = measure_loudness(segs)
     R["loudness_pass1"] = {k: meas[k] for k in ("input_i", "input_tp", "input_lra")}
     print(f"audio pass 1 ({time.time() - t:.1f}s): input {meas['input_i']} LUFS, TP {meas['input_tp']}")

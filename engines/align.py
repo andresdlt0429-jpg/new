@@ -149,7 +149,8 @@ def word_diff(say_tokens, heard_tokens):
 
 
 def align(script, sources):
-    lines = [dict(b, kind="beat") for b in script["beats"]] + [dict(h, kind="hook") for h in script["hooks"]]
+    lines = ([dict(b, kind="beat") for b in script["beats"]] + [dict(h, kind="hook") for h in script["hooks"]] +
+             [dict(a, kind="alt") for a in script.get("alternates", [])])
     used = {s["key"]: [None] * len(s["words"]) for s in sources}
     out_lines = []
     for ln in lines:
@@ -184,6 +185,7 @@ def align(script, sources):
                 if used[t["src"]][k] is None or role == "chosen":
                     used[t["src"]][k] = (ln["id"], role)
         out_lines.append({"id": ln["id"], "kind": ln["kind"], "beat": ln.get("beat"), "say": ln["say"],
+                          "replaces": ln.get("replaces"),
                           "on_screen": ln.get("on_screen"), "on_screen_kind": ln.get("on_screen_kind"),
                           "protected_pauses": ln.get("protected_pauses", []),
                           "chosen": chosen, "takes": takes, "flags": flags})

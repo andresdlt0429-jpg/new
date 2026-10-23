@@ -12,17 +12,15 @@
     "path": "proxy/IMG_8641_work.mp4",
     "w": 1440,
     "h": 2560,
-    "scale": 0.667,
-    "seconds": 41.7,
-    "reused": false
+    "reused": true
   },
   "whisper": {
     "model": "medium",
-    "load_s": 137.3,
-    "transcribe_s": 13.5,
-    "rtf": 1.25,
+    "load_s": 3.5,
+    "transcribe_s": 8.8,
+    "rtf": 0.82,
     "words": 24,
-    "mean_word_prob": 0.94
+    "mean_word_prob": 0.963
   },
   "loudness": {
     "integrated_lufs": -43.2,
@@ -31,20 +29,18 @@
   },
   "faces": {
     "frames_sampled": 22,
-    "frames_with_face": 4,
-    "face_rate": 0.18,
-    "seconds": 2.4,
-    "mean_center_x_pct": 58.4,
-    "mean_center_y_pct": 36.9,
-    "mean_face_height_pct": 12.9
+    "frames_with_face": 22,
+    "face_rate": 1.0,
+    "seconds": 2.6,
+    "mean_center_x_pct": 55.8,
+    "mean_center_y_pct": 34.0,
+    "mean_face_height_pct": 9.0
   },
   "words": 24,
   "numbers_spoken": 1,
-  "pauses": 0,
-  "lead_in_s": 0.78,
-  "tail_s": 2.51,
-  "flags": [
-    "1 low-confidence words, check by ear: click @ 6.08s (p=0.44)"
-  ],
+  "pauses": 1,
+  "lead_in_s": 0.66,
+  "tail_s": 2.45,
+  "flags": [],
   "outputs": "work/IMG_8641"
 }

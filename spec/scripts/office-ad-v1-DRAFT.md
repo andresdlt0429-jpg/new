@@ -29,3 +29,11 @@ Checked against "Launchpad Ads: Policy-Safe One-Pagers" (Andy's Drive, 2026-10-1
 - The guarantee terms for "20 more jobs completely guaranteed" are written on the landing page.
 - "All live within just four days" is true for a new client.
 - Andy accepts or fixes each Meta policy scan item above.
+
+## CTA alternates
+
+Option 1 is the CTA in the script table above. Option 2 comes from the second session (IMG_8479, last take at 5:10) and carries no guarantee claim.
+
+| # | Say | On screen |
+| :-: | :-: | :-: |
+| 2 | "If you're sick of chasing referrals and want actual jobs on autopilot, tap get offer below and see if you qualify." | TAP GET OFFER / SEE IF YOU QUALIFY |
