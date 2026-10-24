@@ -98,6 +98,8 @@ A hex color in a plan (brand values only in brand.json), raw-seconds anchors, mi
 
 Order for one ad: `intake.py` -> `ingest.py` -> `build_plan.py` -> `render.py --draft` -> `qa_gate.py` -> (Andy locks / accepts) -> `render.py` -> `qa_gate.py` -> `export_matrix.py`.
 
+Hook matrix: a script with a hooks table (H1..Hn, e.g. `spec/scripts/starting-out-40s.md`) gives one variant per recorded hook x body (`H3_A`, `H3_C2`, ...); each cut opens on its own hook only. A hook with no take gets no cut and shows in lock check `hooks_recorded`; it never blocks the others. Export names use the script's hook number, so H3 stays H3 even if H2 was never filmed.
+
 The timeline is whole frames: every piece is trimmed to an exact frame count (video) and the matching sample count (audio), so the planned clock that places titles, graphics, captions, ticks and music is the file's clock (render QA `timeline_exact`).
 
 ## Pending SOP / pending Andy

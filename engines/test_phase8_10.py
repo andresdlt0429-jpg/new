@@ -88,7 +88,8 @@ class Matrix(unittest.TestCase):
         p = copy.deepcopy(self.plan)
         p["parts"][0]["group"] = "hook:H3"
         p["parts"].insert(0, dict(p["parts"][0], id="B1_0", group="hook:H1"))
-        self.assertEqual(export_matrix.hook_no(p, {"id": "x", "hook": "H3"}), 2)
+        # the script's number, not the position: H2 never filmed, H3 still exports as H3
+        self.assertEqual(export_matrix.hook_no(p, {"id": "x", "hook": "H3"}), 3)
 
     def test_version_follows_content(self):
         v = self.plan["variants"][0]
@@ -122,3 +123,73 @@ class Intake(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class HookMatrixPlan(unittest.TestCase):
+    """build_plan on a script with a hooks table: hook x body variants, hooks played first,
+    a hook never filmed costs only its own cuts. Built from the office ad's real takes."""
+
+    @classmethod
+    def setUpClass(cls):
+        import shutil
+        import build_plan
+        import policy_scan
+        import render
+        src = os.path.join(ROOT, "plans", "office-ad")
+        cls.tmp = tempfile.mkdtemp()
+        d = os.path.join(cls.tmp, "hook-test")
+        os.makedirs(d)
+        shutil.copy(os.path.join(src, "script.json"), d)
+        al = json.load(open(os.path.join(src, "alignment.json")))
+        cuts = json.load(open(os.path.join(src, "cuts.json")))
+        b1 = next(x for x in al["lines"] if x["id"] == "B1")
+        h1 = dict(b1, id="H1", kind="hook", beat=None)
+        h2 = dict(b1, id="H2", kind="hook", beat=None)
+        h3 = dict(b1, id="H3", kind="hook", beat=None, takes=[], chosen=None,
+                  flags=["MISSING: no take of this line in any source"])
+        al["lines"] = [h1, h2, h3] + [x for x in al["lines"] if x["id"] != "B1"]
+        keeps = []
+        for k in cuts["keeps"]:
+            if k["line"] == "B1":
+                keeps += [dict(k, line="H1"), dict(k, line="H2")]
+            else:
+                keeps.append(k)
+        cuts["keeps"] = keeps
+        json.dump(al, open(os.path.join(d, "alignment.json"), "w"))
+        json.dump(cuts, open(os.path.join(d, "cuts.json"), "w"))
+        cls.plan = build_plan.build(d)
+        cls.render, cls.policy = render, policy_scan
+
+    @classmethod
+    def tearDownClass(cls):
+        import shutil
+        shutil.rmtree(cls.tmp, ignore_errors=True)
+
+    def test_variants_are_hooks_times_bodies(self):
+        self.assertEqual([v["id"] for v in self.plan["variants"]], ["H1_A", "H1_C2", "H2_A", "H2_C2"])
+
+    def test_hooks_grouped_and_first(self):
+        groups = [p["group"] for p in self.plan["parts"]]
+        self.assertTrue(groups[0].startswith("hook:"))
+        self.assertFalse(any(p["beat"] == "HOOK" and p["group"] == "shared" for p in self.plan["parts"]))
+        srcs = {k: align.load_source(os.path.join(ROOT, v["ingest"])) for k, v in self.plan["sources"].items()}
+        for v in self.plan["variants"]:
+            segs = self.render.build_timeline(self.plan, v, srcs)
+            self.assertEqual(segs[0]["part"].split("_")[0], v["hook"])  # each cut opens on its own hook
+            self.assertEqual(sum(s["beat"] == "HOOK" for s in segs), 1)  # and only that one
+
+    def test_unfilmed_hook_warns_not_blocks(self):
+        c = self.plan["checks"]
+        self.assertEqual(c["no_missing_lines"]["status"], "pass")
+        self.assertEqual(c["hooks_recorded"]["status"], "warn")
+        self.assertIn("H3", " ".join(c["hooks_recorded"]["notes"]))
+
+    def test_each_variant_has_hero_and_policy_text(self):
+        for v in self.plan["variants"]:
+            self.assertIn(v["id"], self.plan["layers"]["hero"])
+            spoken, shown = self.policy.variant_texts(self.plan, v)
+            self.assertTrue(spoken[0][0].startswith(v["hook"]))
+        self.assertEqual([export_matrix.hook_no(self.plan, v) for v in self.plan["variants"]], [1, 1, 2, 2])
+
+
+import align  # noqa: E402

@@ -33,11 +33,16 @@ def camel(s):
 
 
 def hook_no(plan, variant):
-    hooks = sorted({p["group"].split(":", 1)[1] for p in plan["parts"] if p["group"].startswith("hook:")})
+    """The hook's number from the script (H3 -> 3), never its position: if H2 was never filmed,
+    H3 must still export as H3. Hooks without a number are numbered in plan order."""
     h = variant.get("hook")
     if not h:
         return 1
-    return hooks.index(h) + 1 if h in hooks else int(re.sub(r"\D", "", h) or 1)
+    m = re.fullmatch(r"[Hh](\d+)", h)
+    if m:
+        return int(m.group(1))
+    hooks = list(dict.fromkeys(p["group"].split(":", 1)[1] for p in plan["parts"] if p["group"].startswith("hook:")))
+    return hooks.index(h) + 1 if h in hooks else 1
 
 
 def content_hash(plan, variant):

@@ -104,8 +104,17 @@ def build(ad_dir, target=(35, 50)):
     replaced = {r for a in alts for r in (a["replaces"] if isinstance(a["replaces"], list) else [a["replaces"]])}
     beats = [x for x in al["lines"] if x["kind"] == "beat"]
     order = {x["id"]: i for i, x in enumerate(beats)}
+    # hook alternates (the script's hooks table, ids H1..Hn): each its own group, played first.
+    # A hook with no take simply gets no cut; the others still ship (lock check hooks_recorded).
+    hooks = [x for x in al["lines"] if x["kind"] == "hook"]
+    recorded = {k["line"] for k in cuts["keeps"]}
+    hook_ids = [h["id"] for h in hooks if h["id"] in recorded]
+    for i, h in enumerate(hooks):
+        order[h["id"]] = -len(hooks) + i
 
     def group_of(ln):
+        if ln["kind"] == "hook":
+            return f"hook:{ln['id']}"
         if ln["kind"] == "alt":
             return f"body:{ln['id']}"
         return "body:A" if (ln["beat"] or "").upper() in replaced else "shared"
@@ -116,11 +125,16 @@ def build(ad_dir, target=(35, 50)):
     for k in sorted(cuts["keeps"], key=lambda k: (order.get(k["line"], 99), k["in"])):
         ln = next(x for x in al["lines"] if x["id"] == k["line"])
         pid = f"{k['line']}_{sum(1 for p in parts if p['id'].startswith(k['line'] + '_')) + 1}"
-        parts.append({"id": pid, "group": group_of(ln), "beat": ln["beat"] or ln["kind"], "say": ln["say"],
+        beat = "HOOK" if ln["kind"] == "hook" else (ln["beat"] or ln["kind"])
+        parts.append({"id": pid, "group": group_of(ln), "beat": beat, "say": ln["say"],
                       "src": k["src"], "in": k["in"], "out": k["out"], "reframe": {"mode": "center"}})
         line_parts.setdefault(k["line"], []).append(pid)
-    variants = [{"id": "A", "body": "A"}] + [{"id": a["id"], "body": a["id"]} for a in alts if a["id"] in line_parts]
-    if not alts:
+    bodies = ["A"] + [a["id"] for a in alts if a["id"] in line_parts]
+    if hook_ids:  # the hook matrix: every recorded hook x every body (SOP 2.5, brief chapter 05)
+        variants = [{"id": f"{h}_{b}", "hook": h, "body": b} for h in hook_ids for b in bodies]
+    elif alts:
+        variants = [{"id": b, "body": b} for b in bodies]
+    else:
         variants = [{"id": "main"}]
     for ln in al["lines"]:
         if not ln["on_screen"] or ln["id"] not in line_parts:
@@ -142,11 +156,11 @@ def build(ad_dir, target=(35, 50)):
                 _, _, block_px = render.title_block(ln["on_screen"], 1440, "L")
                 y = round(head_top + ov * fh - block_px / 2560 * 100 / 2, 1)
             titles.append({"id": f"t-{ln['id']}", "text": ln["on_screen"], "style": "headline",
-                           "tier": "L", "beat": beat_spec(ln["beat"])["beat"],
+                           "tier": "L", "beat": beat_spec("HOOK" if ln["kind"] == "hook" else ln["beat"])["beat"],
                            "at": {"part": line_parts[ln["id"]][0], "edge": "start"}, "until": end_anchor,
                            "y_pct": y, "anim": {"in": "pop", "out": "cut"}})
             continue
-        bm = beat_spec(ln["beat"])
+        bm = beat_spec("HOOK" if ln["kind"] == "hook" else ln["beat"])
         pieces = [p.strip() for p in ln["on_screen"].split(" / ") if p.strip()]
         anchors = [anchor_word(p, lw) for p in pieces]
         comp, tier = bm["component"], bm.get("tier", "M")
@@ -223,8 +237,19 @@ def in_variant(p, v):
 def lock_checks(plan, script, al, words, srcs, target):
     c = {}
     s = al["summary"]
-    c["no_missing_lines"] = {"status": "fail" if s["missing"] else "pass",
-                             "notes": [f"{ln['id']}: {f}" for ln in al["lines"] for f in ln["flags"] if f.startswith("MISSING")]}
+    hook_lines = [ln for ln in al["lines"] if ln["kind"] == "hook"]
+    have = {p["group"].split(":", 1)[1] for p in plan["parts"] if p["group"].startswith("hook:")}
+    body_missing = [f"{ln['id']}: {f}" for ln in al["lines"] if ln["kind"] != "hook" or not have
+                    for f in ln["flags"] if f.startswith("MISSING")]
+    c["no_missing_lines"] = {"status": "fail" if body_missing else "pass", "notes": body_missing}
+    if hook_lines:
+        gone = [h["id"] for h in hook_lines if h["id"] not in have]
+        both = [ln["id"] for ln in al["lines"] if ln["kind"] == "beat" and (ln["beat"] or "").upper() == "HOOK"]
+        c["hooks_recorded"] = {
+            "status": "fail" if both or not have else "warn" if gone else "pass",
+            "notes": ([f"script has a HOOK row in the body ({', '.join(both)}) and a hooks table: keep one"] if both else [])
+                     + [f"recorded: {', '.join(sorted(have)) or 'none'}"]
+                     + ([f"no take, so no cut: {', '.join(gone)}"] if gone else [])}
     partial = [f"{ln['id']}: {f}" for ln in al["lines"] for f in ln["flags"] if f.startswith("PARTIAL")]
     c["no_unresolved_off_script"] = {"status": "fail" if partial else "pass", "notes": partial}
     ledger = numbers_guard.spoken_ledger(words)
