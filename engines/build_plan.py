@@ -21,6 +21,20 @@ import align  # noqa: E402
 import numbers_guard  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+with open(os.path.join(ROOT, "spec", "sop-defaults.json")) as _f:
+    SOPD = json.load(_f)
+BM, G4 = SOPD["beat_map_sop_2_2"], SOPD["graphics_sop_4"]
+
+
+def beat_spec(beat):
+    """Script beat label -> brief beat + its beat-map entry (component, tier, timing)."""
+    b = BM["aliases"].get((beat or "").upper().strip(), (beat or "").upper().strip())
+    spec = dict(BM["beats"].get(b, {"component": "phrase", "tier": "M", "anim": "pop"}))
+    spec["beat"] = b
+    return spec
+
+
 STOP = set("a an the and or of to in on for your you youre is are it this that at all just with if so we i "
            "be do get see more my me our us not no".split())
 
@@ -83,11 +97,11 @@ def build(ad_dir, target=(35, 50)):
     srcs = {s["key"]: align.load_source(os.path.join(ROOT, s["dir"])) for s in al["sources"]}
     ad = os.path.basename(ad_dir.rstrip("/"))
     words = kept_words(cuts, srcs)
-    parts, titles, graphics, emphasis = [], [], [], []
+    parts, titles, graphics, emphasis, beat_notes = [], [], [], [], []
     line_parts = {}
     # alternates (e.g. CTA options) become body:A (the script's own line) / body:<alt id> groups
     alts = [x for x in al["lines"] if x["kind"] == "alt"]
-    replaced = {a["replaces"] for a in alts}
+    replaced = {r for a in alts for r in (a["replaces"] if isinstance(a["replaces"], list) else [a["replaces"]])}
     beats = [x for x in al["lines"] if x["kind"] == "beat"]
     order = {x["id"]: i for i, x in enumerate(beats)}
 
@@ -96,7 +110,8 @@ def build(ad_dir, target=(35, 50)):
             return f"body:{ln['id']}"
         return "body:A" if (ln["beat"] or "").upper() in replaced else "shared"
     for a in alts:
-        base = next((b for b in beats if (b["beat"] or "").upper() == a["replaces"]), None)
+        reps = a["replaces"] if isinstance(a["replaces"], list) else [a["replaces"]]
+        base = next((b for b in beats if (b["beat"] or "").upper() in reps), None)
         order[a["id"]] = order[base["id"]] + 0.5 if base else len(order)
     for k in sorted(cuts["keeps"], key=lambda k: (order.get(k["line"], 99), k["in"])):
         ln = next(x for x in al["lines"] if x["id"] == k["line"])
@@ -124,22 +139,55 @@ def build(ad_dir, target=(35, 50)):
                 head_top = min(f["cy_pct"] - f["h_pct"] / 2 for f in fs) - 0.3 * fh
                 ov = load(os.path.join(ROOT, "spec", "sop-defaults.json"))["graphics_sop_5"]["title_head_overlap"]
                 import render
-                _, _, block_px = render.title_block(ln["on_screen"], 1440)
+                _, _, block_px = render.title_block(ln["on_screen"], 1440, "L")
                 y = round(head_top + ov * fh - block_px / 2560 * 100 / 2, 1)
             titles.append({"id": f"t-{ln['id']}", "text": ln["on_screen"], "style": "headline",
+                           "tier": "L", "beat": beat_spec(ln["beat"])["beat"],
                            "at": {"part": line_parts[ln["id"]][0], "edge": "start"}, "until": end_anchor,
                            "y_pct": y, "anim": {"in": "pop", "out": "cut"}})
             continue
+        bm = beat_spec(ln["beat"])
         pieces = [p.strip() for p in ln["on_screen"].split(" / ") if p.strip()]
         anchors = [anchor_word(p, lw) for p in pieces]
-        for i, (p, a) in enumerate(zip(pieces, anchors)):
-            until = {"word": anchors[i + 1]} if i + 1 < len(pieces) and anchors[i + 1] else end_anchor
-            y = 15 if ln["beat"] and ln["beat"].upper() == "HOOK" else 58
-            graphics.append({"id": f"g-{ln['id']}-{i + 1}", "kind": "text", "text": p, "style": "graphic",
-                             "at": {"word": a}, "until": until,
-                             "box": {"x_pct": 8, "y_pct": y, "w_pct": 84}, "anim": {"in": "pop", "out": "cut"}})
+        comp, tier = bm["component"], bm.get("tier", "M")
+        if comp is None:  # script is law: the beat map says no text here, the script lists some
+            comp, tier = "phrase", "M"
+            beat_notes.append(f"{ln['id']} ({bm['beat']}): beat map has no text on this beat; "
+                              f"script lists {ln['on_screen']!r}; script wins")
+        base_tier = "L" if tier == "XL" else tier  # XL is given per variant to the hero only
+        y = G4["y_pct"].get(comp, 50)
+        start_anchor = ({"part": line_parts[ln["id"]][0], "edge": "start"} if bm.get("at") == "beat_start"
+                        else None)
+        if comp == "ticks":
+            graphics.append({"id": f"g-{ln['id']}-ticks", "kind": "ticks", "beat": bm["beat"], "tier": base_tier,
+                             "items": [{"text": p, "at": {"word": a}} for p, a in zip(pieces, anchors)],
+                             "at": {"word": anchors[0]}, "until": end_anchor,
+                             "box": {"x_pct": G4["ticks_x_pct"], "y_pct": y, "w_pct": 100 - 2 * G4["ticks_x_pct"]},
+                             "anim": {"in": "pop", "out": "cut"}})
+        else:
+            for i, (p, a) in enumerate(zip(pieces, anchors)):
+                until = {"word": anchors[i + 1]} if i + 1 < len(pieces) and anchors[i + 1] else end_anchor
+                at = start_anchor if (start_anchor and i == 0) else {"word": a}
+                graphics.append({"id": f"g-{ln['id']}-{i + 1}", "kind": comp, "beat": bm["beat"], "text": p,
+                                 "tier": base_tier, "at": at, "until": until,
+                                 "box": {"x_pct": 8, "y_pct": y, "w_pct": 84},
+                                 "anim": {"in": bm.get("anim", "pop"), "out": "cut"}})
+        for p in pieces:
             toks = {align.norm(t) for t in p.split()} - STOP
             emphasis += [w["ref"] for w in lw if align.norm(w["w"]) in toks]
+    line_of = {}
+    for g in graphics + titles:
+        line_of[g["id"]] = g["id"].split("-")[1]
+    hero = {}
+    for v in variants:
+        in_v = {lid for lid, pids in line_parts.items()
+                if any(in_variant(next(p for p in parts if p["id"] == pid), v) for pid in pids)}
+        cands = [g for g in graphics + titles if line_of[g["id"]] in in_v]
+        for beat in BM["hero_priority"]:
+            pick = next((g for g in cands if g.get("beat") == beat), None)
+            if pick:
+                hero[v["id"]] = pick["id"]
+                break
     plan = {
         "schema": "dlt-plan/0.1", "id": ad, "ad_type": "own", "client": None, "platform": "meta",
         "status": "draft", "lock": None,
@@ -150,12 +198,16 @@ def build(ad_dir, target=(35, 50)):
         "parts": parts,
         "variants": variants,
         "layers": {"titles": titles, "graphics": graphics,
+                   "hero": hero,
                    "captions": {"style": "auto", "emphasis": sorted(set(emphasis)), "hide": [],
                                 "fixes": [{"word": f"{k}:{i}", "text": w["w"], "heard_by": w["heard_by"]}
                                           for k, sr in srcs.items() for i, w in enumerate(sr["words"]) if w.get("fixed")]}},
         "audio": {"loudness_lufs": None, "music": None},
     }
     plan["checks"] = lock_checks(plan, script, al, words, srcs, target)
+    plan["checks"]["one_biggest_text_moment"] = {
+        "status": "pass" if all(v["id"] in hero for v in variants) else "fail",
+        "notes": [f"variant {v['id']}: {hero.get(v['id'], 'NONE')}" for v in variants] + beat_notes}
     jsonschema.Draft202012Validator(load(os.path.join(ROOT, "plans", "plan.schema.json"))).validate(plan)
     return plan
 
@@ -175,9 +227,10 @@ def lock_checks(plan, script, al, words, srcs, target):
     ledger = numbers_guard.spoken_ledger(words)
     blocks, warns = [], []
     for item in plan["layers"]["titles"] + plan["layers"]["graphics"]:
-        r = numbers_guard.check(item["text"], ledger)
-        blocks += [f"{item['text']!r}: {b}" for b in r["block"]]
-        warns += [f"{item['text']!r}: {w}" for w in r["warn"]]
+        text = item.get("text") or " / ".join(i["text"] for i in item.get("items", []))
+        r = numbers_guard.check(text, ledger)
+        blocks += [f"{text!r}: {b}" for b in r["block"]]
+        warns += [f"{text!r}: {w}" for w in r["warn"]]
     c["numbers_rule"] = {"status": "fail" if blocks else "warn" if warns else "pass", "notes": blocks + warns}
     mm = [f"{ln['id']}: {f}" for ln in al["lines"] for f in ln["flags"] if f.startswith("NUMBER")]
     c["say_numbers_match_transcript"] = {"status": "fail" if mm else "pass", "notes": mm}

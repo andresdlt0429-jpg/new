@@ -85,7 +85,7 @@
   {
    "id": "B2",
    "kind": "beat",
-   "beat": "PAIN",
+   "beat": "PROBLEM",
    "say": "Are you sick and tired of knocking doors all day just for a couple extra deals, when really you want exclusive qualified leads that are ready to buy? Then this is for you.",
    "replaces": null,
    "on_screen": null,
@@ -121,7 +121,7 @@
   {
    "id": "B3",
    "kind": "beat",
-   "beat": "SYSTEM",
+   "beat": "SOLUTION",
    "say": "We built the exact system you're missing. Here's what I mean.",
    "replaces": null,
    "on_screen": "THE SYSTEM YOU'RE MISSING",
@@ -197,10 +197,10 @@
   {
    "id": "B4",
    "kind": "beat",
-   "beat": "OFFER",
+   "beat": "SOLUTION",
    "say": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it.",
    "replaces": null,
-   "on_screen": "LIVE IN 4 DAYS",
+   "on_screen": "OFFER / SCRIPTS / VIDEOS / ADS / LIVE IN 4 DAYS",
    "on_screen_kind": "graphic",
    "protected_pauses": [
     {
@@ -233,7 +233,7 @@
   {
    "id": "B5",
    "kind": "beat",
-   "beat": "FUTURE",
+   "beat": "FUTURE-PACE",
    "say": "So instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar.",
    "replaces": null,
    "on_screen": null,
@@ -264,10 +264,10 @@
   {
    "id": "B6",
    "kind": "beat",
-   "beat": "CTA",
-   "say": "So if you want 20 more jobs completely guaranteed on your calendar every single month, click the link below and see if you qualify.",
+   "beat": "GUARANTEE",
+   "say": "So if you want 20 more jobs completely guaranteed on your calendar every single month,",
    "replaces": null,
-   "on_screen": "20 MORE JOBS A MONTH / SEE IF YOU QUALIFY",
+   "on_screen": "20 MORE JOBS A MONTH",
    "on_screen_kind": "graphic",
    "protected_pauses": [
     {
@@ -278,30 +278,160 @@
    "chosen": {
     "src": "img_8641",
     "w0": 0,
-    "w1": 23,
+    "w1": 14,
     "start": 0.66,
+    "end": 6.02,
+    "coverage": 1.0,
+    "heard": "So if you want 20 more jobs completely guaranteed on your calendar every single month,"
+   },
+   "takes": [
+    {
+     "src": "img_8641",
+     "w0": 0,
+     "w1": 14,
+     "start": 0.66,
+     "end": 6.02,
+     "coverage": 1.0,
+     "heard": "So if you want 20 more jobs completely guaranteed on your calendar every single month,"
+    }
+   ],
+   "flags": []
+  },
+  {
+   "id": "B7",
+   "kind": "beat",
+   "beat": "CTA",
+   "say": "click the link below and see if you qualify.",
+   "replaces": null,
+   "on_screen": "SEE IF YOU QUALIFY",
+   "on_screen_kind": "graphic",
+   "protected_pauses": [],
+   "chosen": {
+    "src": "img_8641",
+    "w0": 15,
+    "w1": 23,
+    "start": 6.56,
     "end": 8.32,
     "coverage": 1.0,
-    "heard": "So if you want 20 more jobs completely guaranteed on your calendar every single month, click the link below and see if you qualify."
+    "heard": "click the link below and see if you qualify."
    },
    "takes": [
     {
      "src": "img_8479",
-     "w0": 355,
+     "w0": 12,
+     "w1": 17,
+     "start": 7.04,
+     "end": 8.62,
+     "coverage": 0.67,
+     "heard": "below and see if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 36,
+     "w1": 41,
+     "start": 17.32,
+     "end": 19.32,
+     "coverage": 0.67,
+     "heard": "below and see if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 54,
+     "w1": 58,
+     "start": 27.88,
+     "end": 29.72,
+     "coverage": 0.56,
+     "heard": "below and see if qualify"
+    },
+    {
+     "src": "img_8479",
+     "w0": 71,
+     "w1": 76,
+     "start": 38.32,
+     "end": 40.92,
+     "coverage": 0.67,
+     "heard": "below and see if you qualify"
+    },
+    {
+     "src": "img_8479",
+     "w0": 148,
+     "w1": 153,
+     "start": 76.9,
+     "end": 79.32,
+     "coverage": 0.67,
+     "heard": "below and see if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 167,
+     "w1": 171,
+     "start": 86.8,
+     "end": 88.86,
+     "coverage": 0.56,
+     "heard": "below and if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 371,
      "w1": 376,
-     "start": 184.19,
+     "start": 190.35,
      "end": 191.79,
-     "coverage": 0.5,
-     "heard": "So if you're say chasing referrals and want actual jobs on autopilot tap get off or below and see if you qualify"
+     "coverage": 0.67,
+     "heard": "below and see if you qualify"
+    },
+    {
+     "src": "img_8479",
+     "w0": 443,
+     "w1": 448,
+     "start": 250.69,
+     "end": 252.69,
+     "coverage": 0.67,
+     "heard": "below and see if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 466,
+     "w1": 471,
+     "start": 261.99,
+     "end": 263.79,
+     "coverage": 0.67,
+     "heard": "below and see if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 492,
+     "w1": 497,
+     "start": 276.31,
+     "end": 278.29,
+     "coverage": 0.67,
+     "heard": "below and see if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 556,
+     "w1": 561,
+     "start": 303.31,
+     "end": 304.75,
+     "coverage": 0.67,
+     "heard": "below and see if you qualify."
+    },
+    {
+     "src": "img_8479",
+     "w0": 602,
+     "w1": 607,
+     "start": 319.83,
+     "end": 321.25,
+     "coverage": 0.67,
+     "heard": "below and see if you qualify."
     },
     {
      "src": "img_8641",
-     "w0": 0,
+     "w0": 15,
      "w1": 23,
-     "start": 0.66,
+     "start": 6.56,
      "end": 8.32,
      "coverage": 1.0,
-     "heard": "So if you want 20 more jobs completely guaranteed on your calendar every single month, click the link below and see if you qualify."
+     "heard": "click the link below and see if you qualify."
     }
    ],
    "flags": []
@@ -311,7 +441,10 @@
    "kind": "alt",
    "beat": "CTA",
    "say": "If you're sick of chasing referrals and want actual jobs on autopilot, tap get offer below and see if you qualify.",
-   "replaces": "CTA",
+   "replaces": [
+    "GUARANTEE",
+    "CTA"
+   ],
    "on_screen": "TAP GET OFFER / SEE IF YOU QUALIFY",
    "on_screen_kind": "graphic",
    "protected_pauses": [],
@@ -531,10 +664,10 @@
   {
    "src": "img_8479",
    "w0": 172,
-   "w1": 354,
+   "w1": 355,
    "start": 93.26,
-   "end": 181.13,
-   "text": "What do you think? I feel like there needs to be a better transition right here. So stop chasing referrals and get real jobs on autopilot. I think there should either be more of a gap between the tab get - Oh, what about this? So if you're chasing so if you're tired chasing referrals and want real jobs on autopilot yeah yeah so if you're so if you're tired or if you're sick which one's better you think so if you're tired like the for the original so stop chasing referrals. So if you're sick, chasing referrals. Wait, so what was your question? So I was like, you know how we're doing. So if you're sick chasing referrals and want actual real job or want to get real job, blah, blah, blah, type, get off of a low, you know how we're doing that. Yeah. I was. So do you think it's better to say so if you're sick or so if you're tired or am I just thinking too much? There's they both work on so if you're say chasing referrals",
+   "end": 184.75,
+   "text": "What do you think? I feel like there needs to be a better transition right here. So stop chasing referrals and get real jobs on autopilot. I think there should either be more of a gap between the tab get - Oh, what about this? So if you're chasing so if you're tired chasing referrals and want real jobs on autopilot yeah yeah so if you're so if you're tired or if you're sick which one's better you think so if you're tired like the for the original so stop chasing referrals. So if you're sick, chasing referrals. Wait, so what was your question? So I was like, you know how we're doing. So if you're sick chasing referrals and want actual real job or want to get real job, blah, blah, blah, type, get off of a low, you know how we're doing that. Yeah. I was. So do you think it's better to say so if you're sick or so if you're tired or am I just thinking too much? There's they both work on so if you're say chasing referrals So",
    "kind": "off_script"
   },
   {
@@ -602,7 +735,7 @@
   }
  ],
  "summary": {
-  "lines": 7,
+  "lines": 8,
   "missing": 0,
   "partial": 0,
   "number_mismatch": 0,

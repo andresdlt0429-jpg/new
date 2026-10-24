@@ -350,6 +350,17 @@
               },
               "anim": {
                 "$ref": "#/$defs/anim"
+              },
+              "tier": {
+                "enum": [
+                  "S",
+                  "M",
+                  "L",
+                  "XL"
+                ]
+              },
+              "beat": {
+                "type": "string"
               }
             }
           }
@@ -375,7 +386,12 @@
                   "text",
                   "image",
                   "card",
-                  "end_card"
+                  "end_card",
+                  "icp_callout",
+                  "phrase",
+                  "ticks",
+                  "guarantee",
+                  "cta_button"
                 ]
               },
               "text": {
@@ -422,6 +438,40 @@
               },
               "anim": {
                 "$ref": "#/$defs/anim"
+              },
+              "tier": {
+                "enum": [
+                  "S",
+                  "M",
+                  "L",
+                  "XL"
+                ],
+                "description": "size tier (graphics_sop_4); XL only for layers.hero"
+              },
+              "beat": {
+                "type": "string",
+                "description": "brief beat this graphic belongs to (beat map 2.2)"
+              },
+              "items": {
+                "type": "array",
+                "minItems": 1,
+                "description": "ticks: one item per spoken word",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "text",
+                    "at"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "text": {
+                      "type": "string"
+                    },
+                    "at": {
+                      "$ref": "#/$defs/anchor"
+                    }
+                  }
+                }
               }
             },
             "allOf": [
@@ -429,7 +479,13 @@
                 "if": {
                   "properties": {
                     "kind": {
-                      "const": "text"
+                      "enum": [
+                        "text",
+                        "icp_callout",
+                        "phrase",
+                        "guarantee",
+                        "cta_button"
+                      ]
                     }
                   }
                 },
@@ -454,6 +510,20 @@
                 "then": {
                   "required": [
                     "src"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "kind": {
+                      "const": "ticks"
+                    }
+                  }
+                },
+                "then": {
+                  "required": [
+                    "items"
                   ]
                 }
               }
@@ -526,6 +596,13 @@
                 }
               }
             }
+          }
+        },
+        "hero": {
+          "type": "object",
+          "description": "variant id -> the id of its one biggest text moment (rendered XL)",
+          "additionalProperties": {
+            "type": "string"
           }
         }
       }

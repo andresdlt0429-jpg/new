@@ -128,7 +128,7 @@
    "w1": 23,
    "protected_before": null,
    "text": "click the link below and see if you qualify.",
-   "line": "B6"
+   "line": "B7"
   },
   {
    "src": "img_8479",
@@ -183,9 +183,16 @@
   {
    "src": "img_8479",
    "start": 6.42,
-   "end": 8.62,
+   "end": 7.04,
    "reason": "retake of C2",
-   "text": "tap get offer below and see if you qualify."
+   "text": "tap get offer"
+  },
+  {
+   "src": "img_8479",
+   "start": 7.04,
+   "end": 8.62,
+   "reason": "retake of B7",
+   "text": "below and see if you qualify."
   },
   {
    "src": "img_8479",
@@ -246,9 +253,16 @@
   {
    "src": "img_8479",
    "start": 16.68,
-   "end": 19.32,
+   "end": 17.32,
    "reason": "retake of C2",
-   "text": "tap get offer below and see if you qualify."
+   "text": "tap get offer"
+  },
+  {
+   "src": "img_8479",
+   "start": 17.32,
+   "end": 19.32,
+   "reason": "retake of B7",
+   "text": "below and see if you qualify."
   },
   {
    "src": "img_8479",
@@ -267,9 +281,16 @@
   {
    "src": "img_8479",
    "start": 23.98,
-   "end": 29.72,
+   "end": 27.88,
    "reason": "retake of C2",
-   "text": "chasing referrals, get actual real jobs and tap get offer below and see if qualify"
+   "text": "chasing referrals, get actual real jobs and tap get offer"
+  },
+  {
+   "src": "img_8479",
+   "start": 27.88,
+   "end": 29.72,
+   "reason": "retake of B7",
+   "text": "below and see if qualify"
   },
   {
    "src": "img_8479",
@@ -281,9 +302,16 @@
   {
    "src": "img_8479",
    "start": 33.64,
-   "end": 40.92,
+   "end": 38.32,
    "reason": "retake of C2",
-   "text": "chasing referrals get real jobs on autopilot tap get offer below and see if you qualify"
+   "text": "chasing referrals get real jobs on autopilot tap get offer"
+  },
+  {
+   "src": "img_8479",
+   "start": 38.32,
+   "end": 40.92,
+   "reason": "retake of B7",
+   "text": "below and see if you qualify"
   },
   {
    "src": "img_8479",
@@ -323,9 +351,16 @@
   {
    "src": "img_8479",
    "start": 72.12,
-   "end": 79.32,
+   "end": 76.9,
    "reason": "retake of C2",
-   "text": "chasing referrals get actual real jobs on autopilot tap get offer below and see if you qualify."
+   "text": "chasing referrals get actual real jobs on autopilot tap get offer"
+  },
+  {
+   "src": "img_8479",
+   "start": 76.9,
+   "end": 79.32,
+   "reason": "retake of B7",
+   "text": "below and see if you qualify."
   },
   {
    "src": "img_8479",
@@ -358,9 +393,16 @@
   {
    "src": "img_8479",
    "start": 86.14,
-   "end": 88.86,
+   "end": 86.8,
    "reason": "retake of C2",
-   "text": "tap get offer below and if you qualify."
+   "text": "tap get offer"
+  },
+  {
+   "src": "img_8479",
+   "start": 86.8,
+   "end": 88.86,
+   "reason": "retake of B7",
+   "text": "below and if you qualify."
   },
   {
    "src": "img_8479",
@@ -540,9 +582,23 @@
   {
    "src": "img_8479",
    "start": 184.19,
+   "end": 184.75,
+   "reason": "OFF-SCRIPT",
+   "text": "So"
+  },
+  {
+   "src": "img_8479",
+   "start": 184.75,
+   "end": 190.35,
+   "reason": "retake of C2",
+   "text": "if you're say chasing referrals and want actual jobs on autopilot tap get off or"
+  },
+  {
+   "src": "img_8479",
+   "start": 190.35,
    "end": 191.79,
-   "reason": "retake of B6",
-   "text": "So if you're say chasing referrals and want actual jobs on autopilot tap get off or below and see if you qualify"
+   "reason": "retake of B7",
+   "text": "below and see if you qualify"
   },
   {
    "src": "img_8479",
@@ -596,9 +652,16 @@
   {
    "src": "img_8479",
    "start": 250.11,
-   "end": 252.69,
+   "end": 250.69,
    "reason": "retake of C2",
-   "text": "tap get offer below and see if you qualify."
+   "text": "tap get offer"
+  },
+  {
+   "src": "img_8479",
+   "start": 250.69,
+   "end": 252.69,
+   "reason": "retake of B7",
+   "text": "below and see if you qualify."
   },
   {
    "src": "img_8479",
@@ -631,9 +694,16 @@
   {
    "src": "img_8479",
    "start": 261.39,
-   "end": 263.79,
+   "end": 261.99,
    "reason": "retake of C2",
-   "text": "tap get offer below and see if you qualify."
+   "text": "tap get offer"
+  },
+  {
+   "src": "img_8479",
+   "start": 261.99,
+   "end": 263.79,
+   "reason": "retake of B7",
+   "text": "below and see if you qualify."
   },
   {
    "src": "img_8479",
@@ -680,9 +750,16 @@
   {
    "src": "img_8479",
    "start": 275.45,
-   "end": 278.29,
+   "end": 276.31,
    "reason": "retake of C2",
-   "text": "tap get off or below and see if you qualify."
+   "text": "tap get off or"
+  },
+  {
+   "src": "img_8479",
+   "start": 276.31,
+   "end": 278.29,
+   "reason": "retake of B7",
+   "text": "below and see if you qualify."
   },
   {
    "src": "img_8479",
@@ -813,9 +890,16 @@
   {
    "src": "img_8479",
    "start": 302.57,
-   "end": 304.75,
+   "end": 303.31,
    "reason": "retake of C2",
-   "text": "tap get off or below and see if you qualify."
+   "text": "tap get off or"
+  },
+  {
+   "src": "img_8479",
+   "start": 303.31,
+   "end": 304.75,
+   "reason": "retake of B7",
+   "text": "below and see if you qualify."
   },
   {
    "src": "img_8479",

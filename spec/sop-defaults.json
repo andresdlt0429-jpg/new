@@ -102,5 +102,117 @@
     "_what": "On-screen text timing and placement (placeholder).",
     "min_on_screen_s": 1.5,
     "title_head_overlap": 0.35
+  },
+  "beat_map_sop_2_2": {
+    "_source": "spec/ad-editor-brief.md (DLT production guide), standing in for SOP 2.2 until the SOP arrives.",
+    "aliases": {
+      "HOOK": "HOOK",
+      "ICP": "HOOK",
+      "PROBLEM": "PROBLEM",
+      "PAIN": "PROBLEM",
+      "MONEY": "PROBLEM",
+      "DIAGNOSIS": "DIAGNOSIS",
+      "AGITATE": "DIAGNOSIS",
+      "REFRAME": "DIAGNOSIS",
+      "SOLUTION": "SOLUTION",
+      "SYSTEM": "SOLUTION",
+      "OFFER": "SOLUTION",
+      "DELIVERABLES": "SOLUTION",
+      "AUTHORITY": "PROOF",
+      "PROOF": "PROOF",
+      "FUTURE": "FUTURE-PACE",
+      "FUTURE-PACE": "FUTURE-PACE",
+      "GUARANTEE": "GUARANTEE",
+      "KICKER": "GUARANTEE",
+      "RISK REVERSAL": "GUARANTEE",
+      "CTA": "CTA",
+      "SCARCITY": "SCARCITY",
+      "DIFFERENTIATION": "DIAGNOSIS",
+      "QUALIFIER 1": "PROBLEM",
+      "QUALIFIER 2": "PROBLEM"
+    },
+    "beats": {
+      "HOOK": {
+        "component": "icp_callout",
+        "tier": "L",
+        "at": "beat_start",
+        "anim": "cut"
+      },
+      "PROBLEM": {
+        "component": "phrase",
+        "tier": "M",
+        "anim": "pop"
+      },
+      "DIAGNOSIS": {
+        "component": "phrase",
+        "tier": "L",
+        "anim": "cut",
+        "hold": "beat_end"
+      },
+      "SOLUTION": {
+        "component": "ticks",
+        "tier": "M",
+        "anim": "pop"
+      },
+      "FUTURE-PACE": {
+        "component": null
+      },
+      "GUARANTEE": {
+        "component": "guarantee",
+        "tier": "XL",
+        "anim": "cut",
+        "hold": "beat_end"
+      },
+      "PROOF": {
+        "component": "phrase",
+        "tier": "L",
+        "anim": "pop",
+        "min_s": 2.0
+      },
+      "CTA": {
+        "component": "cta_button",
+        "tier": "M",
+        "anim": "pop",
+        "pulse": true
+      },
+      "SCARCITY": {
+        "component": "phrase",
+        "tier": "M",
+        "anim": "pop",
+        "logo_card_s": 2.5
+      }
+    },
+    "hero_priority": [
+      "GUARANTEE",
+      "DIAGNOSIS",
+      "HOOK",
+      "SOLUTION"
+    ],
+    "_hero_rule": "Exactly one XL text moment per variant: the GUARANTEE beat if the variant has one, else the next beat in hero_priority that has on-screen text."
+  },
+  "graphics_sop_4": {
+    "_source": "spec/ad-editor-brief.md Chapter 02/04 + engine defaults (placeholder sizes until SOP 4).",
+    "tiers_pct_of_width": {
+      "XL": 15.5,
+      "L": 9.5,
+      "M": 6.5,
+      "S": 4.5
+    },
+    "hero_min_ratio": 1.4,
+    "pop_s": 0.12,
+    "pop_from": 0.86,
+    "pulse_hz": 1.2,
+    "pulse_amp": 0.04,
+    "tick_mark": "✓",
+    "max_lines": 2,
+    "no_count_up": "Numbers never count up: a count-up would show numbers that were never spoken (rule 4).",
+    "y_pct": {
+      "icp_callout": 13,
+      "phrase": 20,
+      "ticks": 46,
+      "guarantee": 24,
+      "cta_button": 60
+    },
+    "ticks_x_pct": 9
   }
 }

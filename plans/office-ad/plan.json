@@ -74,7 +74,7 @@
   {
    "id": "B2_1",
    "group": "shared",
-   "beat": "PAIN",
+   "beat": "PROBLEM",
    "say": "Are you sick and tired of knocking doors all day just for a couple extra deals, when really you want exclusive qualified leads that are ready to buy? Then this is for you.",
    "src": "img_8627",
    "in": 3.395,
@@ -86,7 +86,7 @@
   {
    "id": "B3_1",
    "group": "shared",
-   "beat": "SYSTEM",
+   "beat": "SOLUTION",
    "say": "We built the exact system you're missing. Here's what I mean.",
    "src": "img_8628",
    "in": 50.705,
@@ -98,7 +98,7 @@
   {
    "id": "B3_2",
    "group": "shared",
-   "beat": "SYSTEM",
+   "beat": "SOLUTION",
    "say": "We built the exact system you're missing. Here's what I mean.",
    "src": "img_8628",
    "in": 53.155,
@@ -110,7 +110,7 @@
   {
    "id": "B4_1",
    "group": "shared",
-   "beat": "OFFER",
+   "beat": "SOLUTION",
    "say": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it.",
    "src": "img_8636",
    "in": 3.445,
@@ -122,7 +122,7 @@
   {
    "id": "B4_2",
    "group": "shared",
-   "beat": "OFFER",
+   "beat": "SOLUTION",
    "say": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it.",
    "src": "img_8636",
    "in": 5.165,
@@ -134,7 +134,7 @@
   {
    "id": "B4_3",
    "group": "shared",
-   "beat": "OFFER",
+   "beat": "SOLUTION",
    "say": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it.",
    "src": "img_8636",
    "in": 6.165,
@@ -146,7 +146,7 @@
   {
    "id": "B4_4",
    "group": "shared",
-   "beat": "OFFER",
+   "beat": "SOLUTION",
    "say": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it.",
    "src": "img_8636",
    "in": 7.345,
@@ -158,7 +158,7 @@
   {
    "id": "B4_5",
    "group": "shared",
-   "beat": "OFFER",
+   "beat": "SOLUTION",
    "say": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it.",
    "src": "img_8636",
    "in": 8.445,
@@ -170,7 +170,7 @@
   {
    "id": "B5_1",
    "group": "shared",
-   "beat": "FUTURE",
+   "beat": "FUTURE-PACE",
    "say": "So instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar.",
    "src": "img_8640",
    "in": 4.635,
@@ -182,7 +182,7 @@
   {
    "id": "B5_2",
    "group": "shared",
-   "beat": "FUTURE",
+   "beat": "FUTURE-PACE",
    "say": "So instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar.",
    "src": "img_8640",
    "in": 7.925,
@@ -194,23 +194,11 @@
   {
    "id": "B6_1",
    "group": "body:A",
-   "beat": "CTA",
-   "say": "So if you want 20 more jobs completely guaranteed on your calendar every single month, click the link below and see if you qualify.",
+   "beat": "GUARANTEE",
+   "say": "So if you want 20 more jobs completely guaranteed on your calendar every single month,",
    "src": "img_8641",
    "in": 0.185,
    "out": 6.175,
-   "reframe": {
-    "mode": "center"
-   }
-  },
-  {
-   "id": "B6_2",
-   "group": "body:A",
-   "beat": "CTA",
-   "say": "So if you want 20 more jobs completely guaranteed on your calendar every single month, click the link below and see if you qualify.",
-   "src": "img_8641",
-   "in": 6.555,
-   "out": 8.395,
    "reframe": {
     "mode": "center"
    }
@@ -238,6 +226,18 @@
    "reframe": {
     "mode": "center"
    }
+  },
+  {
+   "id": "B7_1",
+   "group": "body:A",
+   "beat": "CTA",
+   "say": "click the link below and see if you qualify.",
+   "src": "img_8641",
+   "in": 6.555,
+   "out": 8.395,
+   "reframe": {
+    "mode": "center"
+   }
   }
  ],
  "variants": [
@@ -256,6 +256,8 @@
     "id": "t-B3",
     "text": "THE SYSTEM YOU'RE MISSING",
     "style": "headline",
+    "tier": "L",
+    "beat": "SOLUTION",
     "at": {
      "part": "B3_1",
      "edge": "start"
@@ -264,7 +266,7 @@
      "part": "B3_2",
      "edge": "end"
     },
-    "y_pct": 20.1,
+    "y_pct": 25.8,
     "anim": {
      "in": "pop",
      "out": "cut"
@@ -274,11 +276,13 @@
   "graphics": [
    {
     "id": "g-B1-1",
-    "kind": "text",
+    "kind": "icp_callout",
+    "beat": "HOOK",
     "text": "$20K A MONTH?",
-    "style": "graphic",
+    "tier": "L",
     "at": {
-     "word": "img_8627:4"
+     "part": "B1_1",
+     "edge": "start"
     },
     "until": {
      "part": "B1_1",
@@ -286,30 +290,62 @@
     },
     "box": {
      "x_pct": 8,
-     "y_pct": 15,
+     "y_pct": 13,
      "w_pct": 84
     },
     "anim": {
-     "in": "pop",
+     "in": "cut",
      "out": "cut"
     }
    },
    {
-    "id": "g-B4-1",
-    "kind": "text",
-    "text": "LIVE IN 4 DAYS",
-    "style": "graphic",
+    "id": "g-B4-ticks",
+    "kind": "ticks",
+    "beat": "SOLUTION",
+    "tier": "M",
+    "items": [
+     {
+      "text": "OFFER",
+      "at": {
+       "word": "img_8636:3"
+      }
+     },
+     {
+      "text": "SCRIPTS",
+      "at": {
+       "word": "img_8636:6"
+      }
+     },
+     {
+      "text": "VIDEOS",
+      "at": {
+       "word": "img_8636:9"
+      }
+     },
+     {
+      "text": "ADS",
+      "at": {
+       "word": "img_8636:12"
+      }
+     },
+     {
+      "text": "LIVE IN 4 DAYS",
+      "at": {
+       "word": "img_8636:17"
+      }
+     }
+    ],
     "at": {
-     "word": "img_8636:17"
+     "word": "img_8636:3"
     },
     "until": {
      "part": "B4_5",
      "edge": "end"
     },
     "box": {
-     "x_pct": 8,
-     "y_pct": 58,
-     "w_pct": 84
+     "x_pct": 9,
+     "y_pct": 46,
+     "w_pct": 82
     },
     "anim": {
      "in": "pop",
@@ -318,40 +354,43 @@
    },
    {
     "id": "g-B6-1",
-    "kind": "text",
+    "kind": "guarantee",
+    "beat": "GUARANTEE",
     "text": "20 MORE JOBS A MONTH",
-    "style": "graphic",
+    "tier": "L",
     "at": {
      "word": "img_8641:4"
     },
     "until": {
-     "word": "img_8641:20"
-    },
-    "box": {
-     "x_pct": 8,
-     "y_pct": 58,
-     "w_pct": 84
-    },
-    "anim": {
-     "in": "pop",
-     "out": "cut"
-    }
-   },
-   {
-    "id": "g-B6-2",
-    "kind": "text",
-    "text": "SEE IF YOU QUALIFY",
-    "style": "graphic",
-    "at": {
-     "word": "img_8641:20"
-    },
-    "until": {
-     "part": "B6_2",
+     "part": "B6_1",
      "edge": "end"
     },
     "box": {
      "x_pct": 8,
-     "y_pct": 58,
+     "y_pct": 24,
+     "w_pct": 84
+    },
+    "anim": {
+     "in": "cut",
+     "out": "cut"
+    }
+   },
+   {
+    "id": "g-B7-1",
+    "kind": "cta_button",
+    "beat": "CTA",
+    "text": "SEE IF YOU QUALIFY",
+    "tier": "M",
+    "at": {
+     "word": "img_8641:20"
+    },
+    "until": {
+     "part": "B7_1",
+     "edge": "end"
+    },
+    "box": {
+     "x_pct": 8,
+     "y_pct": 60,
      "w_pct": 84
     },
     "anim": {
@@ -361,9 +400,10 @@
    },
    {
     "id": "g-C2-1",
-    "kind": "text",
+    "kind": "cta_button",
+    "beat": "CTA",
     "text": "TAP GET OFFER",
-    "style": "graphic",
+    "tier": "M",
     "at": {
      "word": "img_8479:599"
     },
@@ -372,7 +412,7 @@
     },
     "box": {
      "x_pct": 8,
-     "y_pct": 58,
+     "y_pct": 60,
      "w_pct": 84
     },
     "anim": {
@@ -382,9 +422,10 @@
    },
    {
     "id": "g-C2-2",
-    "kind": "text",
+    "kind": "cta_button",
+    "beat": "CTA",
     "text": "SEE IF YOU QUALIFY",
-    "style": "graphic",
+    "tier": "M",
     "at": {
      "word": "img_8479:604"
     },
@@ -394,7 +435,7 @@
     },
     "box": {
      "x_pct": 8,
-     "y_pct": 58,
+     "y_pct": 60,
      "w_pct": 84
     },
     "anim": {
@@ -403,6 +444,10 @@
     }
    }
   ],
+  "hero": {
+   "A": "g-B6-1",
+   "C2": "g-B1-1"
+  },
   "captions": {
    "style": "auto",
    "emphasis": [
@@ -410,9 +455,13 @@
     "img_8479:601",
     "img_8479:607",
     "img_8627:7",
+    "img_8636:12",
     "img_8636:14",
     "img_8636:17",
     "img_8636:18",
+    "img_8636:3",
+    "img_8636:6",
+    "img_8636:9",
     "img_8641:14",
     "img_8641:23",
     "img_8641:4",
@@ -498,6 +547,13 @@
    "status": "pending",
    "notes": [
     "spec/scripts/office-ad-v1-DRAFT.md is a DRAFT reconstructed from the takes"
+   ]
+  },
+  "one_biggest_text_moment": {
+   "status": "pass",
+   "notes": [
+    "variant A: g-B6-1",
+    "variant C2: g-B1-1"
    ]
   }
  }

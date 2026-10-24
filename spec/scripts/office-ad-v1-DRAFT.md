@@ -8,12 +8,13 @@
 
 | TIME | BEAT | SAY | ON SCREEN | SHOW | DELIVERY |
 | :-: | :-: | :-: | :-: | :-: | :-: |
-| 0:00 | HOOK | "Exterior cleaners still got 20 grand a month?" | $20K A MONTH? | Andy walking toward camera | Punchy, no breath into the pain line |
-| 0:03 | PAIN | "Are you sick and tired of knocking doors all day just for a couple extra deals, when really you want exclusive qualified leads that are ready to buy? Then this is for you." |  | Keep walking | Pause before "Then this is for you." |
-| 0:13 | SYSTEM | "We built the exact system you're missing. Here's what I mean." | TITLE BEHIND HEAD: THE SYSTEM YOU'RE MISSING | Andy stops, square to camera | Confident |
-| 0:17 | OFFER | "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it." | LIVE IN 4 DAYS | Count on fingers | Fast. Pause before "All of it." |
-| 0:26 | FUTURE | "So instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar." |  | Calm walk | Calm, relief |
-| 0:32 | CTA | "So if you want 20 more jobs completely guaranteed on your calendar every single month, click the link below and see if you qualify." | 20 MORE JOBS A MONTH / SEE IF YOU QUALIFY | Point down at "link below" | Slowest moment on "completely guaranteed" |
+| 0:00 | HOOK | "Exterior cleaners still got 20 grand a month?" | $20K A MONTH? | Andy walking toward camera | Flat. Text in the first frame. |
+| 0:03 | PROBLEM | "Are you sick and tired of knocking doors all day just for a couple extra deals, when really you want exclusive qualified leads that are ready to buy? Then this is for you." |  | Keep walking | Pause before "Then this is for you." |
+| 0:13 | SOLUTION | "We built the exact system you're missing. Here's what I mean." | TITLE BEHIND HEAD: THE SYSTEM YOU'RE MISSING | Andy stops, square to camera | Confident |
+| 0:17 | SOLUTION | "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it." | OFFER / SCRIPTS / VIDEOS / ADS / LIVE IN 4 DAYS | Count on fingers | Fast. Ticks land on each word. Pause before "All of it." |
+| 0:26 | FUTURE-PACE | "So instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar." |  | Calm walk | Calm, relief |
+| 0:32 | GUARANTEE | "So if you want 20 more jobs completely guaranteed on your calendar every single month," | 20 MORE JOBS A MONTH | Stand still, down the lens | Slowest moment. Stand still. |
+| 0:38 | CTA | "click the link below and see if you qualify." | SEE IF YOU QUALIFY | Point down at "link below" | Warm, then firm |
 
 ## Meta policy scan
 
@@ -30,10 +31,14 @@ Checked against "Launchpad Ads: Policy-Safe One-Pagers" (Andy's Drive, 2026-10-1
 - "All live within just four days" is true for a new client.
 - Andy accepts or fixes each Meta policy scan item above.
 
-## CTA alternates
+## GUARANTEE+CTA alternates
 
-Option 1 is the CTA in the script table above. Option 2 comes from the second session (IMG_8479, last take at 5:10) and carries no guarantee claim.
+Option 1 is the GUARANTEE and CTA rows in the script table above. Option 2 comes from the second session (IMG_8479, last take at 5:10) and carries no guarantee claim.
 
 | # | Say | On screen |
 | :-: | :-: | :-: |
 | 2 | "If you're sick of chasing referrals and want actual jobs on autopilot, tap get offer below and see if you qualify." | TAP GET OFFER / SEE IF YOU QUALIFY |
+
+## Missing from the footage (brief Chapter 07)
+
+- Scarcity line and logo card (beat 9): no scarcity line was recorded and no DLT logo file is in the repo or the footage folder.

@@ -126,9 +126,9 @@ def parse(path):
             continue  # not a script table (policy table, changelog, ...)
         is_hooks = "id" in fields and "time" not in fields
         alt_of = None
-        m = re.search(r"\b([A-Za-z]+)\s+alternates?\b", heading or "", re.I)
+        m = re.search(r"\b([A-Za-z+-]+)\s+alternates?\b", heading or "", re.I)
         if is_hooks and m and m.group(1).lower() != "hook":
-            alt_of = m.group(1).upper()  # e.g. "CTA alternates": options that replace the CTA beat
+            alt_of = m.group(1).upper()  # "CTA alternates" or "GUARANTEE+CTA alternates": beats they replace
         for r in rows:
             def get(name):
                 k = fields.get(name)
@@ -143,7 +143,8 @@ def parse(path):
                     "show": get("show") or None, "delivery": get("delivery") or None,
                     "protected_pauses": protected_pauses(get("delivery"))}
             if alt_of:
-                item.update({"id": f"{alt_of[0]}{clean(get('id'))}", "beat": alt_of, "replaces": alt_of})
+                reps = alt_of.split("+")
+                item.update({"id": f"{reps[-1][0]}{clean(get('id'))}", "beat": reps[-1], "replaces": reps})
                 alternates.append(item)
             elif is_hooks:
                 item.update({"id": f"H{clean(get('id'))}", "hook_type": get("hook_type") or None})

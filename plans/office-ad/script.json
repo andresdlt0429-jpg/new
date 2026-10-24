@@ -8,7 +8,7 @@
    "on_screen": "$20K A MONTH?",
    "on_screen_kind": "graphic",
    "show": "Andy walking toward camera",
-   "delivery": "Punchy, no breath into the pain line",
+   "delivery": "Flat. Text in the first frame.",
    "protected_pauses": [],
    "id": "B1",
    "time": "0:00",
@@ -30,7 +30,7 @@
    "id": "B2",
    "time": "0:03",
    "time_end": null,
-   "beat": "PAIN"
+   "beat": "PROBLEM"
   },
   {
    "say": "We built the exact system you're missing. Here's what I mean.",
@@ -42,14 +42,14 @@
    "id": "B3",
    "time": "0:13",
    "time_end": null,
-   "beat": "SYSTEM"
+   "beat": "SOLUTION"
   },
   {
    "say": "We build the offer, write the scripts, edit the videos, run your ads, all live within just four days. All of it.",
-   "on_screen": "LIVE IN 4 DAYS",
+   "on_screen": "OFFER / SCRIPTS / VIDEOS / ADS / LIVE IN 4 DAYS",
    "on_screen_kind": "graphic",
    "show": "Count on fingers",
-   "delivery": "Fast. Pause before \"All of it.\"",
+   "delivery": "Fast. Ticks land on each word. Pause before \"All of it.\"",
    "protected_pauses": [
     {
      "before": "All of it",
@@ -59,7 +59,7 @@
    "id": "B4",
    "time": "0:17",
    "time_end": null,
-   "beat": "OFFER"
+   "beat": "SOLUTION"
   },
   {
    "say": "So instead of wondering where next month's jobs are coming from, you're just fulfilling jobs that are already on your calendar.",
@@ -71,14 +71,14 @@
    "id": "B5",
    "time": "0:26",
    "time_end": null,
-   "beat": "FUTURE"
+   "beat": "FUTURE-PACE"
   },
   {
-   "say": "So if you want 20 more jobs completely guaranteed on your calendar every single month, click the link below and see if you qualify.",
-   "on_screen": "20 MORE JOBS A MONTH / SEE IF YOU QUALIFY",
+   "say": "So if you want 20 more jobs completely guaranteed on your calendar every single month,",
+   "on_screen": "20 MORE JOBS A MONTH",
    "on_screen_kind": "graphic",
-   "show": "Point down at \"link below\"",
-   "delivery": "Slowest moment on \"completely guaranteed\"",
+   "show": "Stand still, down the lens",
+   "delivery": "Slowest moment. Stand still.",
    "protected_pauses": [
     {
      "before": null,
@@ -87,6 +87,18 @@
    ],
    "id": "B6",
    "time": "0:32",
+   "time_end": null,
+   "beat": "GUARANTEE"
+  },
+  {
+   "say": "click the link below and see if you qualify.",
+   "on_screen": "SEE IF YOU QUALIFY",
+   "on_screen_kind": "graphic",
+   "show": "Point down at \"link below\"",
+   "delivery": "Warm, then firm",
+   "protected_pauses": [],
+   "id": "B7",
+   "time": "0:38",
    "time_end": null,
    "beat": "CTA"
   }
@@ -102,7 +114,10 @@
    "protected_pauses": [],
    "id": "C2",
    "beat": "CTA",
-   "replaces": "CTA"
+   "replaces": [
+    "GUARANTEE",
+    "CTA"
+   ]
   }
  ],
  "lock_items": [

@@ -21,6 +21,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import align  # noqa: E402
+import components  # noqa: E402
+import graphics_qa  # noqa: E402
 import ingest  # noqa: E402
 import media  # noqa: E402
 import numbers_guard  # noqa: E402
@@ -123,12 +125,13 @@ def graphic_png(item, W, H, path):
 def title_png(item, W, H, path):
     g = BRAND["graphics"]
     font = ImageFont.truetype(fontfile(BRAND["fonts"]["headline"] or BRAND["fonts"]["fallback_headline"]),
-                              round(W * g["title_size_pct_of_width"] / 100))
+                              components.tier_px(item.get("tier", "L"), W))
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     lines = wrap(d, item["text"], font, W * 0.92)
     lh = font.size * 1.02
     y0 = H * item.get("y_pct", 25) / 100 - lh * len(lines) / 2
+    item["font_px"] = font.size
     shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     ds = ImageDraw.Draw(shadow)
     for i, ln in enumerate(lines):
@@ -140,11 +143,10 @@ def title_png(item, W, H, path):
     Image.alpha_composite(shadow, img).save(path)
 
 
-def title_block(text, W):
+def title_block(text, W, tier="L"):
     """(font_px, lines, block_height_px) for a behind-head title at master width W."""
-    g = BRAND["graphics"]
     font = ImageFont.truetype(fontfile(BRAND["fonts"]["headline"] or BRAND["fonts"]["fallback_headline"]),
-                              round(W * g["title_size_pct_of_width"] / 100))
+                              components.tier_px(tier, W))
     d = ImageDraw.Draw(Image.new("RGBA", (8, 8)))
     lines = wrap(d, text, font, W * 0.92)
     return font.size, lines, font.size * 1.02 * len(lines)
@@ -354,6 +356,7 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
 
     # assets
     titles, graphics = [], []
+    hero_id = plan["layers"].get("hero", {}).get(variant["id"])
     def span(item):
         try:
             a = resolve(item["at"], segs, srcs)
@@ -366,23 +369,42 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
             continue
         ts, te = sp
         p = os.path.join(cards, f"{t['id']}.png")
+        t = dict(t, tier="XL" if t["id"] == hero_id else t.get("tier", "L"))
         title_png(t, W, H, p)
         mp = os.path.join(wd, f"matte_{t['id']}.mkv")
         stats = matte_for(t, ts, te, segs, W, H, mp)
-        titles.append({"id": t["id"], "text": t["text"], "ts": ts, "te": te, "png": p, "matte": mp, "matte_stats": stats})
+        titles.append({"id": t["id"], "text": t["text"], "ts": ts, "te": te, "png": p, "matte": mp, "matte_stats": stats,
+                       "tier": t["tier"], "font_px": t["font_px"], "beat": t.get("beat")})
         print(f"title {t['id']} {ts:.2f}-{te:.2f}s  matte {stats}")
     for g in plan["layers"]["graphics"]:
         sp = span(g)
         if not sp:
             continue
         a, b = sp
-        p = os.path.join(cards, f"{g['id']}.png")
-        gx, gy = graphic_png(g, W, H, p)
-        graphics.append({"id": g["id"], "text": g["text"], "ts": a, "te": b, "png": p, "x": gx, "y": gy})
-        print(f"graphic {g['id']} {a:.2f}-{b:.2f}s  {g['text']!r}")
+        item = dict(g, tier="XL" if g["id"] == hero_id else g.get("tier", "M"))
+        if g["kind"] == "ticks":
+            item["items"] = [{"text": it["text"], "t": round(resolve(it["at"], segs, srcs) - a, 3)} for it in g["items"]]
+            item["text"] = " / ".join(it["text"] for it in g["items"])
+        if g["kind"] in components.BUILDERS:
+            graphics.append({"id": g["id"], "text": item["text"], "ts": a, "te": b, "item": item, "beat": g.get("beat")})
+        else:
+            p = os.path.join(cards, f"{g['id']}.png")
+            gx, gy = graphic_png(g, W, H, p)
+            graphics.append({"id": g["id"], "text": g["text"], "ts": a, "te": b, "png": p, "x": gx, "y": gy,
+                             "kind": "still", "tier": g.get("tier", "M"), "font_px": None, "beat": g.get("beat")})
     enforce_min_on_screen(graphics, total)
     for x in graphics:
-        print(f"graphic {x['id']} on screen {x['ts']:.2f}-{x['te']:.2f}s ({x['te'] - x['ts']:.2f}s)")
+        if "item" in x:
+            it = x["item"]
+            built = components.build(it, W, H, x["te"] - x["ts"], os.path.join(cards, f"{variant['id']}_{x['id']}"))
+            bx = round(W * it["box"]["x_pct"] / 100) if it["kind"] == "ticks" else (W - built["w"]) // 2
+            by = round(H * it["box"]["y_pct"] / 100 - built["h"] / 2)
+            x.update({"png": built["path"], "kind": built["kind"], "x": bx // 2 * 2, "y": by // 2 * 2,
+                      "w": built["w"], "h": built["h"], "tier": it["tier"], "font_px": built["font_px"],
+                      "hold_last": built["hold_last"], "component": it["kind"],
+                      "row_h": built.get("row_h"), "items": it.get("items")})
+        print(f"graphic {x['id']:14s} {x.get('component', 'text'):12s} tier {x['tier']:2s} "
+              f"{x['ts']:6.2f}-{x['te']:6.2f}s ({x['te'] - x['ts']:.2f}s)  {x['text']!r}")
     style = BRAND["captions"]["own_ads" if plan["ad_type"] == "own" else "client_ads"]
     caps = caption_lines(segs, srcs, set(plan["layers"]["captions"].get("emphasis", [])),
                          style["max_words_per_line"])
@@ -409,7 +431,7 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
         x["gi"], x["mi"] = idx, idx + 1
         idx += 2
     for x in graphics:
-        args += ["-loop", "1", "-t", f"{total:.3f}", "-i", x["png"]]
+        args += (["-loop", "1", "-t", f"{total:.3f}", "-i", x["png"]] if x["kind"] == "still" else ["-i", x["png"]])
         x["gi"] = idx
         idx += 1
     fl = [f"[{i}:v]setpts=PTS-STARTPTS,fps={EXP['fps']},scale={W}:{H},format=yuv420p,setsar=1[v{i}]" for i in range(n)]
@@ -430,8 +452,13 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
                f"[tt{k}][fg{k}]overlay=0:0:shortest=1:enable='between(t,{ts:.3f},{te:.3f})'[l3_{k}]"]
         cur = f"l3_{k}"
     for j, x in enumerate(graphics):
-        fl += [f"[{x['gi']}:v]format=rgba,fade=t=in:st={x['ts']:.3f}:d=0.12:alpha=1[gp{j}]",
-               f"[{cur}][gp{j}]overlay={x['x']}:{x['y']}:enable='between(t,{x['ts']:.3f},{x['te']:.3f})'[g{j}]"]
+        if x["kind"] == "still":
+            src = f"[{x['gi']}:v]format=rgba[gp{j}]"  # hard cut in: motion lives only in clips
+        else:
+            hold = (f",tpad=stop_mode=clone:stop_duration={x['te'] - x['ts'] + 1:.3f}" if x["hold_last"] else "")
+            src = (f"[{x['gi']}:v]format=rgba,setpts=PTS-STARTPTS,"
+                   f"tpad=start_duration={x['ts']:.3f}:start_mode=add:color=black@0.0{hold}[gp{j}]")
+        fl += [src, f"[{cur}][gp{j}]overlay={x['x']}:{x['y']}:enable='between(t,{x['ts']:.3f},{x['te']:.3f})'[g{j}]"]
         cur = f"g{j}"
     fl.append(f"[{cur}]ass={os.path.basename(ass)}[cap]")
     cur = "cap"
@@ -475,10 +502,11 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
     print(f"render: {R['render']}")
     with open(peak_file, "w") as f:
         json.dump(R["render"], f)
-    qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out_dir, stem)
+    R["hero"] = hero_id
+    qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out_dir, stem, W, H, DW, style, hero_id)
 
 
-def qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out_dir, stem):
+def qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out_dir, stem, W, H, DW, style, hero_id):
     lo, hi = plan["output"].get("target_duration_s", [0, 1e9])
     checks = {}
     for name, path, (w, h) in (("master", master, (plan["output"]["master"]["w"], plan["output"]["master"]["h"])),
@@ -506,6 +534,18 @@ def qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out
     heard = [w["w"] for w in kept if align.norm(w["w"]) in bad]
     checks["no_profanity"] = {"status": "fail" if heard else "pass",
                               "value": heard or "no profanity in the kept audio or captions"}
+    # Phase 6: one biggest text moment, ticks on their words, component stills, beat map
+    checks["one_biggest_text_moment"] = graphics_qa.hero_check(titles, graphics, round(H * style["size_pct_of_height"] / 100), hero_id)
+    tk = graphics_qa.tick_landing(delivery, graphics, DW / W, EXP["fps"])
+    checks["ticks_land_on_words"] = tk
+    aliases = SOP["beat_map_sop_2_2"]["aliases"]
+    for sg in segs:
+        sg["brief_beat"] = aliases.get((sg["beat"] or "").upper(), (sg["beat"] or "").upper())
+    shots, sheet = graphics_qa.stills(delivery, graphics, titles, proof)
+    tl = graphics_qa.beat_timeline(segs, graphics, titles, caps, hero_id, tk, media.probe(delivery)["duration"],
+                                   os.path.join(proof, "phase6_beat_map.png"), f"{stem}: beat map and text components")
+    R["phase6"] = {"stills": [{k: v for k, v in x.items() if k != "path"} for x in shots],
+                   "sheet": os.path.relpath(sheet, ROOT), "beat_map": os.path.relpath(tl, ROOT)}
     R["qa"] = checks
     # proof stills: each title/graphic midpoint + contact sheet
     shots = [((x["ts"] + x["te"]) / 2, x["id"]) for x in titles + graphics]
@@ -521,6 +561,8 @@ def qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out
     print("\nQA:")
     for k, v in checks.items():
         print(f"  [{v['status'].upper():4s}] {k}: {v['value']}")
+    for r in tk["rows"]:
+        print(f"         tick {r['tick']!r:20s} word {r['word_at_s']}s  appears {r['appears_at_s']}s  {r['offset_ms']} ms")
     print(f"files: {R['master_file']}  {R['delivery_file']}")
 
 
