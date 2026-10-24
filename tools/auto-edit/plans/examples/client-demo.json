@@ -1,0 +1,17 @@
+{
+  "name": "Demo · Client look · Window cleaning · H1 · r1",
+  "kind": "client",
+  "brand": {"name": "Demo Window Co", "color": "#2E8BFF"},
+  "card": {"shop": "Demo Window Co", "owner": "Owner", "area": "Fresno", "price": null, "no_price": false},
+  "sections": [
+    {"src": "raw/IMG_8627.MOV", "from": 0.76, "to": 12.30, "focus_y": 0.38},
+    {"src": "raw/IMG_8636.MOV", "from": 3.52, "to": 11.14, "focus_y": 0.35, "tail": 0.8}
+  ],
+  "fix": {"next to your": "Exterior", "x to your": "Exterior", "20 grand": "$20K"},
+  "titles": [
+    {"style": "callout", "say": "Exterior", "at": 0.08, "lines": ["EXTERIOR"], "hold": 1.6},
+    {"style": "combo", "say": "exclusive qualified leads", "lines": ["EXCLUSIVE LEADS", "ready to buy"]},
+    {"style": "tag", "say": "write the scripts", "lines": ["SCRIPTS", "WRITTEN FOR YOU"]}
+  ],
+  "offer": {"lines": ["EXCLUSIVE LEADS", "+ ADS LIVE IN 4 DAYS"], "say": ["four days"]}
+}

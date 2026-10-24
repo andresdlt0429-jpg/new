@@ -1,0 +1,7 @@
+faster-whisper>=1.0
+numpy
+Pillow
+fonttools
+brotli
+mediapipe          # person matte: titles under the chin / behind the head (optional; QA notes when missing)
+yt-dlp             # pull Drive footage at 1080p (optional)

@@ -1,0 +1,14 @@
+{
+  "name": "Demo · Breakout look · Landscape · r1",
+  "kind": "breakout",
+  "brand": {"name": "DLT Marketing"},
+  "sections": [{"src": "raw/test_landscape.mov", "from": 2.0, "to": 9.9, "focus_y": 0.4, "tail": 0.6}],
+  "fix": {"get offered": "get offer"},
+  "titles": [
+    {"style": "tag", "say": "So if", "lines": ["Your Name", "Owner, DLT Marketing"], "hold": 2.5},
+    {"style": "H", "say": "chasing referrals", "lines": ["Stop", "Chasing Referrals"], "hold": 1.0},
+    {"style": "check", "say": "real jobs", "title": "What you get", "items": [
+      {"text": "Real jobs", "say": "real jobs"}, {"text": "On autopilot", "say": "autopilot"}, {"text": "See if you qualify", "say": "qualify"}],
+      "hold": 1.0}
+  ]
+}
