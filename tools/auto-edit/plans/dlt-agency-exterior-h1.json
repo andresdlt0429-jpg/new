@@ -1,5 +1,5 @@
 {
-  "name": "DLT \u00b7 Agency \u00b7 Exterior cleaners \u00b7 H1 \u00b7 r5",
+  "name": "DLT \u00b7 Agency \u00b7 Exterior cleaners \u00b7 H1 \u00b7 r6",
   "kind": "agency",
   "brand": {
     "name": "DLT Marketing",
@@ -64,7 +64,12 @@
     "still got": "stuck at",
     "20 grand": "$20K"
   },
-  "drop": [],
+  "drop": [
+    {
+      "say": "all of it",
+      "section": 2
+    }
+  ],
   "protect": [],
   "titles": [
     {
@@ -75,7 +80,8 @@
       "lines": [
         "EXTERIOR CLEANERS",
         "stuck at $20K a month?"
-      ]
+      ],
+      "script_font": "mont800i"
     },
     {
       "style": "stack",
@@ -107,5 +113,6 @@
   "music": {
     "style": "soul",
     "db": -16
-  }
+  },
+  "duration": 33.0
 }

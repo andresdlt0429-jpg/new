@@ -97,6 +97,18 @@ def build(plan):
             st = to_out(kept[i][0])
             broll_cues.append(dict(b, start=st, end=st + b.get("dur", 2.2)))
     total = t0
+    # a target length (plan "duration"): the held tail after the last word gives or takes the difference,
+    # never leaving less than 0.9 s after his last word (the end card has to be readable)
+    if plan.get("duration") and pieces:
+        last = pieces[-1]
+        last_word = max(w[1] for w in words_out)
+        delta = plan["duration"] - total
+        floor = (last_word - last["t0"] + last["a"]) + 0.9
+        new_b = max(floor, last["b"] + delta)
+        total += new_b - last["b"]
+        last["b"] = new_b
+        if abs(total - plan["duration"]) > 0.05:
+            log(f"  ! target {plan['duration']} s not reachable by the tail alone: {total:.2f} s (drop a line or a pause)")
     # zooms: agency punches on every sentence; client/breakout alternate on cuts inside a take
     cyc = prof["zoom_cycle"]
     k = 0
@@ -416,7 +428,7 @@ def draw(ed, faces):
         if kind == "agency":
             if style == "combo":
                 y = place(ed, cue, fonts.fit(faces, "head", lines[0], 150, 0.9 * W))
-                looks.agency_combo(c, st, en, y, lines, cue.get('k', 1.0))
+                looks.agency_combo(c, st, en, y, lines, cue.get('k', 1.0), cue.get('script_font', 'script'))
             elif style == "stack":
                 y = place(ed, cue, fonts.fit(faces, "head", lines[0], 220, 0.86 * W))
                 looks.agency_stack(c, st, en, y, lines, cue.get('k', 1.0))
@@ -432,7 +444,7 @@ def draw(ed, faces):
         elif kind == "client":
             if style in ("combo", "headline"):
                 y = place(ed, cue, fonts.fit(faces, "head", lines[0], 150, 0.9 * W))
-                looks.agency_combo(c, st, en, y, lines, cue.get('k', 1.0))
+                looks.agency_combo(c, st, en, y, lines, cue.get('k', 1.0), cue.get('script_font', 'script'))
             elif style == "number":
                 y = place(ed, cue, fonts.fit(faces, "head", lines[0], 280, 0.8 * W))
                 looks.client_number(c, st, en, y, lines)

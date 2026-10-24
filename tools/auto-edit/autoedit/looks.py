@@ -127,13 +127,14 @@ class Canvas:
 
 
 # --- agency ---------------------------------------------------------------------------------------------------------
-def agency_combo(c, start, end, y, lines, k=1.0):
+def agency_combo(c, start, end, y, lines, k=1.0, script_role="script"):
     caps, script = lines[0], lines[1] if len(lines) > 1 else ""
     s1 = int(fonts.fit(c.faces, "head", caps, 150, 0.9 * c.W) * k)
     c.type3d(start, end, c.W / 2, y, caps, "head", s1, config.WHITE, depth=c.pal["depth"], ext=s1 / 118, glow=0)
     if script:
-        s2 = int(fonts.fit(c.faces, "script", script, 112, 0.84 * c.W) * k)
-        c.type3d(start + 0.12, end, c.W / 2, y + s1 * 0.82, script, "script", s2, c.pal["accent"],
+        cap2 = 112 if script_role == "script" else 96
+        s2 = int(fonts.fit(c.faces, script_role, script, cap2, 0.84 * c.W) * k)
+        c.type3d(start + 0.12, end, c.W / 2, y + s1 * 0.82, script, script_role, s2, c.pal["accent"],
                  depth=c.pal["accent_depth"], steps=5, ext=0.7, glow=c.glow * 0.7)
         return s1 * 0.5 + s1 * 0.82 + s2 * 0.6
     return s1

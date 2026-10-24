@@ -14,6 +14,7 @@ FACES = {
     "mont800": ("montserrat-latin-800-normal.woff2", "AE Mont800"),
     "mont700": ("montserrat-latin-700-normal.woff2", "AE Mont700"),
     "mont600": ("montserrat-latin-600-normal.woff2", "AE Mont600"),
+    "mont800i": ("montserrat-latin-800-italic.woff2", "AE Mont800 Italic"),
     "poppins": ("poppins-latin-800-normal.woff2", "AE Poppins"),
 }
 
