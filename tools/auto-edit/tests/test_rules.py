@@ -92,6 +92,14 @@ class LookRules(unittest.TestCase):
             self.assertNotIn("\\", text)
             self.assertNotIn("&H", text)
 
+    def test_brand_palette_overrides_gold(self):
+        faces = fonts.ensure(Path(__file__).resolve().parent.parent / "work" / "_test")
+        c = looks.Canvas((1080, 1920), faces, 0.3, {"bright": "#2B74FF", "depth": ("#0A2E8A", "#020A26")})
+        looks.agency_stack(c, 0, 2, 900, ["LIVE IN", "4 DAYS"])
+        text = "\n".join(c.front)
+        self.assertIn(looks.col("#2B74FF"), text)
+        self.assertNotIn(looks.col(config.YELLOW), text)
+
     def test_fit_uses_libass_scale(self):
         faces = fonts.ensure(Path(__file__).resolve().parent.parent / "work" / "_test")
         s = fonts.fit(faces, "head", "EXTERIOR CLEANERS", 400, 972)

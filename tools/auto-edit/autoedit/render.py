@@ -405,8 +405,9 @@ def place(ed, c, size_first):
 def draw(ed, faces):
     plan, prof, kind = ed["plan"], ed["prof"], ed["plan"]["kind"]
     W, H = ed["W"], ed["H"]
-    c = looks.Canvas((W, H), faces, prof["glow"])
     brand = plan.get("brand", {})
+    pal = {k: (tuple(v) if isinstance(v, list) else v) for k, v in brand.get("palette", {}).items()}
+    c = looks.Canvas((W, H), faces, prof["glow"], pal)
     color = brand.get("color", "#2E8BFF")
     sfx = []
     first_title = True
@@ -449,7 +450,7 @@ def draw(ed, faces):
                 looks.client_tag(c, st, min(en, st + cue.get("dur", 1.25)), cue.get("y", 0.33) * H, lines, color)
             elif style == "cta":
                 y = place(ed, cue, 150)
-                looks.cta(c, st, en, y, lines, second=config.GOLD, k=cue.get('k', 1.0))
+                looks.cta(c, st, en, y, lines, second=pal.get("bright", config.GOLD), k=cue.get('k', 1.0))
             else:
                 cue["flag"] = f"style {style} is not a client style"
                 continue
@@ -551,10 +552,10 @@ def pass_b(ed, base, voice, mattef, behind, front, faces_dir, still=None):
         v = "[ec]"
         logo = plan.get("brand", {}).get("logo")
         if logo:
-            lp = Path(plan["_root"]) / logo
+            lp = logo_for_dark(Path(plan["_root"]) / logo, work, plan["brand"].get("logo_on_dark", True))
             inputs += ["-loop", "1", "-t", f"{total:.3f}", "-i", lp]
             li = inputs.count("-i") - 1
-            fc.append(f"[{li}:v]scale={int(W * 0.5)}:-1,format=rgba,fade=t=in:st={e + 0.1:.3f}:d=0.3:alpha=1[logo]")
+            fc.append(f"[{li}:v]scale={int(W * 0.62)}:-1,format=rgba,fade=t=in:st={e + 0.1:.3f}:d=0.3:alpha=1[logo]")
             fc.append(f"{v}[logo]overlay=(W-w)/2:{int(0.26 * H)}-h/2:enable='gte(t,{e:.3f})'[lg]")
             v = "[lg]"
     tail = ""
@@ -595,6 +596,24 @@ def pass_b(ed, base, voice, mattef, behind, front, faces_dir, still=None):
              "-profile:v", "high", "-preset", "slow", "-tune", "film", "-crf", str(config.MASTER_CRF), "-pix_fmt", "yuv420p",
              *BT709, "-r", str(config.FPS), "-c:a", "pcm_s16le", "-t", f"{total:.3f}", raw)
     return raw
+
+
+def logo_for_dark(src, work, on_dark=True):
+    """The brand logo for the end card: transparent margins trimmed, and, because the card is his blurred and darkened
+    take, near-black ink turned white so a black wordmark stays readable (brand colours are kept as they are)."""
+    from PIL import Image
+    out = Path(work) / "logo_end_card.png"
+    im = Image.open(src).convert("RGBA")
+    a = np.asarray(im).copy()
+    if on_dark:
+        rgb = a[..., :3].astype(int)
+        dark = (rgb.max(axis=2) < 90) & (a[..., 3] > 0)
+        a[dark, :3] = 255
+    ys, xs = np.where(a[..., 3] > 10)
+    if len(ys):
+        a = a[ys.min():ys.max() + 1, xs.min():xs.max() + 1]
+    Image.fromarray(a).save(out)
+    return out
 
 
 def finish(ed, raw, phone=True):

@@ -1,33 +1,111 @@
 {
-  "name": "DLT · Agency · Exterior cleaners · H1 · r4",
+  "name": "DLT \u00b7 Agency \u00b7 Exterior cleaners \u00b7 H1 \u00b7 r5",
   "kind": "agency",
   "brand": {
     "name": "DLT Marketing",
     "wordmark": "DLT MARKETING",
     "tagline": "exclusive leads for exterior cleaners",
-    "color": "#F2C14E",
-    "logo": null
+    "logo": "brand/dlt-marketing-logo.png",
+    "logo_on_dark": true,
+    "color": "#0052FB",
+    "palette": {
+      "accent": "#5A9CFF",
+      "bright": "#2B74FF",
+      "depth": [
+        "#0A2E8A",
+        "#020A26"
+      ],
+      "accent_depth": [
+        "#0A2E8A",
+        "#020A26"
+      ]
+    }
   },
-  "card": {"shop": "DLT Marketing"},
-  "_footage": "The five clips are in the Drive folder 'DLT Marketing office raw footage'. Pull each into raw/ with: python -m autoedit fetch <its Drive link> raw/<name>.MOV",
+  "card": {
+    "shop": "DLT Marketing"
+  },
+  "_footage": "Clips IMG_8627, IMG_8628, IMG_8636, IMG_8640, IMG_8641 from the Drive folder 'DLT Marketing office raw footage'; the logo is 'DLT marketing logo' in Drive, saved to brand/ (local). Pull clips with: python -m autoedit fetch <Drive link> raw/<name>.MOV",
   "sections": [
-    {"src": "raw/IMG_8627.MOV", "from": 0.76, "to": 12.30, "focus_y": 0.38},
-    {"src": "raw/IMG_8628.MOV", "from": 33.16, "to": 36.16, "focus_y": 0.35},
-    {"src": "raw/IMG_8636.MOV", "from": 3.52, "to": 11.14, "focus_y": 0.35},
-    {"src": "raw/IMG_8640.MOV", "from": 4.74, "to": 10.30, "focus_y": 0.40},
-    {"src": "raw/IMG_8479.MOV", "from": 270.33, "to": 277.63, "focus_y": 0.45, "tail": 1.9}
+    {
+      "src": "raw/IMG_8627.MOV",
+      "from": 0.76,
+      "to": 12.3,
+      "focus_y": 0.38
+    },
+    {
+      "src": "raw/IMG_8628.MOV",
+      "from": 33.16,
+      "to": 36.16,
+      "focus_y": 0.35
+    },
+    {
+      "src": "raw/IMG_8636.MOV",
+      "from": 3.52,
+      "to": 11.14,
+      "focus_y": 0.35
+    },
+    {
+      "src": "raw/IMG_8640.MOV",
+      "from": 4.74,
+      "to": 10.3,
+      "focus_y": 0.4
+    },
+    {
+      "src": "raw/IMG_8641.MOV",
+      "from": 0.66,
+      "to": 8.08,
+      "focus_y": 0.4,
+      "tail": 1.9
+    }
   ],
-  "fix": {"next to your": "Exterior", "x to your": "Exterior", "still got": "stuck at", "20 grand": "$20K"},
+  "fix": {
+    "next to your": "Exterior",
+    "x to your": "Exterior",
+    "still got": "stuck at",
+    "20 grand": "$20K"
+  },
   "drop": [],
   "protect": [],
   "titles": [
-    {"style": "combo", "say": "Exterior cleaner", "at": 0.08, "hold": 1.2,
-     "lines": ["EXTERIOR CLEANERS", "stuck at $20K a month?"]},
-    {"style": "stack", "say": "exclusive qualified leads", "lines": ["EXCLUSIVE", "LEADS"]},
-    {"style": "stack", "say": "live within just four days", "lines": ["LIVE IN", "4 DAYS"], "hold": 0.55},
-    {"style": "stack", "say": "real jobs on autopilot", "lines": ["REAL JOBS", "ON AUTOPILOT"], "hold": 0.25}
+    {
+      "style": "combo",
+      "say": "Exterior cleaner",
+      "at": 0.08,
+      "hold": 1.2,
+      "lines": [
+        "EXTERIOR CLEANERS",
+        "stuck at $20K a month?"
+      ]
+    },
+    {
+      "style": "stack",
+      "say": "exclusive qualified leads",
+      "lines": [
+        "EXCLUSIVE",
+        "LEADS"
+      ]
+    },
+    {
+      "style": "stack",
+      "say": "live within just four days",
+      "lines": [
+        "LIVE IN",
+        "4 DAYS"
+      ],
+      "hold": 0.55
+    }
   ],
-  "cta": {"say": "tap", "lines": ["TAP", "GET OFFER"]},
+  "cta": {
+    "say": "click",
+    "nth": -1,
+    "lines": [
+      "TAP",
+      "GET OFFER"
+    ]
+  },
   "end_card": true,
-  "music": {"style": "soul", "db": -16}
+  "music": {
+    "style": "soul",
+    "db": -16
+  }
 }

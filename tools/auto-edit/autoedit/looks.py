@@ -49,10 +49,14 @@ def c_org(c, x):
 class Canvas:
     """Collects ASS events in three stacks: behind the speaker, in front, and captions."""
 
-    def __init__(self, size, faces, glow=0.0):
+    def __init__(self, size, faces, glow=0.0, palette=None):
         self.W, self.H = size
         self.faces = faces
         self.glow = glow
+        # accent: script lines and the end-card tagline; bright: stack bottoms, numbers, GET OFFER (README gold/yellow
+        # by default; a brand can swap its own colours in through the plan's brand block)
+        self.pal = {**dict(accent=config.GOLD, bright=config.YELLOW, depth=config.GOLD_DEPTH,
+                           accent_depth=("#6A430C", "#241604")), **(palette or {})}
         self.behind, self.front, self.caps = [], [], []
 
     def ev(self, stack, layer, start, end, tags, text):
@@ -126,11 +130,11 @@ class Canvas:
 def agency_combo(c, start, end, y, lines, k=1.0):
     caps, script = lines[0], lines[1] if len(lines) > 1 else ""
     s1 = int(fonts.fit(c.faces, "head", caps, 150, 0.9 * c.W) * k)
-    c.type3d(start, end, c.W / 2, y, caps, "head", s1, config.WHITE, ext=s1 / 118, glow=0)
+    c.type3d(start, end, c.W / 2, y, caps, "head", s1, config.WHITE, depth=c.pal["depth"], ext=s1 / 118, glow=0)
     if script:
         s2 = int(fonts.fit(c.faces, "script", script, 112, 0.84 * c.W) * k)
-        c.type3d(start + 0.12, end, c.W / 2, y + s1 * 0.82, script, "script", s2, config.GOLD,
-                 depth=("#6A430C", "#241604"), steps=5, ext=0.7, glow=c.glow * 0.7)
+        c.type3d(start + 0.12, end, c.W / 2, y + s1 * 0.82, script, "script", s2, c.pal["accent"],
+                 depth=c.pal["accent_depth"], steps=5, ext=0.7, glow=c.glow * 0.7)
         return s1 * 0.5 + s1 * 0.82 + s2 * 0.6
     return s1
 
@@ -138,10 +142,11 @@ def agency_combo(c, start, end, y, lines, k=1.0):
 def agency_stack(c, start, end, y, lines, k=1.0):
     top, bottom = lines[0], lines[1] if len(lines) > 1 else ""
     s1 = int(fonts.fit(c.faces, "head", top, 220, 0.86 * c.W) * k)
-    c.type3d(start, end, c.W / 2, y, top, "head", s1, config.WHITE, ext=s1 / 118, glow=0)
+    c.type3d(start, end, c.W / 2, y, top, "head", s1, config.WHITE, depth=c.pal["depth"], ext=s1 / 118, glow=0)
     if bottom:
         s2 = int(fonts.fit(c.faces, "head", bottom, 240, 0.9 * c.W) * k)
-        c.type3d(start + 0.1, end, c.W / 2, y + s1 * 0.5 + s2 * 0.55, bottom, "head", s2, config.YELLOW, ext=s2 / 110,
+        c.type3d(start + 0.1, end, c.W / 2, y + s1 * 0.5 + s2 * 0.55, bottom, "head", s2, c.pal["bright"], ext=s2 / 110,
+                 depth=c.pal["depth"],
                  steps=11)
         return s1 * 0.42 + s2 * 1.0
     return s1
@@ -149,7 +154,7 @@ def agency_stack(c, start, end, y, lines, k=1.0):
 
 def agency_number(c, start, end, y, lines, k=1.0):
     s1 = int(fonts.fit(c.faces, "head", lines[0], 300, 0.82 * c.W) * k)
-    c.type3d(start, end, c.W / 2, y, lines[0], "head", s1, config.YELLOW, ext=1.4, steps=11)
+    c.type3d(start, end, c.W / 2, y, lines[0], "head", s1, c.pal["bright"], depth=c.pal["depth"], ext=1.4, steps=11)
     if len(lines) > 1:
         s2 = fonts.fit(c.faces, "bold", lines[1], 64, 0.8 * c.W)
         c.type3d(start + 0.1, end, c.W / 2, y + s1 * 0.66, lines[1], "bold", s2, config.WHITE,
@@ -157,12 +162,13 @@ def agency_number(c, start, end, y, lines, k=1.0):
     return s1 * 1.25
 
 
-def cta(c, start, end, y, lines, second=config.YELLOW, k=1.0):
+def cta(c, start, end, y, lines, second=None, k=1.0):
     s1 = int(fonts.fit(c.faces, "head", lines[0], 150, 0.5 * c.W) * k)
-    c.type3d(start, end, c.W / 2, y, lines[0], "head", s1, config.WHITE, ext=1.0, glow=0, fade_out=False)
+    c.type3d(start, end, c.W / 2, y, lines[0], "head", s1, config.WHITE, depth=c.pal["depth"], ext=1.0, glow=0, fade_out=False)
     if len(lines) > 1:
         s2 = int(fonts.fit(c.faces, "head", lines[1], 220, 0.82 * c.W) * k)
-        c.type3d(start + 0.14, end, c.W / 2, y + s1 * 1.15, lines[1], "head", s2, second, ext=1.1, steps=10,
+        c.type3d(start + 0.14, end, c.W / 2, y + s1 * 1.15, lines[1], "head", s2, second or c.pal["bright"],
+                 depth=c.pal["depth"], ext=1.1, steps=10,
                  fade_out=False)
     return s1 * 2.4
 
@@ -172,13 +178,13 @@ def end_card(c, start, end, brand):
     y = 0.33 * c.H
     if mark and not brand.get("logo"):
         s = fonts.fit(c.faces, "head", mark, 160, 0.86 * c.W)
-        c.type3d(start, end, c.W / 2, y, mark, "head", s, config.WHITE, ext=0.9, glow=0, fade_out=False)
+        c.type3d(start, end, c.W / 2, y, mark, "head", s, config.WHITE, depth=c.pal["depth"], ext=0.9, glow=0, fade_out=False)
         y += s * 0.85
     else:
         y += 0.06 * c.H   # the logo image itself is overlaid by the renderer above this line
     if brand.get("tagline"):
         s2 = fonts.fit(c.faces, "script", brand["tagline"], 76, 0.84 * c.W)
-        c.type3d(start + 0.1, end, c.W / 2, y, brand["tagline"], "script", s2, config.GOLD, depth=("#6A430C", "#241604"),
+        c.type3d(start + 0.1, end, c.W / 2, y, brand["tagline"], "script", s2, c.pal["accent"], depth=c.pal["accent_depth"],
                  steps=4, ext=0.5, fade_out=False)
 
 
