@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "client-card/1",
+  "title": "Client card: everything the editor needs to make ads for one client",
+  "type": "object",
+  "required": ["schema", "id", "name", "status", "trade", "brand", "offer", "cta", "approved_claims"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"const": "client-card/1"},
+    "_note": {"type": "string"},
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "description": "folder name under clients/"},
+    "name": {"type": "string", "minLength": 1},
+    "status": {"enum": ["draft", "approved"], "description": "approved = the client signed off this card"},
+    "approved": {"type": ["object", "null"], "properties": {"by": {"type": "string"}, "date": {"type": "string"}, "words": {"type": "string"}}},
+    "trade": {"enum": ["exterior cleaning", "holiday lighting", "other"]},
+    "market": {"type": "object", "properties": {"city": {"type": "string"}, "service_area": {"type": "string"}}},
+    "brand": {
+      "type": "object",
+      "required": ["colors", "logo"],
+      "additionalProperties": false,
+      "properties": {
+        "colors": {
+          "type": "object",
+          "required": ["primary"],
+          "additionalProperties": false,
+          "properties": {
+            "primary": {"type": ["string", "null"]},
+            "secondary": {"type": ["string", "null"]},
+            "text_dark": {"type": ["string", "null"]}
+          }
+        },
+        "logo": {
+          "type": "object",
+          "required": ["path"],
+          "additionalProperties": false,
+          "properties": {"path": {"type": ["string", "null"]}, "background": {"type": ["string", "null"]}, "end_card_s": {"type": "number", "minimum": 2, "maximum": 3}}
+        },
+        "fonts": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {"headline": {"type": ["string", "null"]}, "caption": {"type": ["string", "null"]}}
+        }
+      }
+    },
+    "offer": {
+      "type": "object",
+      "required": ["headline"],
+      "additionalProperties": false,
+      "properties": {"headline": {"type": "string"}, "details": {"type": "string"}, "terms": {"type": "string"}}
+    },
+    "guarantee": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "properties": {"text": {"type": "string"}, "terms_url": {"type": ["string", "null"]}}
+    },
+    "cta": {
+      "type": "object",
+      "required": ["text"],
+      "additionalProperties": false,
+      "properties": {"text": {"type": "string"}, "button": {"type": "string"}, "landing_page": {"type": ["string", "null"]}}
+    },
+    "approved_claims": {
+      "type": "array",
+      "description": "The only claims an ad for this client may make. Each needs its proof and who approved it.",
+      "items": {
+        "type": "object",
+        "required": ["claim", "proof", "approved_by", "date"],
+        "additionalProperties": false,
+        "properties": {"claim": {"type": "string"}, "proof": {"type": "string"}, "approved_by": {"type": "string"}, "date": {"type": "string"}}
+      }
+    },
+    "banned_words": {"type": "array", "items": {"type": "string"}},
+    "footage": {"type": "object", "properties": {"folder": {"type": "string"}, "notes": {"type": "string"}}},
+    "notes": {"type": "string"}
+  }
+}

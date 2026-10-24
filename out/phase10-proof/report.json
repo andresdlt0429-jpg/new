@@ -1,0 +1,32 @@
+{
+  "DLT (own ad)": {
+    "title_letters_hidden": 0.085,
+    "text_on_primary": "#FFFFFF",
+    "text_contrast": 4.83,
+    "primary": "#2068F4",
+    "card_codes": []
+  },
+  "client: example-client": {
+    "title_letters_hidden": 0.085,
+    "text_on_primary": "#FFFFFF",
+    "text_contrast": 6.25,
+    "primary": "#0B6E4F",
+    "card_codes": [
+      [
+        "C06",
+        "HOLD",
+        "card status is draft: the client has not signed it off"
+      ],
+      [
+        "C07",
+        "HOLD",
+        "claim 'Over 200 five-star reviews' has no proof or approver"
+      ],
+      [
+        "C08",
+        "HOLD",
+        "guarantee has no terms page (terms_url)"
+      ]
+    ]
+  }
+}

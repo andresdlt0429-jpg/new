@@ -93,25 +93,35 @@ def occlusion(layer_rgba, person_alpha, text_only_rgba=None):
     return round(float((person_alpha[a] > 0.5).mean()), 3)
 
 
+def depth_ok(occ):
+    """The over-time rule (sop-defaults depth_sop_7 _depth_rule)."""
+    return occ["p90"] <= D7["occlusion_max"] and occ["depth_frames"] >= D7["depth_frames_min"]
+
+
 def place_title_over_time(text, W, H, alphas, y_guess, tier="L", slab=True):
-    """Like place_title, but over every sampled frame of the title's time on screen: the 90th
-    percentile frame must hide <= occlusion_max, the median frame close to occlusion_target.
-    Returns (y_center, {"median", "p90", "max"})."""
+    """Like place_title, but over every sampled frame of the title's time on screen. A moving
+    speaker swings letter occlusion from 0 to ~17% at one height, so the rule splits in two:
+    depth = the person cuts into the slab in >= depth_frames_min of frames; readability = the 90th
+    percentile frame hides <= occlusion_max of the letters. Among heights meeting both, the most
+    depth frames wins. Returns (y_center, {"median", "p90", "max", "depth_frames"})."""
     best = None
-    step = max(8, H // 160)
+    step = max(4, H // 320)
     for dy in range(-H // 3, H // 6, step):
         yc = y_guess + dy
-        layer, (x0, y0, bw, bh), _ = slab_frame(text, W, H, yc, 1.0, tier, slab)
+        layer, (x0, y0, bw, bh), _ = slab_frame(text, W, H, yc, 1.0, tier, slab, draw_text=False)
         if y0 < H * 0.03:
             continue
         txt, _, _ = slab_frame(text, W, H, yc, 1.0, tier, False)
         glyph = np.asarray(txt)[..., 3] > 128
+        panel = np.asarray(layer)[..., 3] > 128 if slab else glyph
         occ = np.array([float((a[glyph] > 0.5).mean()) for a in alphas])
-        med, p90 = float(np.median(occ)), float(np.percentile(occ, 90))
-        ok = p90 <= D7["occlusion_max"] and med >= D7["occlusion_min"]
-        score = (0 if ok else 1, max(0.0, p90 - D7["occlusion_max"]), abs(med - D7["occlusion_target"]), abs(dy))
+        over = np.array([float((a[panel] > 0.5).mean()) for a in alphas])
+        r = {"median": round(float(np.median(occ)), 3), "p90": round(float(np.percentile(occ, 90)), 3),
+             "max": round(float(occ.max()), 3), "depth_frames": round(float((over >= D7["slab_overlap_min"]).mean()), 3)}
+        score = (0 if depth_ok(r) else 1, max(0.0, r["p90"] - D7["occlusion_max"]),
+                 max(0.0, D7["depth_frames_min"] - r["depth_frames"]), -r["depth_frames"], r["p90"], abs(dy))
         if best is None or score < best[0]:
-            best = (score, yc, {"median": round(med, 3), "p90": round(p90, 3), "max": round(float(occ.max()), 3)})
+            best = (score, yc, r)
     return best[1], best[2]
 
 
@@ -157,7 +167,7 @@ def slab_frame(text, W, H, y_center, t, tier="L", slab=True, color=None, text_co
     """Full-frame RGBA of the slab title at time t (seconds since it starts)."""
     L = slab_layout(text, W, tier, slab)
     color = color or components.PRIMARY
-    text_color = text_color or components.WHITE
+    text_color = text_color or components.ON_PRIMARY
     rise = ease_out(t / D7["rise_s"]) if slab else 1.0
     drift = -D7["drift_pct_per_s"] / 100 * H * max(0.0, t - D7["rise_s"])
     y_off = (1 - rise) * L["h"] * D7["rise_from"] + drift

@@ -87,13 +87,27 @@ Preview on the example: "Text back in under 5 min" passes (spoken: "five minutes
 
 A hex color in a plan (brand values only in brand.json), raw-seconds anchors, misspelled keys (`untill`), a text graphic with no text, an unknown group like `hooks:H1`, a hand-written lock, a caption number fix with no `heard_by`.
 
+## Built since Phase 3 (where each piece lives)
+
+| Phase | What | Code | Numbers |
+|------|------|------|---------|
+| 7 | Depth look: refined person matte, title on a brand slab behind the head, rise + drift | `engines/depth.py`, proof `engines/phase7_depth.py` | `sop-defaults.json depth_sop_7` |
+| 8 | Synth music bed + soft effects on the edit's clock: silent in the hook and guarantee, ducked under words, settle-in after the hook, fade-out on the logo card | `engines/music.py` | `music_sop_5` |
+| 9 | QA gate (BLOCK / HOLD / PASS) + policy scan | `engines/qa_gate.py`, `engines/policy_scan.py` | `spec/policy-rules.json` -> `spec/QA-policy.md` |
+| 10 | Client cards (`clients/<id>/card.json`, codes C01-C10), intake check (codes I01-I13), hook-matrix export (`<Ad>_H<n>_Body<x>_v<k>.mp4`) | `engines/client_card.py`, `engines/intake.py`, `engines/export_matrix.py` | `clients/card.schema.json`, `spec/intake-rules.json` |
+
+Order for one ad: `intake.py` -> `ingest.py` -> `build_plan.py` -> `render.py --draft` -> `qa_gate.py` -> (Andy locks / accepts) -> `render.py` -> `qa_gate.py` -> `export_matrix.py`.
+
+The timeline is whole frames: every piece is trimmed to an exact frame count (video) and the matching sample count (audio), so the planned clock that places titles, graphics, captions, ticks and music is the file's clock (render QA `timeline_exact`).
+
 ## Pending SOP / pending Andy
 
 | Item | Placeholder now |
 |------|-----------------|
 | Caption size, position, words per line | brand.json `_placeholder` values |
 | Meta safe zones (UI covers top/bottom/right) | not enforced yet |
-| Loudness target | `audio.loudness_lufs: null` |
+| Loudness target | `audio_sop_5`: -14 LUFS / -1 dBTP (plan `audio.loudness_lufs` null = this) |
+| Music | `music_sop_5` (plan `audio.music`: null = on, "off" = none) |
 | Max duration per placement | `output.max_duration_s: null` |
 | Brand colors and fonts | `null` (Inter fallback) |
 | Script format details | parser waits for `spec/scripts/` |

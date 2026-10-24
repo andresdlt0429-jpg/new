@@ -1,0 +1,22 @@
+{
+  "schema": "client-card/1",
+  "_note": "Copy this folder to clients/<client-id>/ and fill every [BRACKET]. Captions on client ads are always plain white (Andy's rule), so there is no caption colour here.",
+  "id": "client-id",
+  "name": "[CLIENT BUSINESS NAME]",
+  "status": "draft",
+  "approved": null,
+  "trade": "exterior cleaning",
+  "market": {"city": "[CITY]", "service_area": "[AREA]"},
+  "brand": {
+    "colors": {"primary": null, "secondary": null, "text_dark": null},
+    "logo": {"path": null, "background": null, "end_card_s": 2.5},
+    "fonts": {"headline": null, "caption": null}
+  },
+  "offer": {"headline": "[OFFER IN THE CLIENT'S WORDS]", "details": "", "terms": ""},
+  "guarantee": null,
+  "cta": {"text": "[ONE CTA]", "button": "[BUTTON TEXT]", "landing_page": null},
+  "approved_claims": [],
+  "banned_words": [],
+  "footage": {"folder": "", "notes": ""},
+  "notes": ""
+}

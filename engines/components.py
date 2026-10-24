@@ -43,6 +43,16 @@ def rgba(h, a=255):
 PRIMARY = rgba(BRAND["colors"]["primary"] or "#1070F0")
 SECONDARY = rgba(BRAND["colors"]["secondary"] or "#F8D898")
 WHITE, SHADOW = rgba("#FFFFFF"), (0, 0, 0, 150)
+ON_PRIMARY = rgba(BRAND["colors"].get("text_on_primary") or "#FFFFFF")  # text on slabs and buttons
+
+
+def use_brand(b):
+    """Switch every component to another brand (a client card merged over brand.json)."""
+    global BRAND, PRIMARY, SECONDARY, ON_PRIMARY
+    BRAND = b
+    PRIMARY = rgba(b["colors"]["primary"] or "#1070F0")
+    SECONDARY = rgba(b["colors"]["secondary"] or "#F8D898")
+    ON_PRIMARY = rgba(b["colors"].get("text_on_primary") or "#FFFFFF")
 
 
 def tier_px(tier, W):
@@ -120,7 +130,7 @@ def size_px(item, W):
 
 def icp_callout(item, W, H):
     font, lines = fit_lines(item["text"], size_px(item, W), W * 0.86, G4["max_lines"])
-    return {"still": text_block(lines, font, WHITE, box=PRIMARY), "font_px": font.size}
+    return {"still": text_block(lines, font, ON_PRIMARY, box=PRIMARY), "font_px": font.size}
 
 
 def phrase(item, W, H):
@@ -137,7 +147,7 @@ def guarantee(item, W, H):
 
 def cta_button(item, W, H, dur):
     font, lines = fit_lines(item["text"], tier_px(item["tier"], W), W * 0.78, 1)
-    btn = text_block(lines, font, WHITE, box=PRIMARY, pad=0.55)
+    btn = text_block(lines, font, ON_PRIMARY, box=PRIMARY, pad=0.55)
     aw = round(font.size * 0.9)
     arrow = Image.new("RGBA", (aw, aw), (0, 0, 0, 0))
     ImageDraw.Draw(arrow).polygon([(0, aw * 0.25), (aw, aw * 0.25), (aw / 2, aw)], fill=WHITE)
@@ -174,7 +184,7 @@ def ticks(item, W, H, dur):
         d.rounded_rectangle([0, (lh - mark) / 2, mark, (lh + mark) / 2], radius=round(mark * 0.28),
                             fill=SECONDARY if last else PRIMARY)
         d.line([(mark * 0.24, lh / 2), (mark * 0.43, lh / 2 + mark * 0.2), (mark * 0.78, lh / 2 - mark * 0.22)],
-               fill=(20, 20, 20, 255) if last else WHITE, width=max(3, round(mark * 0.12)), joint="curve")
+               fill=(20, 20, 20, 255) if last else ON_PRIMARY, width=max(3, round(mark * 0.12)), joint="curve")
         sh = Image.new("RGBA", (cw, lh), (0, 0, 0, 0))
         ImageDraw.Draw(sh).text((mark * 1.35, (lh - px) / 2 - px * 0.08 + px * 0.05), r["text"], font=font, fill=SHADOW)
         img = Image.alpha_composite(sh.filter(ImageFilter.GaussianBlur(px * 0.05)), img)

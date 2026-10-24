@@ -1,0 +1,59 @@
+{
+  "schema": "client-card/1",
+  "_note": "FICTIONAL test client for the pipeline proof. Not a real business; replace with a real card.",
+  "id": "example-client",
+  "name": "Example Softwash Co.",
+  "status": "draft",
+  "approved": null,
+  "trade": "exterior cleaning",
+  "market": {
+    "city": "Example City",
+    "service_area": "25 miles"
+  },
+  "brand": {
+    "colors": {
+      "primary": "#0B6E4F",
+      "secondary": "#F2C14E",
+      "text_dark": "#0A0A0A"
+    },
+    "logo": {
+      "path": "logo.png",
+      "background": "#FFFFFF",
+      "end_card_s": 2.5
+    },
+    "fonts": {
+      "headline": null,
+      "caption": null
+    }
+  },
+  "offer": {
+    "headline": "Free gutter clean with any house wash",
+    "details": "This month only",
+    "terms": "Single-family homes"
+  },
+  "guarantee": {
+    "text": "Streak-free or we come back free",
+    "terms_url": null
+  },
+  "cta": {
+    "text": "Get your quote",
+    "button": "GET MY QUOTE",
+    "landing_page": null
+  },
+  "approved_claims": [
+    {
+      "claim": "Over 200 five-star reviews",
+      "proof": "review profile export, 2026-10-01",
+      "approved_by": "",
+      "date": "2026-10-01"
+    }
+  ],
+  "banned_words": [
+    "cheap"
+  ],
+  "footage": {
+    "folder": "",
+    "notes": ""
+  },
+  "notes": ""
+}

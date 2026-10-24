@@ -1,0 +1,25 @@
+{
+  "_what": "Intake check (Phase 10): a fast look at every raw clip before ingest. Placeholder thresholds until the SOP; edit here, never in code. REJECT = do not use (ask for a re-shoot or a better file). WARN = usable, the note says what the pipeline does about it.",
+  "roles": {
+    "talking_head": "the speaker on camera with their own audio (script lines)",
+    "broll": "cutaways; audio not used"
+  },
+  "role_from_folder": {"office": "talking_head", "sampson": "broll", "broll": "broll"},
+  "auto_role": "talking_head when a face is found in >= half the sample frames and the clip has audio; else broll",
+  "sample_frames": 5,
+  "codes": [
+    {"code": "I01", "name": "UNREADABLE", "level": "REJECT", "roles": ["talking_head", "broll"], "rule": "no video stream, or sample frames fail to decode"},
+    {"code": "I02", "name": "NO_AUDIO", "level": "REJECT", "roles": ["talking_head"], "rule": "no audio stream"},
+    {"code": "I03", "name": "LOW_RES", "level": "REJECT", "roles": ["talking_head", "broll"], "rule": "short side < min_short_side px", "min_short_side": 1080},
+    {"code": "I04", "name": "LOW_RES_AFTER_CROP", "level": "WARN", "roles": ["broll"], "rule": "landscape clip: its 9:16 crop is narrower than min_crop_w px (soft when filled to 1440x2560)", "min_crop_w": 810},
+    {"code": "I05", "name": "NOT_VERTICAL", "level": "REJECT", "roles": ["talking_head"], "rule": "displayed width > height (the speaker must be shot 9:16)"},
+    {"code": "I06", "name": "TOO_SHORT", "level": "REJECT", "roles": ["talking_head", "broll"], "rule": "duration below min_s for the role", "min_s": {"talking_head": 4.0, "broll": 1.5}},
+    {"code": "I07", "name": "ODD_FRAME_RATE", "level": "WARN", "roles": ["talking_head", "broll"], "rule": "average fps not one of the standard rates, or variable frame rate (avg vs nominal differ > 1%); the working copy is made constant", "standard": [23.976, 24, 25, 29.97, 30, 50, 59.94, 60]},
+    {"code": "I08", "name": "HDR", "level": "WARN", "roles": ["talking_head", "broll"], "rule": "HDR transfer (PQ / HLG): colours shift unless tone-mapped to SDR in the working copy"},
+    {"code": "I09", "name": "CLIPPED_AUDIO", "level": "WARN", "roles": ["talking_head"], "rule": "true peak > max_true_peak_dbtp: distortion is baked in and cannot be removed", "max_true_peak_dbtp": 0.0},
+    {"code": "I10", "name": "TOO_QUIET", "level": "WARN", "roles": ["talking_head"], "rule": "speech loudness below warn_lufs (raised in the edit, noise comes up with it); REJECT below reject_lufs", "warn_lufs": -38.0, "reject_lufs": -50.0},
+    {"code": "I11", "name": "TOO_DARK", "level": "WARN", "roles": ["talking_head", "broll"], "rule": "median sample-frame brightness below warn_luma (0-255); REJECT below reject_luma", "warn_luma": 50, "reject_luma": 22},
+    {"code": "I12", "name": "NO_FACE", "level": "REJECT", "roles": ["talking_head"], "rule": "a face in fewer than min_face_share of sample frames", "min_face_share": 0.5},
+    {"code": "I13", "name": "DUPLICATE", "level": "WARN", "roles": ["talking_head", "broll"], "rule": "same duration (to 0.05 s), size and first-frame fingerprint as another clip: only the first is used"}
+  ]
+}

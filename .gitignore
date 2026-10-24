@@ -22,3 +22,14 @@ out/*/*
 !out/*/*_qa.json
 # Generated graphics (rebuilt by every render)
 cards/*/
+# QA gate verdicts, intake report and hook-matrix manifests (text only)
+!out/*/*_gate.json
+!out/*/*_gate.md
+!out/intake/intake.md
+!out/intake/intake.json
+!out/*/matrix/
+out/*/matrix/*
+!out/*/matrix/manifest.json
+!out/*/matrix/manifest.csv
+# Phase proof reports (numbers) after the out/*/* rule above
+!out/phase*-proof/*.json

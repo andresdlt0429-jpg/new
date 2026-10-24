@@ -1,0 +1,110 @@
+{
+  "step1": {
+    "light": {
+      "soft_edge_px": 467.62,
+      "halo_pct": 8.37
+    },
+    "dark": {
+      "soft_edge_px": 500.16,
+      "halo_pct": 10.55
+    }
+  },
+  "step2": {
+    "light": {
+      "raw": {
+        "soft_edge_px": 500.09,
+        "halo_pct": 9.33,
+        "flicker_pct": 15.84
+      },
+      "refined": {
+        "soft_edge_px": 24.37,
+        "halo_pct": 1.27,
+        "flicker_pct": 18.92
+      }
+    },
+    "dark": {
+      "raw": {
+        "soft_edge_px": 514.01,
+        "halo_pct": 11.49,
+        "flicker_pct": 6.84
+      },
+      "refined": {
+        "soft_edge_px": 21.72,
+        "halo_pct": 1.89,
+        "flicker_pct": 8.8
+      }
+    }
+  },
+  "step3": {
+    "light": {
+      "text_contrast_worst": 1.19,
+      "letters_hidden": 0.085,
+      "pass": false
+    },
+    "dark": {
+      "text_contrast_worst": 2.7,
+      "letters_hidden": 0.085,
+      "pass": false
+    }
+  },
+  "step4": {
+    "light": {
+      "text_contrast_worst": 4.83,
+      "letters_hidden": 0.085,
+      "pass": true
+    },
+    "dark": {
+      "text_contrast_worst": 4.83,
+      "letters_hidden": 0.085,
+      "pass": true
+    }
+  },
+  "step5": {
+    "light": {
+      "letters_hidden_over_time": {
+        "median": 0.089,
+        "p90": 0.129,
+        "max": 0.141
+      }
+    },
+    "dark": {
+      "letters_hidden_over_time": {
+        "median": 0.069,
+        "p90": 0.081,
+        "max": 0.085
+      }
+    },
+    "curve": [
+      [
+        0.0,
+        0.9,
+        0.0
+      ],
+      [
+        0.08,
+        0.413,
+        0.0
+      ],
+      [
+        0.16,
+        0.144,
+        0.53
+      ],
+      [
+        0.24,
+        0.028,
+        0.96
+      ],
+      [
+        0.35,
+        0.0,
+        1.0
+      ],
+      [
+        1.5,
+        0.0,
+        1.0
+      ]
+    ]
+  }
+}

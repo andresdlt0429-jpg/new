@@ -3,14 +3,14 @@
   "variant": "A",
   "draft": true,
   "parts": 13,
-  "duration_planned_s": 36.24,
+  "duration_planned_s": 36.233,
   "captions": 35,
   "segments": [
     {
       "part": "B1_1",
       "src": "img_8627",
       "in": 0.895,
-      "out": 3.215,
+      "out": 3.2283,
       "t0": 0.0,
       "lufs_in": -43.6,
       "gain_db": 20.6
@@ -19,8 +19,8 @@
       "part": "B2_1",
       "src": "img_8627",
       "in": 3.395,
-      "out": 12.485,
-      "t0": 2.32,
+      "out": 12.495,
+      "t0": 2.3333,
       "lufs_in": -43.4,
       "gain_db": 20.4
     },
@@ -28,8 +28,8 @@
       "part": "B3_1",
       "src": "img_8628",
       "in": 50.705,
-      "out": 53.155,
-      "t0": 11.41,
+      "out": 53.1717,
+      "t0": 11.4333,
       "lufs_in": -42.0,
       "gain_db": 19.0
     },
@@ -37,8 +37,8 @@
       "part": "B3_2",
       "src": "img_8628",
       "in": 53.155,
-      "out": 54.295,
-      "t0": 13.86,
+      "out": 54.2883,
+      "t0": 13.9,
       "lufs_in": -43.9,
       "gain_db": 20.9
     },
@@ -46,8 +46,8 @@
       "part": "B4_1",
       "src": "img_8636",
       "in": 3.445,
-      "out": 5.085,
-      "t0": 15.0,
+      "out": 5.0783,
+      "t0": 15.0333,
       "lufs_in": -37.2,
       "gain_db": 14.2
     },
@@ -55,8 +55,8 @@
       "part": "B4_2",
       "src": "img_8636",
       "in": 5.165,
-      "out": 6.125,
-      "t0": 16.64,
+      "out": 6.1317,
+      "t0": 16.6667,
       "lufs_in": -44.0,
       "gain_db": 21.0
     },
@@ -64,8 +64,8 @@
       "part": "B4_3",
       "src": "img_8636",
       "in": 6.165,
-      "out": 7.215,
-      "t0": 17.6,
+      "out": 7.1983,
+      "t0": 17.6333,
       "lufs_in": -41.1,
       "gain_db": 18.1
     },
@@ -73,8 +73,8 @@
       "part": "B4_4",
       "src": "img_8636",
       "in": 7.345,
-      "out": 8.385,
-      "t0": 18.65,
+      "out": 8.3783,
+      "t0": 18.6667,
       "lufs_in": -41.0,
       "gain_db": 18.0
     },
@@ -82,8 +82,8 @@
       "part": "B4_5",
       "src": "img_8636",
       "in": 8.445,
-      "out": 11.355,
-      "t0": 19.69,
+      "out": 11.345,
+      "t0": 19.7,
       "lufs_in": -40.6,
       "gain_db": 17.6
     },
@@ -100,7 +100,7 @@
       "part": "B5_2",
       "src": "img_8640",
       "in": 7.925,
-      "out": 10.535,
+      "out": 10.525,
       "t0": 25.8,
       "lufs_in": -41.8,
       "gain_db": 18.8
@@ -109,8 +109,8 @@
       "part": "B6_1",
       "src": "img_8641",
       "in": 0.185,
-      "out": 6.175,
-      "t0": 28.41,
+      "out": 6.185,
+      "t0": 28.4,
       "lufs_in": -43.0,
       "gain_db": 20.0
     },
@@ -118,38 +118,107 @@
       "part": "B7_1",
       "src": "img_8641",
       "in": 6.555,
-      "out": 8.395,
+      "out": 8.3883,
       "t0": 34.4,
       "lufs_in": -44.8,
       "gain_db": 21.8
     }
   ],
   "loudness_pass1": {
-    "input_i": "-24.57",
+    "input_i": "-24.58",
     "input_tp": "-11.00",
-    "input_lra": "2.90"
+    "input_lra": "2.80"
   },
+  "end_card_s": 2.5,
   "preflight": {
-    "free_ram_gb": 14.5,
+    "free_ram_gb": 14.1,
     "need_ram_gb": 3.7,
-    "free_disk_gb": 20.9,
+    "free_disk_gb": 20.8,
     "need_disk_gb": 10.0,
     "source_gb": 0.03,
     "need_ram_gb_this_ad": 9.7
   },
   "render": {
-    "seconds": 134.8,
-    "x_realtime": 3.72,
-    "ffmpeg_peak_ram_gb": 8.03
+    "seconds": 136.3,
+    "x_realtime": 3.76,
+    "ffmpeg_peak_ram_gb": 7.98
   },
   "hero": "g-B6-1",
   "master_file": {
     "path": "out/office-ad/office-ad_A_DRAFT_master_1440x2560.mp4",
-    "mb": 54.1
+    "mb": 53.7
   },
   "delivery_file": {
     "path": "out/office-ad/office-ad_A_DRAFT_1080x1920.mp4",
     "mb": 24.6
+  },
+  "music": {
+    "bed_below_speech_db": 25.8,
+    "silent_rms_dbfs": -240.0,
+    "gap_rms_dbfs": null,
+    "tail_peak_dbfs": -72.1,
+    "sfx": [
+      {
+        "ref": "t-B3",
+        "kind": "whoosh",
+        "t": 11.433
+      },
+      {
+        "ref": "g-B1-1",
+        "kind": "pop",
+        "t": 0.0,
+        "skipped": "silent beat"
+      },
+      {
+        "ref": "g-B4-ticks:OFFER",
+        "kind": "tick",
+        "t": 16.267
+      },
+      {
+        "ref": "g-B4-ticks:SCRIPTS",
+        "kind": "tick",
+        "t": 17.2
+      },
+      {
+        "ref": "g-B4-ticks:VIDEOS",
+        "kind": "tick",
+        "t": 18.2
+      },
+      {
+        "ref": "g-B4-ticks:ADS",
+        "kind": "tick",
+        "t": 19.2
+      },
+      {
+        "ref": "g-B4-ticks:LIVE IN 4 DAYS",
+        "kind": "tick",
+        "t": 20.9
+      },
+      {
+        "ref": "g-B7-1",
+        "kind": "pop",
+        "t": 34.733
+      }
+    ],
+    "seconds": 38.733,
+    "raw_bed_lufs": -15.0,
+    "silent_windows": [
+      [
+        0.0,
+        2.333
+      ],
+      [
+        28.4,
+        34.4
+      ]
+    ],
+    "hook_end": 2.333,
+    "level_lu": {
+      "gaps": -20.0,
+      "under_words": -26.0,
+      "card": -12.0
+    },
+    "proof": "out/office-ad/proof/A/phase8_audio_map.png"
   },
   "phase6": {
     "stills": [
@@ -158,19 +227,19 @@
         "label": "g-B1-1 icp_callout L (first frame)"
       },
       {
-        "t": 13.21,
+        "t": 13.23,
         "label": "t-B3 title-behind-head L"
       },
       {
-        "t": 16.43,
+        "t": 16.47,
         "label": "tick 'OFFER' lands"
       },
       {
-        "t": 17.37,
+        "t": 17.4,
         "label": "tick 'SCRIPTS' lands"
       },
       {
-        "t": 18.37,
+        "t": 18.4,
         "label": "tick 'VIDEOS' lands"
       },
       {
@@ -186,11 +255,11 @@
         "label": "g-B6-1 guarantee XL"
       },
       {
-        "t": 34.89,
+        "t": 34.88,
         "label": "g-B7-1 cta pulse low"
       },
       {
-        "t": 35.31,
+        "t": 35.3,
         "label": "g-B7-1 cta pulse high"
       }
     ],
@@ -204,7 +273,7 @@
     },
     "master_duration": {
       "status": "pass",
-      "value": "36.50s (target 35-50s)"
+      "value": "38.80s (target 35-50s)"
     },
     "delivery_size": {
       "status": "pass",
@@ -212,11 +281,11 @@
     },
     "delivery_duration": {
       "status": "pass",
-      "value": "36.50s (target 35-50s)"
+      "value": "38.80s (target 35-50s)"
     },
     "loudness": {
       "status": "pass",
-      "value": "-14.5 LUFS (target -14.0), TP -1.1 dBTP, LRA 3.4"
+      "value": "-14.7 LUFS (target -14.0), TP -1.6 dBTP, LRA 3.6"
     },
     "numbers_rule_final": {
       "status": "pass",
@@ -225,6 +294,12 @@
     "no_profanity": {
       "status": "pass",
       "value": "no profanity in the kept audio or captions"
+    },
+    "depth_title": {
+      "status": "pass",
+      "value": [
+        "t-B3: speaker in front of the slab in 89% of frames, letters hidden median 2% p90 15%, contrast 4.83:1, matte halo 0.05%"
+      ]
     },
     "one_biggest_text_moment": {
       "status": "pass",
@@ -271,36 +346,56 @@
       "rows": [
         {
           "tick": "OFFER",
-          "word_at_s": 16.235,
-          "appears_at_s": 16.268,
+          "word_at_s": 16.268,
+          "appears_at_s": 16.301,
           "offset_ms": 33
         },
         {
           "tick": "SCRIPTS",
-          "word_at_s": 17.168,
-          "appears_at_s": 17.202,
+          "word_at_s": 17.201,
+          "appears_at_s": 17.235,
           "offset_ms": 33
         },
         {
           "tick": "VIDEOS",
-          "word_at_s": 18.168,
-          "appears_at_s": 18.202,
-          "offset_ms": 33
+          "word_at_s": 18.201,
+          "appears_at_s": 18.201,
+          "offset_ms": 0
         },
         {
           "tick": "ADS",
-          "word_at_s": 19.202,
+          "word_at_s": 19.201,
           "appears_at_s": 19.235,
           "offset_ms": 33
         },
         {
           "tick": "LIVE IN 4 DAYS",
-          "word_at_s": 20.902,
-          "appears_at_s": 20.935,
-          "offset_ms": 33
+          "word_at_s": 20.901,
+          "appears_at_s": 20.901,
+          "offset_ms": 0
         }
       ],
       "value": "5 ticks, worst offset 33 ms (limit 50 ms)"
+    },
+    "timeline_exact": {
+      "status": "pass",
+      "value": "planned 38.733s = 1162 frames; video 1162 frames, audio 38.741s decoded (off by +8 ms; limits: 0 frames, 25 ms = one AAC frame)"
+    },
+    "music_silent_in_hook_and_guarantee": {
+      "status": "pass",
+      "value": "bed -240.0 dBFS RMS in [[0.0, 2.333], [28.4, 34.4]] (need silence)"
+    },
+    "music_low_under_speech": {
+      "status": "pass",
+      "value": "bed 25.8 dB below speech while words are spoken (RMS; need >= 18.0)"
+    },
+    "fade_out_to_silence": {
+      "status": "pass",
+      "value": "last 50 ms of the final audio peak -72.1 dBFS (need <= -60)"
+    },
+    "effects_soft_and_placed": {
+      "status": "pass",
+      "value": "7 effects at peak -26.0 dBFS, none in the hook or guarantee; 1 skipped (silent beat)"
     }
   }
 }

@@ -1,0 +1,74 @@
+{
+ "ad": "office-ad",
+ "exports": [
+  {
+   "key": "H1_BodyA",
+   "version": 1,
+   "file": "out/office-ad/matrix/review/OfficeAd_H1_BodyA_v1.mp4",
+   "variant": "A",
+   "content": "5980725f7830",
+   "verdict": "HOLD",
+   "draft_render": true,
+   "duration_s": 38.73,
+   "hook_text": "Exterior cleaners still got 20 grand a month,",
+   "on_screen": [
+    "THE SYSTEM YOU'RE MISSING",
+    "$20K A MONTH?",
+    "OFFER / SCRIPTS / VIDEOS / ADS / LIVE IN 4 DAYS",
+    "20 MORE JOBS A MONTH",
+    "SEE IF YOU QUALIFY"
+   ],
+   "sha1": "69f5c10d59fbe06970eb5a637d0d35c8f7215fa0",
+   "made_at": "2026-10-24 05:57 UTC",
+   "holds": [
+    "script_lock_items",
+    "meta_policy_items",
+    "caption_word_fixes",
+    "script_is_final",
+    "jobs_guarantee",
+    "personal_attributes",
+    "money_on_screen",
+    "clean_render",
+    "money_visuals",
+    "real_testimonials",
+    "landing_page",
+    "footage_rules",
+    "phone_check"
+   ]
+  },
+  {
+   "key": "H1_BodyC2",
+   "version": 1,
+   "file": "out/office-ad/matrix/review/OfficeAd_H1_BodyC2_v1.mp4",
+   "variant": "C2",
+   "content": "8a76a948507d",
+   "verdict": "HOLD",
+   "draft_render": true,
+   "duration_s": 37.73,
+   "hook_text": "Exterior cleaners still got 20 grand a month,",
+   "on_screen": [
+    "THE SYSTEM YOU'RE MISSING",
+    "$20K A MONTH?",
+    "OFFER / SCRIPTS / VIDEOS / ADS / LIVE IN 4 DAYS",
+    "TAP GET OFFER",
+    "SEE IF YOU QUALIFY"
+   ],
+   "sha1": "50c501c5c94d6090de478233633d6150c3a72b4f",
+   "made_at": "2026-10-24 05:57 UTC",
+   "holds": [
+    "script_lock_items",
+    "meta_policy_items",
+    "caption_word_fixes",
+    "script_is_final",
+    "autopilot",
+    "personal_attributes",
+    "money_on_screen",
+    "clean_render",
+    "money_visuals",
+    "real_testimonials",
+    "landing_page",
+    "phone_check"
+   ]
+  }
+ ]
+}

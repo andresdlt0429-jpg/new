@@ -204,7 +204,7 @@
     "pop_from": 0.86,
     "pulse_hz": 1.2,
     "pulse_amp": 0.04,
-    "tick_mark": "✓",
+    "tick_mark": "\u2713",
     "max_lines": 2,
     "no_count_up": "Numbers never count up: a count-up would show numbers that were never spoken (rule 4).",
     "y_pct": {
@@ -239,6 +239,67 @@
     "occlusion_min": 0.04,
     "occlusion_max": 0.15,
     "occlusion_target": 0.08,
-    "_occlusion": "share of title letter pixels hidden by the person: enough to read as depth, never enough to lose a word"
+    "_occlusion": "share of title letter pixels hidden by the person: enough to read as depth, never enough to lose a word",
+    "slab_overlap_min": 0.02,
+    "depth_frames_min": 0.8,
+    "_depth_rule": "Over a title's whole time on screen: the speaker must cut into the slab (>= slab_overlap_min of its area) in >= depth_frames_min of frames (the depth cue), and the 90th-percentile frame may hide <= occlusion_max of the letters (readability). occlusion_min/target apply to single-frame proofs only: a moving speaker (head bobbing ~150 px on IMG_8628) makes a median minimum unreachable without breaking the p90 limit (measured 2026-10-24)."
+  },
+  "music_sop_5": {
+    "_what": "Phase 8 placeholders (SOP section 5 stand-in). Levels are LU relative to the speech loudness target (audio_sop_5.loudness_lufs). Follows the brief: hook flat (no music, no effects), music low or none under the speaker, nothing competing on the guarantee, logo card in the last seconds.",
+    "enabled": true,
+    "bpm": 84,
+    "chords_midi": [
+      [
+        57,
+        60,
+        64
+      ],
+      [
+        53,
+        57,
+        60
+      ],
+      [
+        55,
+        60,
+        64
+      ],
+      [
+        55,
+        59,
+        62
+      ]
+    ],
+    "bars_per_chord": 2,
+    "under_words_lu": -26.0,
+    "gaps_lu": -20.0,
+    "card_lu": -12.0,
+    "word_pad_s": [
+      0.08,
+      0.25
+    ],
+    "duck_attack_s": 0.08,
+    "duck_release_s": 0.35,
+    "silent_beats": [
+      "HOOK",
+      "GUARANTEE"
+    ],
+    "settle_in_s": 1.5,
+    "into_silence_fade_s": 0.3,
+    "out_of_silence_fade_s": 0.8,
+    "fade_out_s": 1.5,
+    "min_below_speech_db": 18.0,
+    "final_limit_dbfs": -2.0,
+    "sfx": {
+      "enabled": true,
+      "peak_dbfs": -26.0,
+      "by_kind": {
+        "title": "whoosh",
+        "ticks": "tick",
+        "cta_button": "pop",
+        "phrase": "pop",
+        "icp_callout": "pop"
+      }
+    }
   }
 }

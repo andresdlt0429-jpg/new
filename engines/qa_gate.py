@@ -7,8 +7,9 @@ Collects, per variant:
   2 policy scan         spec/policy-rules.json (QA-policy.md): BLOCK / HOLD / NOTE
   3 render QA           out/<ad>/<ad>_<variant>[_DRAFT]_qa.json: any fail -> BLOCK; missing or older
                         than the plan -> BLOCK (re-render)
-  4 delivery state      a DRAFT render can never PASS (it is not locked) -> HOLD
-  5 manual checks       QA-policy manual list -> HOLD until accepted
+  4 client card       ad_type client: clients/<id>/card.json codes C01-C10 (BLOCK / HOLD)
+  5 delivery state      a DRAFT render can never PASS (it is not locked) -> HOLD
+  6 manual checks       QA-policy manual list -> HOLD until accepted
 HOLD items clear only through plans/<ad>/acceptances.json (Andy's exact words, dated).
 
 Verdict: BLOCK if anything blocks, else HOLD if anything waits on Andy, else PASS.
@@ -20,6 +21,7 @@ import sys
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import client_card  # noqa: E402
 import policy_scan  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -49,6 +51,13 @@ def gate_variant(plan, plan_path, v, acc, policy):
                          f"accepted by {a['by']} {a['date']}: \"{a['words']}\"" if a else "; ".join(c.get("notes", []))[:300]))
         else:
             rows.append(("lock", k, "PASS", ""))
+
+    if plan.get("ad_type") == "client":  # Phase 10: the client card must be complete and signed off
+        card, d = client_card.load(plan["client"])
+        for code, sev, msg in client_card.check(card, d):
+            a = accepted(acc, code, vid) if sev == "HOLD" else None
+            rows.append(("client", code, "PASS" if a else sev,
+                         f"accepted by {a['by']} {a['date']}: \"{a['words']}\" | {msg}" if a else msg))
 
     for f in policy.get(vid, []):
         a = accepted(acc, f["rule"], vid) if f["severity"] == "HOLD" else None

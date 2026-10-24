@@ -21,11 +21,13 @@ from PIL import Image, ImageDraw, ImageFont
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import align  # noqa: E402
+import client_card  # noqa: E402
 import components  # noqa: E402
 import depth  # noqa: E402
 import graphics_qa  # noqa: E402
 import ingest  # noqa: E402
 import media  # noqa: E402
+import music  # noqa: E402
 import numbers_guard  # noqa: E402
 import preflight  # noqa: E402
 import spike_layers  # noqa: E402
@@ -56,14 +58,19 @@ def build_timeline(plan, variant, srcs):
     def wanted(p):
         g = p["group"]
         return g in ("shared", "cta") or g == f"hook:{variant.get('hook')}" or g == f"body:{variant.get('body')}"
-    segs, t = [], 0.0
+    fps = plan["output"]["fps"]
+    segs, n = [], 0
     for p in plan["parts"]:
         if not wanted(p):
             continue
-        d = p["out"] - p["in"]
+        # whole frames per piece: the render trims video and audio to exactly this, so the planned
+        # clock (overlays, captions, ticks, music) is the file's clock. Unrounded pieces each gained
+        # up to a frame at the concat: +0.26 s by the end of variant A (measured 2026-10-24).
+        f = max(1, round((p["out"] - p["in"]) * fps))
         segs.append({"part": p["id"], "src": p["src"], "proxy": srcs[p["src"]]["proxy"], "in": p["in"],
-                     "out": p["out"], "t0": round(t, 3), "t1": round(t + d, 3), "beat": p.get("beat")})
-        t += d
+                     "out": round(p["in"] + f / fps, 4), "frames": f, "t0": round(n / fps, 4),
+                     "t1": round((n + f) / fps, 4), "beat": p.get("beat")})
+        n += f
     return segs
 
 
@@ -168,9 +175,10 @@ def end_card(W, H, cards):
     return {"png": p, "s": float(lg.get("end_card_s", 2.5))}
 
 
-def slab_title_clip(t, ts, te, samples, W, H, path):
-    """Phase 7 depth title: slab placed so the person hides 4-15% of its letters over the whole
-    range (measured on the matte samples, half size), then rendered with its rise + drift."""
+def slab_title_clip(t, ts, te, samples, W, H, path, flick=None):
+    """Phase 7 depth title: slab placed over the whole range so the speaker cuts into it (depth)
+    without hiding too many letters (depth.place_title_over_time, on the half-size matte samples),
+    then rendered with its rise + drift."""
     hw, hh = W // 2, H // 2
     y_guess = H * t.get("y_pct", 25) / 100 / 2
     yc_half, occ = depth.place_title_over_time(t["text"], hw, hh, samples, y_guess, t["tier"], True)
@@ -187,34 +195,47 @@ def slab_title_clip(t, ts, te, samples, W, H, path):
     y1 = min(H, int(max(b[1] + b[3] for b in boxes)) + 2)
     components.write_clip([f.crop((x0, y0, x1, y1)) for f in frames], path)
     halo = depth.edge_metrics(samples[len(samples) // 2])["halo_pct"]
-    flick = depth.flicker(samples)
-    c = depth.contrast(components.WHITE, np.array([[components.PRIMARY[:3]]], np.uint8))
+    c = depth.contrast(components.ON_PRIMARY, np.array([[components.PRIMARY[:3]]], np.uint8))
     return {"path": path, "x": x0, "y": y0, "font_px": L["font"].size,
             "depth": {"letters_hidden": occ, "text_contrast": c, "matte_halo_pct": halo, "matte_flicker_pct": flick}}
 
 
 def matte_for(title, ts, te, segs, W, H, path):
-    """Speaker matte (multiclass, half size, smoothed) for the title's time range only."""
-    s = next(x for x in segs if x["t0"] - 0.001 <= ts < x["t1"])
-    start = s["in"] + (ts - s["t0"])
+    """Speaker matte (multiclass, half size, refined, smoothed) for the title's time range only,
+    following the timeline across cuts (smoothing restarts at each cut). Flicker is measured on
+    consecutive frames inside the edge band (it still includes real movement)."""
     hw, hh = W // 2, H // 2
     seg = spike_layers.segmenter("multiclass")
     enc = subprocess.Popen(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt",
                             "gray", "-s", f"{hw}x{hh}", "-r", "30", "-i", "-", "-c:v", "ffv1", path],
                            stdin=subprocess.PIPE)
-    prev, n, t, samples = None, 0, time.time(), []
-    for _, small in media.read_frames(os.path.join(ROOT, s["proxy"]), hw, hh, 30, start=start, dur=te - ts):
-        m = depth.refine(spike_layers.person_mask(seg, "multiclass", small), small)  # Phase 7: no halo
-        m = m if prev is None else spike_layers.EMA * m + (1 - spike_layers.EMA) * prev
-        prev = m
-        enc.stdin.write((m * 255).astype(np.uint8).tobytes())
-        if n % 3 == 0:
-            samples.append(m.astype(np.float32))
-        n += 1
+    n, t, samples, flick = 0, time.time(), [], []
+    total = max(1, round((te - ts) * EXP["fps"]))
+    for s in segs:
+        a, b = max(ts, s["t0"]), min(te, s["t1"])
+        if b - a < 0.5 / EXP["fps"] or n >= total:
+            continue
+        prev = None
+        for _, small in media.read_frames(os.path.join(ROOT, s["proxy"]), hw, hh, 30,
+                                          start=s["in"] + (a - s["t0"]), dur=b - a):
+            if n >= total:
+                break
+            m = depth.refine(spike_layers.person_mask(seg, "multiclass", small), small)  # Phase 7: no halo
+            if prev is not None:
+                m = spike_layers.EMA * m + (1 - spike_layers.EMA) * prev
+                band = ((m > 0.05) & (m < 0.95)) | ((prev > 0.05) & (prev < 0.95))
+                if band.any():
+                    flick.append(float(np.abs(m - prev)[band].mean()))
+            prev = m
+            enc.stdin.write((m * 255).astype(np.uint8).tobytes())
+            if n % 3 == 0:
+                samples.append(m.astype(np.float32))
+            n += 1
     enc.stdin.close()
     enc.wait()
     seg.close()
-    return {"frames": n, "seconds": round(time.time() - t, 1)}, samples
+    return {"frames": n, "seconds": round(time.time() - t, 1),
+            "flicker_pct": round(float(np.mean(flick)) * 100, 2) if flick else 0.0}, samples
 
 
 def face_boxes(segs, srcs, ts, te, W, H):
@@ -371,7 +392,9 @@ def audio_chain(segs, measured=None):
     parts = []
     for i, s in enumerate(segs):
         d = s["out"] - s["in"]
-        parts.append(f"[{i}:a]aresample=48000,asetpts=PTS-STARTPTS,volume={s.get('gain_db', 0)}dB,afade=t=in:st=0:d={F},"
+        ns = round(s["frames"] / EXP["fps"] * 48000) if "frames" in s else round(d * 48000)
+        parts.append(f"[{i}:a]aresample=48000,asetpts=PTS-STARTPTS,apad=pad_dur=0.2,atrim=end_sample={ns},"
+                     f"volume={s.get('gain_db', 0)}dB,afade=t=in:st=0:d={F},"
                      f"afade=t=out:st={max(0, d - F):.3f}:d={F}[a{i}]")
     cat = "".join(f"[a{i}]" for i in range(len(segs))) + f"concat=n={len(segs)}:v=0:a=1[acat]"
     # aim below the true-peak limit: AAC encoding overshoots by a few tenths of a dB
@@ -391,7 +414,8 @@ def audio_chain(segs, measured=None):
 def seg_inputs(segs, video=True):
     args = []
     for s in segs:
-        args += ["-ss", f"{s['in']:.3f}", "-t", f"{s['out'] - s['in']:.3f}"]
+        # read a little past the cut; the graph trims to the piece's exact frames / samples
+        args += ["-ss", f"{s['in']:.3f}", "-t", f"{s['out'] - s['in'] + 0.1:.3f}"]
         if not video:
             args += ["-vn"]
         args += ["-i", os.path.join(ROOT, s["proxy"])]
@@ -414,6 +438,16 @@ def main(plan_path, draft):
         bad = [k for k, v in plan.get("checks", {}).items() if v["status"] in ("fail", "pending")]
         sys.exit(f"REFUSED: plan is not locked (open checks: {', '.join(bad)}). Use --draft for a review render.")
     ad = plan["id"]
+    # Phase 10: client ads take the client card's colours, logo and fonts (captions stay plain white)
+    global BRAND
+    BRAND, card_codes = client_card.brand_for(plan, BRAND)
+    components.use_brand(BRAND)
+    if any(c[1] == "BLOCK" for c in card_codes):
+        sys.exit("REFUSED: client card blocks: " + "; ".join(f"{c[0]} {c[2]}" for c in card_codes if c[1] == "BLOCK"))
+    if card_codes and not draft:
+        sys.exit("REFUSED: client card on hold (" + ", ".join(c[0] for c in card_codes) + "). Use --draft for a review render.")
+    for c in card_codes:
+        print(f"client card {c[0]} {c[1]}: {c[2]}")
     L = preflight.load_limits()
     srcs = {k: align.load_source(os.path.join(ROOT, v["ingest"])) for k, v in plan["sources"].items()}
     W, H = plan["output"]["master"]["w"], plan["output"]["master"]["h"]
@@ -457,7 +491,8 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
         t = dict(t, tier="XL" if t["id"] == hero_id else t.get("tier", "L"))
         mp = os.path.join(wd, f"matte_{t['id']}.mkv")
         stats, samples = matte_for(t, ts, te, segs, W, H, mp)
-        built = slab_title_clip(t, ts, te, samples, W, H, os.path.join(cards, f"{variant['id']}_{t['id']}.mkv"))
+        built = slab_title_clip(t, ts, te, samples, W, H, os.path.join(cards, f"{variant['id']}_{t['id']}.mkv"),
+                                stats["flicker_pct"])
         titles.append({"id": t["id"], "text": t["text"], "ts": ts, "te": te, "png": built["path"], "matte": mp,
                        "matte_stats": stats, "tier": t["tier"], "font_px": built["font_px"], "beat": t.get("beat"),
                        "x": built["x"], "y": built["y"], "depth": built["depth"]})
@@ -553,7 +588,20 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
         card["ci"], card["ai"] = idx, idx + 1
         idx += 2
         R["end_card_s"] = card["s"]
-    fl = [f"[{i}:v]setpts=PTS-STARTPTS,fps={EXP['fps']},scale={W}:{H},format=yuv420p,setsar=1[v{i}]" for i in range(n)]
+    # Phase 8: music bed + soft effects on the same clock (plan audio.music: null = SOP default, "off")
+    mus = None
+    if (plan.get("audio") or {}).get("music") != "off" and music.M["enabled"]:
+        seed = sum(map(ord, stem.replace("_DRAFT", "")))
+        mus = music.build(segs, srcs, titles, graphics, total, card["s"] if card else 0.0,
+                          os.path.join(wd, f"{stem}_music.wav"), seed)
+        args += ["-i", mus["path"]]
+        mus["ai"] = idx
+        idx += 1
+        print(f"music: bed {mus['seconds']}s, silent {mus['silent_windows']}, settles in at {mus['hook_end']}s, "
+              f"{sum('skipped' not in h for h in mus['sfx'])} effects")
+    fl = [f"[{i}:v]setpts=PTS-STARTPTS,fps={EXP['fps']},tpad=stop_mode=clone:stop_duration=0.2,"
+          f"trim=end_frame={segs[i]['frames']},setpts=PTS-STARTPTS,scale={W}:{H},format=yuv420p,setsar=1[v{i}]"
+          for i in range(n)]
     aparts, _, clean = audio_chain(segs, meas)
     fl += aparts
     fl.append("".join(f"[v{i}][a{i}]" for i in range(n)) + f"concat=n={n}:v=1:a=1[vc][acat]")
@@ -592,12 +640,19 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
                   f":fontcolor=white@0.9:box=1:boxcolor=black@0.55:boxborderw=14[dr]")
         cur = "dr"
     if card:
-        fl += [f"[{card['ci']}:v]fps={EXP['fps']},scale={W}:{H},format=yuv420p,setsar=1[vcard]",
+        fl += [f"[{card['ci']}:v]fps={EXP['fps']},trim=end_frame={round(card['s'] * EXP['fps'])},"
+               f"scale={W}:{H},format=yuv420p,setsar=1[vcard]",
                f"[{card['ai']}:a]aresample={EXP['audio_rate']}[acard]",
-               f"[{cur}][vcard]concat=n=2:v=1:a=0[vfin]", clean + "[an0]", "[an0][acard]concat=n=2:v=0:a=1[an]"]
+               f"[{cur}][vcard]concat=n=2:v=1:a=0[vfin]", clean + "[an0]", "[an0][acard]concat=n=2:v=0:a=1[asp]"]
         cur = "vfin"
     else:
-        fl.append(clean + "[an]")
+        fl.append(clean + "[asp]")
+    if mus:  # bed under the finished speech; a last limiter only catches an effect landing on a speech peak
+        lim = 10 ** (music.M["final_limit_dbfs"] / 20)
+        fl.append(f"[asp][{mus['ai']}:a]amix=inputs=2:normalize=0:duration=first,"
+                  f"alimiter=limit={lim:.4f}:attack=1:release=50:level=0:latency=1[an]")
+    else:
+        fl.append("[asp]anull[an]")
     fl += [f"[{cur}]split[vm][vd0]", f"[vd0]scale={DW}:{DH}:flags=lanczos[vd]", "[an]asplit[am][ad]"]
     master = os.path.join(out_dir, f"{stem}_master_{W}x{H}.mp4")
     delivery = os.path.join(out_dir, f"{stem}_{DW}x{DH}.mp4")
@@ -633,10 +688,12 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
     with open(peak_file, "w") as f:
         json.dump(R["render"], f)
     R["hero"] = hero_id
-    qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out_dir, stem, W, H, DW, style, hero_id)
+    qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out_dir, stem, W, H, DW, style, hero_id,
+       mus, card)
 
 
-def qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out_dir, stem, W, H, DW, style, hero_id):
+def qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out_dir, stem, W, H, DW, style, hero_id,
+       mus=None, card=None):
     lo, hi = plan["output"].get("target_duration_s", [0, 1e9])
     checks = {}
     for name, path, (w, h) in (("master", master, (plan["output"]["master"]["w"], plan["output"]["master"]["h"])),
@@ -670,12 +727,16 @@ def qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out
     for t in titles:
         dp = t["depth"]
         occ = dp["letters_hidden"]
-        if not (occ["p90"] <= D7["occlusion_max"] and occ["median"] >= D7["occlusion_min"]):
-            bad.append(f"{t['id']}: letters hidden median {occ['median']:.0%}, p90 {occ['p90']:.0%}")
+        if not depth.depth_ok(occ):
+            bad.append(f"{t['id']}: speaker in front of the slab in {occ['depth_frames']:.0%} of frames "
+                       f"(need >= {D7['depth_frames_min']:.0%}), letters hidden p90 {occ['p90']:.0%} "
+                       f"(max {D7['occlusion_max']:.0%})")
         if dp["text_contrast"] < D7["min_text_contrast"]:
             bad.append(f"{t['id']}: text contrast {dp['text_contrast']}:1")
     checks["depth_title"] = {"status": "fail" if bad else ("pass" if titles else "n/a"),
-                             "value": bad or [f"{t['id']}: hidden median {t['depth']['letters_hidden']['median']:.0%} "
+                             "value": bad or [f"{t['id']}: speaker in front of the slab in "
+                                              f"{t['depth']['letters_hidden']['depth_frames']:.0%} of frames, letters hidden "
+                                              f"median {t['depth']['letters_hidden']['median']:.0%} "
                                               f"p90 {t['depth']['letters_hidden']['p90']:.0%}, contrast "
                                               f"{t['depth']['text_contrast']}:1, matte halo {t['depth']['matte_halo_pct']}%"
                                               for t in titles] or "no title"}
@@ -686,6 +747,24 @@ def qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out
     checks["graphics_clear_of_face"] = {"status": "fail" if clash else "pass",
                                         "value": clash or "no graphic covers the speaker's face"}
     checks["ticks_land_on_words"] = tk
+    # the planned clock is the file's clock: whole-frame pieces, nothing gained at the cuts
+    want = segs[-1]["t1"] + (card["s"] if card else 0.0)
+    # decoded frames and samples (container durations include AAC padding, which is not drift)
+    frames = int(subprocess.run(["ffprobe", "-v", "error", "-count_frames", "-select_streams", "v:0", "-show_entries",
+                                 "stream=nb_read_frames", "-of", "csv=p=0", delivery],
+                                capture_output=True, text=True).stdout.strip() or 0)
+    got_v, got_a = frames / EXP["fps"], len(music.read_audio(delivery)) / music.SR
+    ok = abs(frames - round(want * EXP["fps"])) == 0 and abs(got_a - want) <= 0.025
+    checks["timeline_exact"] = {"status": "pass" if ok else "fail",
+                                "value": f"planned {want:.3f}s = {round(want * EXP['fps'])} frames; video {frames} frames, "
+                                         f"audio {got_a:.3f}s decoded (off by {(got_a - want) * 1000:+.0f} ms; "
+                                         f"limits: 0 frames, 25 ms = one AAC frame)"}
+    if mus:
+        mchecks, R["music"] = music.qa(mus, delivery)
+        checks.update(mchecks)
+        R["music"].update({k: mus[k] for k in ("seconds", "raw_bed_lufs", "silent_windows", "hook_end", "sfx", "level_lu")})
+        R["music"]["proof"] = os.path.relpath(music.proof_plot(mus, delivery, segs, os.path.join(proof, "phase8_audio_map.png"),
+                                                               f"{stem}: speech, music bed and effects"), ROOT)
     aliases = SOP["beat_map_sop_2_2"]["aliases"]
     for sg in segs:
         sg["brief_beat"] = aliases.get((sg["beat"] or "").upper(), (sg["beat"] or "").upper())

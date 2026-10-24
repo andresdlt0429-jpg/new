@@ -1,0 +1,1036 @@
+{
+ "counts": {
+  "OK": 0,
+  "WARN": 37,
+  "REJECT": 4
+ },
+ "seconds": 134.9,
+ "clips": [
+  {
+   "file": "raw/office/IMG_8479.MOV",
+   "codes": [
+    {
+     "code": "I09",
+     "name": "CLIPPED_AUDIO",
+     "level": "WARN",
+     "detail": "true peak +1.1 dBTP"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 326.18,
+   "codec": "hevc",
+   "fps": 29.981,
+   "has_audio": true,
+   "transfer": "bt709",
+   "mb": 1059.0,
+   "luma_median": 62.4,
+   "face_share": 1.0,
+   "fingerprint": "0000000001101000000000100001110000001000111100111011001111111000",
+   "role": "talking_head",
+   "lufs": -16.4,
+   "true_peak_dbtp": 1.1,
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/office/IMG_8627.MOV",
+   "codes": [
+    {
+     "code": "I10",
+     "name": "TOO_QUIET",
+     "level": "WARN",
+     "detail": "-43.5 LUFS < -38.0 (raised in the edit)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 13.5,
+   "codec": "hevc",
+   "fps": 30.007,
+   "has_audio": true,
+   "transfer": "bt709",
+   "mb": 37.3,
+   "luma_median": 78.5,
+   "face_share": 1.0,
+   "fingerprint": "0010000000000000000000111000100011000101111100011111001111110111",
+   "role": "talking_head",
+   "lufs": -43.5,
+   "true_peak_dbtp": -25.6,
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/office/IMG_8628.MOV",
+   "codes": [
+    {
+     "code": "I10",
+     "name": "TOO_QUIET",
+     "level": "WARN",
+     "detail": "-43.8 LUFS < -38.0 (raised in the edit)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 58.3,
+   "codec": "hevc",
+   "fps": 29.981,
+   "has_audio": true,
+   "transfer": "bt709",
+   "mb": 162.0,
+   "luma_median": 88.2,
+   "face_share": 1.0,
+   "fingerprint": "0011100000011000000110000000011000000001111000110110001111101111",
+   "role": "talking_head",
+   "lufs": -43.8,
+   "true_peak_dbtp": -23.3,
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/office/IMG_8636.MOV",
+   "codes": [
+    {
+     "code": "I10",
+     "name": "TOO_QUIET",
+     "level": "WARN",
+     "detail": "-40.5 LUFS < -38.0 (raised in the edit)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 12.44,
+   "codec": "hevc",
+   "fps": 29.98,
+   "has_audio": true,
+   "transfer": "bt709",
+   "mb": 34.5,
+   "luma_median": 81.9,
+   "face_share": 1.0,
+   "fingerprint": "0001111000000010000000101101011111110111111101111111011110101111",
+   "role": "talking_head",
+   "lufs": -40.5,
+   "true_peak_dbtp": -21.7,
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/office/IMG_8640.MOV",
+   "codes": [
+    {
+     "code": "I10",
+     "name": "TOO_QUIET",
+     "level": "WARN",
+     "detail": "-42.1 LUFS < -38.0 (raised in the edit)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 11.81,
+   "codec": "hevc",
+   "fps": 29.979,
+   "has_audio": true,
+   "transfer": "bt709",
+   "mb": 33.9,
+   "luma_median": 74.2,
+   "face_share": 1.0,
+   "fingerprint": "0000000101000001010000100100011011011000111110001011100101111101",
+   "role": "talking_head",
+   "lufs": -42.1,
+   "true_peak_dbtp": -24.3,
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/office/IMG_8641.MOV",
+   "codes": [
+    {
+     "code": "I10",
+     "name": "TOO_QUIET",
+     "level": "WARN",
+     "detail": "-43.2 LUFS < -38.0 (raised in the edit)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 10.77,
+   "codec": "hevc",
+   "fps": 29.986,
+   "has_audio": true,
+   "transfer": "bt709",
+   "mb": 30.8,
+   "luma_median": 77.4,
+   "face_share": 1.0,
+   "fingerprint": "0000001101000111010001100001011100100001001000111110000111101011",
+   "role": "talking_head",
+   "lufs": -43.2,
+   "true_peak_dbtp": -25.6,
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_1349.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 1080,
+   "h": 1920,
+   "duration_s": 32.04,
+   "codec": "hevc",
+   "fps": 30.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 35.3,
+   "luma_median": 151.3,
+   "face_share": 0.0,
+   "fingerprint": "0111010110110011111111111000000111001111110111110000000001110011",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_1352.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 1080,
+   "h": 1920,
+   "duration_s": 30.8,
+   "codec": "hevc",
+   "fps": 29.998,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 34.5,
+   "luma_median": 143.4,
+   "face_share": 0.0,
+   "fingerprint": "0111111100000000000000001101011111000011111111111111101111111111",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_1353.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 1080,
+   "h": 1920,
+   "duration_s": 17.03,
+   "codec": "hevc",
+   "fps": 29.997,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 19.1,
+   "luma_median": 144.7,
+   "face_share": 0.0,
+   "fingerprint": "1111111100000000000000001111111011111010101110100000000111111111",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4156.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 5.04,
+   "codec": "hevc",
+   "fps": 23.984,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 17.7,
+   "luma_median": 153.0,
+   "face_share": 1.0,
+   "fingerprint": "1111111110000111111000101001110011000111000000000000011111111110",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4160.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 4.75,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 12.9,
+   "luma_median": 142.7,
+   "face_share": 1.0,
+   "fingerprint": "1010111100000011111111001011101111100011000000000010000011001111",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4168.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 3.79,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 11.9,
+   "luma_median": 146.2,
+   "face_share": 1.0,
+   "fingerprint": "0011110001111011100010011001101110011001000011100100011110000101",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4169.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 3.46,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 11.5,
+   "luma_median": 146.6,
+   "face_share": 1.0,
+   "fingerprint": "0001110101110011110100110001001100010001100100111001011110010110",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4174.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 11.62,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 34.5,
+   "luma_median": 168.8,
+   "face_share": 0.6,
+   "fingerprint": "0000000001111111000000011111101111110011100000001111011111111111",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4175.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 5.87,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 17.7,
+   "luma_median": 163.9,
+   "face_share": 1.0,
+   "fingerprint": "0011110100000000111111110001000011100111111101111100111111110111",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4193.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 8.0,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 24.7,
+   "luma_median": 147.8,
+   "face_share": 0.8,
+   "fingerprint": "0111111111111100111110010000010000000000111000001111000001111100",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4197.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 7.58,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 22.0,
+   "luma_median": 147.9,
+   "face_share": 1.0,
+   "fingerprint": "0001111011111110011111110000001000000011011100011111000001110110",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4205.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 5.71,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 15.3,
+   "luma_median": 135.8,
+   "face_share": 1.0,
+   "fingerprint": "1111111111100101011000110001001010001111001100101111000100000011",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4206.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 4.83,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 13.0,
+   "luma_median": 135.9,
+   "face_share": 1.0,
+   "fingerprint": "1111111111111111110000110001001100000011111100001111010000000011",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4207.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 4.0,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 15.1,
+   "luma_median": 148.1,
+   "face_share": 0.0,
+   "fingerprint": "1011000010110000100000001100000011101000110000111111111111111011",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4208.MOV",
+   "codes": [
+    {
+     "code": "I03",
+     "name": "LOW_RES",
+     "level": "REJECT",
+     "detail": "720x1280: short side 720 px < 1080"
+    },
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 720,
+   "h": 1280,
+   "duration_s": 11.54,
+   "codec": "hevc",
+   "fps": 23.997,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 3.6,
+   "luma_median": 144.4,
+   "face_share": 0.8,
+   "fingerprint": "1001111110111111101101101000000010110110101110001011001011001000",
+   "role": "broll",
+   "verdict": "REJECT"
+  },
+  {
+   "file": "raw/sampson/IMG_4209.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 8.09,
+   "codec": "hevc",
+   "fps": 23.98,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 27.1,
+   "luma_median": 148.2,
+   "face_share": 0.6,
+   "fingerprint": "0111100011100111001111101110000010000010110000011101110011011111",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4210.MOV",
+   "codes": [
+    {
+     "code": "I07",
+     "name": "ODD_FRAME_RATE",
+     "level": "WARN",
+     "detail": "avg 21.564 fps, nominal 24.000 fps"
+    },
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 3.32,
+   "codec": "hevc",
+   "fps": 21.564,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 11.9,
+   "luma_median": 132.5,
+   "face_share": 1.0,
+   "fingerprint": "1111100110010010111101011110100010000101111001000110011101000010",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4217.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 5.37,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 15.1,
+   "luma_median": 149.0,
+   "face_share": 0.8,
+   "fingerprint": "1000011100011100111111111011011100001111100000111111001111100011",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4220.MOV",
+   "codes": [
+    {
+     "code": "I03",
+     "name": "LOW_RES",
+     "level": "REJECT",
+     "detail": "720x1280: short side 720 px < 1080"
+    },
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 720,
+   "h": 1280,
+   "duration_s": 19.33,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 6.0,
+   "luma_median": 143.0,
+   "face_share": 0.2,
+   "fingerprint": "0111111100000000111111110101111110010111111011110000110000001100",
+   "role": "broll",
+   "verdict": "REJECT"
+  },
+  {
+   "file": "raw/sampson/IMG_4225.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 5.08,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 22.7,
+   "luma_median": 128.4,
+   "face_share": 1.0,
+   "fingerprint": "0001110000011101110110000011110000000100110111100110100001111110",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4227.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 8.38,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 25.7,
+   "luma_median": 149.5,
+   "face_share": 1.0,
+   "fingerprint": "1111111100111100101100111100000010110100000000000000011110011110",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4233.MOV",
+   "codes": [
+    {
+     "code": "I07",
+     "name": "ODD_FRAME_RATE",
+     "level": "WARN",
+     "detail": "avg 24.066 fps, nominal 24.000 fps"
+    },
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 6.69,
+   "codec": "hevc",
+   "fps": 24.066,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 19.8,
+   "luma_median": 142.0,
+   "face_share": 1.0,
+   "fingerprint": "0111110010011101110101011110010011100011100000010010011100000011",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4241.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 9.04,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 27.4,
+   "luma_median": 139.8,
+   "face_share": 1.0,
+   "fingerprint": "0111111110011100111000101111011011100110110000001100000011000011",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4335.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 10.92,
+   "codec": "hevc",
+   "fps": 23.989,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 28.5,
+   "luma_median": 125.2,
+   "face_share": 1.0,
+   "fingerprint": "1111110111111010111110000100000011100010010100110010000011111001",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4336.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 3.5,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 9.9,
+   "luma_median": 124.3,
+   "face_share": 0.0,
+   "fingerprint": "1111111110000011111001110000001010001000101000000000000000010011",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4345.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 6.08,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 19.4,
+   "luma_median": 130.3,
+   "face_share": 1.0,
+   "fingerprint": "1111110111111101111111110000000000100100000010001001100000000111",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4350.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 5.83,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 15.0,
+   "luma_median": 131.0,
+   "face_share": 1.0,
+   "fingerprint": "1111111111111111111110011111000000000110000100000100000111011000",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4351.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 5.54,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 14.4,
+   "luma_median": 155.4,
+   "face_share": 1.0,
+   "fingerprint": "0111000111100010110100110011001000010010001100100001101010001111",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4353.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 4.5,
+   "codec": "hevc",
+   "fps": 23.982,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 11.5,
+   "luma_median": 163.8,
+   "face_share": 1.0,
+   "fingerprint": "1111001111111111000000001001100100011001000100011111001111110111",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4357.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 7.46,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 19.1,
+   "luma_median": 134.1,
+   "face_share": 0.8,
+   "fingerprint": "1111111111111110111101101100000001100000111000001100000011101100",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4358.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 3.75,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 10.0,
+   "luma_median": 135.9,
+   "face_share": 1.0,
+   "fingerprint": "1111111111111111111111101100000000001000111010001100100011111100",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4363.MOV",
+   "codes": [
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 7.71,
+   "codec": "hevc",
+   "fps": 24.0,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 33.1,
+   "luma_median": 120.8,
+   "face_share": 1.0,
+   "fingerprint": "1110000010101100110101101101000101010100000000000111001011110011",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/sampson/IMG_4412.MOV",
+   "codes": [
+    {
+     "code": "I07",
+     "name": "ODD_FRAME_RATE",
+     "level": "WARN",
+     "detail": "avg 23.413 fps, nominal 24.000 fps"
+    },
+    {
+     "code": "I08",
+     "name": "HDR",
+     "level": "WARN",
+     "detail": "transfer arib-std-b67 (HLG)"
+    }
+   ],
+   "w": 2160,
+   "h": 3840,
+   "duration_s": 6.46,
+   "codec": "hevc",
+   "fps": 23.413,
+   "has_audio": true,
+   "transfer": "arib-std-b67",
+   "mb": 17.6,
+   "luma_median": 157.4,
+   "face_share": 1.0,
+   "fingerprint": "1111111111111111111111111111111100000000000000000000000111110111",
+   "role": "broll",
+   "verdict": "WARN"
+  },
+  {
+   "file": "raw/broll/exterior_cleaning.mp4",
+   "codes": [
+    {
+     "code": "I03",
+     "name": "LOW_RES",
+     "level": "REJECT",
+     "detail": "360x450: short side 360 px < 1080"
+    }
+   ],
+   "w": 360,
+   "h": 450,
+   "duration_s": 28.93,
+   "codec": "h264",
+   "fps": 30.0,
+   "has_audio": true,
+   "transfer": "bt709",
+   "mb": 0.8,
+   "luma_median": 138.1,
+   "face_share": 0.2,
+   "fingerprint": "1111111111111110111100001111110011011101000010100000110000000000",
+   "role": "broll",
+   "verdict": "REJECT"
+  },
+  {
+   "file": "raw/broll/w_cleaning.mp4",
+   "codes": [
+    {
+     "code": "I03",
+     "name": "LOW_RES",
+     "level": "REJECT",
+     "detail": "360x640: short side 360 px < 1080"
+    }
+   ],
+   "w": 360,
+   "h": 640,
+   "duration_s": 25.53,
+   "codec": "h264",
+   "fps": 30.0,
+   "has_audio": true,
+   "transfer": "bt709",
+   "mb": 2.2,
+   "luma_median": 93.5,
+   "face_share": 1.0,
+   "fingerprint": "1110010110010101000101100000000010001011000111000100000001111001",
+   "role": "broll",
+   "verdict": "REJECT"
+  }
+ ]
+}

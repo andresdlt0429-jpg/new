@@ -1,0 +1,230 @@
+{
+ "ad": "office-ad",
+ "variant": "C2",
+ "verdict": "HOLD",
+ "at": "2026-10-24 05:57 UTC",
+ "counts": {
+  "BLOCK": 0,
+  "HOLD": 12,
+  "NOTE": 0,
+  "PASS": 24
+ },
+ "rows": [
+  {
+   "area": "lock",
+   "item": "no_missing_lines",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "area": "lock",
+   "item": "no_unresolved_off_script",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "area": "lock",
+   "item": "numbers_rule",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "area": "lock",
+   "item": "say_numbers_match_transcript",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "area": "lock",
+   "item": "duration_in_range",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "area": "lock",
+   "item": "speaker_present_for_titles",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "area": "lock",
+   "item": "script_lock_items",
+   "status": "HOLD",
+   "detail": "Andy confirms the hook wording by ear (medium and large-v3 both hear \"Exterior cleaners still got 20 grand a month\"; \"still got\" may be \"still at\").; The guarantee terms for \"20 more jobs completely guaranteed\" are written on the landing page.; \"All live within just four days\" is true for a new clie"
+  },
+  {
+   "area": "lock",
+   "item": "meta_policy_items",
+   "status": "HOLD",
+   "detail": "MEDIUM: Hook \"still got 20 grand a month\" names the viewer's revenue. Meta's personal-attributes rule rejects ads that imply they know the viewer's financial situation. Safer: \"Exterior cleaners who want more booked jobs.\"; MEDIUM: \"$20K A MONTH?\" on screen is a money figure. Money on screen can rea"
+  },
+  {
+   "area": "lock",
+   "item": "caption_word_fixes",
+   "status": "HOLD",
+   "detail": "img_8627: heard \"X to your cleaner\" -> \"Exterior cleaners\" (PENDING: Andy to confirm by ear); img_8479: heard \"off or\" -> \"offer\" (PENDING: Andy to confirm by ear)"
+  },
+  {
+   "area": "lock",
+   "item": "script_is_final",
+   "status": "HOLD",
+   "detail": "spec/scripts/office-ad-v1-DRAFT.md is a DRAFT reconstructed from the takes"
+  },
+  {
+   "area": "lock",
+   "item": "one_biggest_text_moment",
+   "status": "PASS",
+   "detail": ""
+  },
+  {
+   "area": "policy",
+   "item": "autopilot",
+   "status": "HOLD",
+   "detail": "spoken \"on autopilot\" (whole spoken text). Close to 'runs without you': can read as little or no work needed. Lower risk when it describes the lead flow, not the money."
+  },
+  {
+   "area": "policy",
+   "item": "personal_attributes",
+   "status": "HOLD",
+   "detail": "spoken \"still got 20 grand a month\" (whole spoken text). Implies the ad knows the viewer's financial situation (Meta personal-attributes rule)."
+  },
+  {
+   "area": "policy",
+   "item": "money_on_screen",
+   "status": "HOLD",
+   "detail": "on_screen \"$20k\" (g-B1-1). A money figure on screen can read as an income claim (Meta reviews what is shown, not only what is said)."
+  },
+  {
+   "area": "render",
+   "item": "master_size",
+   "status": "PASS",
+   "detail": "1440x2560 @ 30/1"
+  },
+  {
+   "area": "render",
+   "item": "master_duration",
+   "status": "PASS",
+   "detail": "37.80s (target 35-50s)"
+  },
+  {
+   "area": "render",
+   "item": "delivery_size",
+   "status": "PASS",
+   "detail": "1080x1920 @ 30/1"
+  },
+  {
+   "area": "render",
+   "item": "delivery_duration",
+   "status": "PASS",
+   "detail": "37.80s (target 35-50s)"
+  },
+  {
+   "area": "render",
+   "item": "loudness",
+   "status": "PASS",
+   "detail": "-14.8 LUFS (target -14.0), TP -1.1 dBTP, LRA 3.2"
+  },
+  {
+   "area": "render",
+   "item": "numbers_rule_final",
+   "status": "PASS",
+   "detail": "every number on screen was spoken"
+  },
+  {
+   "area": "render",
+   "item": "no_profanity",
+   "status": "PASS",
+   "detail": "no profanity in the kept audio or captions"
+  },
+  {
+   "area": "render",
+   "item": "depth_title",
+   "status": "PASS",
+   "detail": "[\"t-B3: speaker in front of the slab in 89% of frames, letters hidden median 2% p90 15%, contrast 4.83:1, matte halo 0.05%\"]"
+  },
+  {
+   "area": "render",
+   "item": "one_biggest_text_moment",
+   "status": "PASS",
+   "detail": "hero g-B1-1 190px = 1.65x the next biggest text (need >= 1.4x), XL count 1"
+  },
+  {
+   "area": "render",
+   "item": "graphics_clear_of_face",
+   "status": "PASS",
+   "detail": "no graphic covers the speaker's face"
+  },
+  {
+   "area": "render",
+   "item": "ticks_land_on_words",
+   "status": "PASS",
+   "detail": "5 ticks, worst offset 33 ms (limit 50 ms)"
+  },
+  {
+   "area": "render",
+   "item": "timeline_exact",
+   "status": "PASS",
+   "detail": "planned 37.733s = 1132 frames; video 1132 frames, audio 37.739s decoded (off by +5 ms; limits: 0 frames, 25 ms = one AAC frame)"
+  },
+  {
+   "area": "render",
+   "item": "music_silent_in_hook_and_guarantee",
+   "status": "PASS",
+   "detail": "bed -240.0 dBFS RMS in [[0.0, 2.333]] (need silence)"
+  },
+  {
+   "area": "render",
+   "item": "music_low_under_speech",
+   "status": "PASS",
+   "detail": "bed 24.9 dB below speech while words are spoken (RMS; need >= 18.0)"
+  },
+  {
+   "area": "render",
+   "item": "fade_out_to_silence",
+   "status": "PASS",
+   "detail": "last 50 ms of the final audio peak -74.6 dBFS (need <= -60)"
+  },
+  {
+   "area": "render",
+   "item": "effects_soft_and_placed",
+   "status": "PASS",
+   "detail": "8 effects at peak -26.0 dBFS, none in the hook or guarantee; 1 skipped (silent beat)"
+  },
+  {
+   "area": "delivery",
+   "item": "clean_render",
+   "status": "HOLD",
+   "detail": "this is a DRAFT render; lock the plan and render without --draft to deliver"
+  },
+  {
+   "area": "manual",
+   "item": "money_visuals",
+   "status": "HOLD",
+   "detail": "No bank/payout screenshots, cash or luxury cars on screen (money and lifestyle visuals read as income proof)."
+  },
+  {
+   "area": "manual",
+   "item": "real_testimonials",
+   "status": "HOLD",
+   "detail": "Testimonials are real people in their own words; anything they got for it is disclosed on screen."
+  },
+  {
+   "area": "manual",
+   "item": "landing_page",
+   "status": "HOLD",
+   "detail": "The landing page and form were reviewed too: Meta checks the ad, page and form together."
+  },
+  {
+   "area": "manual",
+   "item": "footage_rules",
+   "status": "PASS",
+   "detail": "accepted by Andy 2026-10-24: \"DONT MIND THE 1 THING YOU SAID\""
+  },
+  {
+   "area": "manual",
+   "item": "phone_check",
+   "status": "HOLD",
+   "detail": "Watched once on a real phone, sound on and off."
+  }
+ ]
+}
