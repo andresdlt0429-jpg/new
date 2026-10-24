@@ -114,20 +114,24 @@ def pop_scale(t):
 
 # ---------- components: each returns a list of frames (RGBA, same canvas size) or a still ----------
 
+def size_px(item, W):
+    return item.get("px") or tier_px(item["tier"], W)
+
+
 def icp_callout(item, W, H):
-    font, lines = fit_lines(item["text"], tier_px(item["tier"], W), W * 0.86, G4["max_lines"])
+    font, lines = fit_lines(item["text"], size_px(item, W), W * 0.86, G4["max_lines"])
     return {"still": text_block(lines, font, WHITE, box=PRIMARY), "font_px": font.size}
 
 
 def phrase(item, W, H):
-    font, lines = fit_lines(item["text"], tier_px(item["tier"], W), W * 0.86, G4["max_lines"])
+    font, lines = fit_lines(item["text"], size_px(item, W), W * 0.86, G4["max_lines"])
     img = text_block(lines, font, WHITE, box=(0, 0, 0, 165))
     return {"anim": "pop" if item.get("anim") == "pop" else None, "still": img, "font_px": font.size}
 
 
 def guarantee(item, W, H):
     # one oversized line (two at most), one color, no box, no motion
-    font, lines = fit_lines(item["text"], tier_px(item["tier"], W), W * 0.94, G4["max_lines"])
+    font, lines = fit_lines(item["text"], size_px(item, W), W * 0.94, G4["max_lines"])
     return {"still": text_block(lines, font, SECONDARY if item["tier"] == "XL" else WHITE), "font_px": font.size}
 
 
@@ -182,7 +186,7 @@ def ticks(item, W, H, dur):
         t = n / FPS
         canvas = Image.new("RGBA", (cw, ch), (0, 0, 0, 0))
         for i, (r, img) in enumerate(zip(rows, row_imgs)):
-            if t + 1e-6 < r["t"]:
+            if t + 1e-6 < r["t"]:  # r["t"] is frame-aligned by the renderer
                 continue
             s = pop_scale(t - r["t"])
             im = scaled(img, s)

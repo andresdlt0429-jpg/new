@@ -174,6 +174,49 @@ def matte_for(title, ts, te, segs, W, H, path):
     return {"frames": n, "seconds": round(time.time() - t, 1)}
 
 
+def face_boxes(segs, srcs, ts, te, W, H):
+    """Face boxes (px, master frame) seen in the source footage behind output time [ts, te]."""
+    out = []
+    for s in segs:
+        a, b = max(ts, s["t0"]), min(te, s["t1"])
+        if b <= a:
+            continue
+        p = os.path.join(ROOT, srcs[s["src"]]["dir"], "faces.json")
+        if not os.path.exists(p):
+            continue
+        with open(p) as f:
+            for fc in json.load(f):
+                t_out = s["t0"] + fc["t"] - s["in"]
+                if a - 0.25 <= t_out <= b + 0.25:
+                    fh = fc["h_pct"] / 100 * H
+                    cx, cy = fc["cx_pct"] / 100 * W, fc["cy_pct"] / 100 * H
+                    out.append((cx - 0.45 * fh, cy - 0.8 * fh, cx + 0.45 * fh, cy + 0.6 * fh))  # incl. hair
+    return out
+
+
+def clear_of_face(x, y, w, h, ts, te, segs, srcs, W, H):
+    """Keep a graphic off the speaker's face: if it overlaps, try just above the face and just
+    below it (above the captions); take the spot nearest the preferred one. -> (y, moved_px, overlap_px)"""
+    g4 = SOP["graphics_sop_4"]
+    cap = BRAND["captions"]["own_ads"]
+    cap_top = H * (100 - cap["margin_bottom_pct"] - 2.2 * cap["size_pct_of_height"]) / 100
+    faces = [f for f in face_boxes(segs, srcs, ts, te, W, H) if f[0] < x + w and f[2] > x]
+    if not faces:
+        return y, 0, 0
+    m = g4["face_margin_pct"] / 100 * H
+    top, bottom = min(f[1] for f in faces) - m, max(f[3] for f in faces) + m
+
+    def overlap(yy):
+        return max(0, min(yy + h, bottom) - max(yy, top))
+    if overlap(y) == 0:
+        return y, 0, 0
+    cands = [c for c in (top - h, bottom) if g4["min_top_pct"] / 100 * H <= c and c + h <= cap_top]
+    if not cands:  # no clean spot: least overlap within the frame limits
+        cands = [max(g4["min_top_pct"] / 100 * H, top - h), min(bottom, cap_top - h)]
+    best = min(cands, key=lambda c: (overlap(c), abs(c - y)))
+    return round(best), round(y - best), round(overlap(best))
+
+
 def enforce_min_on_screen(graphics, total):
     """Every graphic stays up at least min_on_screen_s: extend into the gap after it; if the
     video ends first, start it earlier and shorten the graphic before it."""
@@ -383,7 +426,10 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
         a, b = sp
         item = dict(g, tier="XL" if g["id"] == hero_id else g.get("tier", "M"))
         if g["kind"] == "ticks":
-            item["items"] = [{"text": it["text"], "t": round(resolve(it["at"], segs, srcs) - a, 3)} for it in g["items"]]
+            fps = EXP["fps"]
+            a0 = round(a * fps) / fps  # the clip starts on this frame; each tick on the frame nearest its word
+            item["items"] = [{"text": it["text"], "t": round((resolve(it["at"], segs, srcs) - a0) * fps) / fps}
+                             for it in g["items"]]
             item["text"] = " / ".join(it["text"] for it in g["items"])
         if g["kind"] in components.BUILDERS:
             graphics.append({"id": g["id"], "text": item["text"], "ts": a, "te": b, "item": item, "beat": g.get("beat")})
@@ -396,9 +442,32 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
     for x in graphics:
         if "item" in x:
             it = x["item"]
-            built = components.build(it, W, H, x["te"] - x["ts"], os.path.join(cards, f"{variant['id']}_{x['id']}"))
-            bx = round(W * it["box"]["x_pct"] / 100) if it["kind"] == "ticks" else (W - built["w"]) // 2
-            by = round(H * it["box"]["y_pct"] / 100 - built["h"] / 2)
+            order = ["XL", "L", "M", "S"]
+            if it["tier"] == "XL":  # hero: shrink in small steps, never below hero_min_ratio x tier L
+                g4 = SOP["graphics_sop_4"]
+                floor_px = g4["hero_min_ratio"] * components.tier_px("L", W)
+                px, sizes = components.tier_px("XL", W), []
+                while px >= floor_px:
+                    sizes.append(px)
+                    px = int(px * 0.95)
+                tiers = sizes or [components.tier_px("XL", W)]
+            else:
+                tiers = order[order.index(it["tier"]):]
+            for tier in tiers:  # step down until it clears the face
+                if isinstance(tier, int):
+                    it["px"] = tier
+                else:
+                    it["tier"] = tier
+                built = components.build(it, W, H, x["te"] - x["ts"], os.path.join(cards, f"{variant['id']}_{x['id']}"))
+                bx = round(W * it["box"]["x_pct"] / 100) if it["kind"] == "ticks" else (W - built["w"]) // 2
+                by = round(H * it["box"]["y_pct"] / 100 - built["h"] / 2)
+                by, moved, over = clear_of_face(bx, by, built["w"], built["h"], x["ts"], x["te"], segs, srcs, W, H)
+                if not over:
+                    break
+                print(f"  {x['id']} at {tier if isinstance(tier, str) else str(tier) + 'px'} still overlaps the face by {over}px")
+            if moved:
+                print(f"  moved {x['id']} {'up' if moved > 0 else 'down'} {abs(moved)}px to clear the face")
+            x["face_overlap_px"] = over
             x.update({"png": built["path"], "kind": built["kind"], "x": bx // 2 * 2, "y": by // 2 * 2,
                       "w": built["w"], "h": built["h"], "tier": it["tier"], "font_px": built["font_px"],
                       "hold_last": built["hold_last"], "component": it["kind"],
@@ -446,7 +515,10 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
                f"[tb{k}][tp{k}]overlay=0:0:enable='between(t,{ts:.3f},{te:.3f})'[tt{k}]",
                # matte padded with black (alpha 0) to the full length, so both branches stay in step
                f"[{x['mi']}:v]format=gray,scale={W}:{H}:flags=bicubic,setpts=PTS-STARTPTS,"
-               f"tpad=start_duration={ts:.3f}:start_mode=add:color=black:stop_duration={total - te + 1:.3f}"
+               # settb first: in the clip's 1 ms timebase tpad steps 33 ms per frame and drifts
+               # ~5 frames early by 16 s (measured); 1/fps makes every padded frame exact
+               f"settb=1/{EXP['fps']},tpad=start_duration={round(ts * EXP['fps']) / EXP['fps']:.4f}:start_mode=add"
+               f":color=black:stop_duration={total - te + 1:.3f}"
                f":stop_mode=add:color=black[mm{k}]",
                f"[tf{k}][mm{k}]alphamerge[fg{k}]",
                f"[tt{k}][fg{k}]overlay=0:0:shortest=1:enable='between(t,{ts:.3f},{te:.3f})'[l3_{k}]"]
@@ -456,8 +528,9 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
             src = f"[{x['gi']}:v]format=rgba[gp{j}]"  # hard cut in: motion lives only in clips
         else:
             hold = (f",tpad=stop_mode=clone:stop_duration={x['te'] - x['ts'] + 1:.3f}" if x["hold_last"] else "")
-            src = (f"[{x['gi']}:v]format=rgba,setpts=PTS-STARTPTS,"
-                   f"tpad=start_duration={x['ts']:.3f}:start_mode=add:color=black@0.0{hold}[gp{j}]")
+            src = (f"[{x['gi']}:v]format=rgba,setpts=PTS-STARTPTS,settb=1/{EXP['fps']},"
+                   f"tpad=start_duration={round(x['ts'] * EXP['fps']) / EXP['fps']:.4f}:start_mode=add"
+                   f":color=black@0.0{hold}[gp{j}]")
         fl += [src, f"[{cur}][gp{j}]overlay={x['x']}:{x['y']}:enable='between(t,{x['ts']:.3f},{x['te']:.3f})'[g{j}]"]
         cur = f"g{j}"
     fl.append(f"[{cur}]ass={os.path.basename(ass)}[cap]")
@@ -536,7 +609,11 @@ def qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out
                               "value": heard or "no profanity in the kept audio or captions"}
     # Phase 6: one biggest text moment, ticks on their words, component stills, beat map
     checks["one_biggest_text_moment"] = graphics_qa.hero_check(titles, graphics, round(H * style["size_pct_of_height"] / 100), hero_id)
-    tk = graphics_qa.tick_landing(delivery, graphics, DW / W, EXP["fps"])
+    tk = graphics_qa.tick_landing(delivery, graphics, DW / W, EXP["fps"],
+                                  [components.PRIMARY[:3], components.SECONDARY[:3]])
+    clash = [f"{x['id']} overlaps the face by {x['face_overlap_px']}px" for x in graphics if x.get("face_overlap_px")]
+    checks["graphics_clear_of_face"] = {"status": "fail" if clash else "pass",
+                                        "value": clash or "no graphic covers the speaker's face"}
     checks["ticks_land_on_words"] = tk
     aliases = SOP["beat_map_sop_2_2"]["aliases"]
     for sg in segs:

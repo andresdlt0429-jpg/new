@@ -186,15 +186,16 @@
       "GUARANTEE",
       "DIAGNOSIS",
       "HOOK",
+      "TITLE_BEHIND_HEAD",
       "SOLUTION"
     ],
-    "_hero_rule": "Exactly one XL text moment per variant: the GUARANTEE beat if the variant has one, else the next beat in hero_priority that has on-screen text."
+    "_hero_rule": "Exactly one XL text moment per variant: the GUARANTEE if the variant has one, else the next in hero_priority. XL = the biggest text in the ad: up to tiers_pct_of_width.XL, shrunk only as far as needed to clear the speaker's face, never below hero_min_ratio x the next biggest text."
   },
   "graphics_sop_4": {
     "_source": "spec/ad-editor-brief.md Chapter 02/04 + engine defaults (placeholder sizes until SOP 4).",
     "tiers_pct_of_width": {
       "XL": 15.5,
-      "L": 9.5,
+      "L": 8.0,
       "M": 6.5,
       "S": 4.5
     },
@@ -213,6 +214,8 @@
       "guarantee": 24,
       "cta_button": 60
     },
-    "ticks_x_pct": 9
+    "ticks_x_pct": 9,
+    "face_margin_pct": 1.5,
+    "min_top_pct": 5
   }
 }

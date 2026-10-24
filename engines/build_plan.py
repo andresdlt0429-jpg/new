@@ -182,9 +182,12 @@ def build(ad_dir, target=(35, 50)):
     for v in variants:
         in_v = {lid for lid, pids in line_parts.items()
                 if any(in_variant(next(p for p in parts if p["id"] == pid), v) for pid in pids)}
-        cands = [g for g in graphics + titles if line_of[g["id"]] in in_v]
+        cands = [g for g in titles + graphics if line_of[g["id"]] in in_v]
         for beat in BM["hero_priority"]:
-            pick = next((g for g in cands if g.get("beat") == beat), None)
+            if beat == "TITLE_BEHIND_HEAD":
+                pick = next((g for g in cands if g["id"].startswith("t-")), None)
+            else:
+                pick = next((g for g in cands if g.get("beat") == beat and not g["id"].startswith("t-")), None)
             if pick:
                 hero[v["id"]] = pick["id"]
                 break

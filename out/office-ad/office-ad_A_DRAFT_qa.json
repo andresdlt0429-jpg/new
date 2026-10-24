@@ -115,7 +115,7 @@
       "gain_db": 20.0
     },
     {
-      "part": "B6_2",
+      "part": "B7_1",
       "src": "img_8641",
       "in": 6.555,
       "out": 8.395,
@@ -130,25 +130,72 @@
     "input_lra": "2.90"
   },
   "preflight": {
-    "free_ram_gb": 14.6,
+    "free_ram_gb": 14.5,
     "need_ram_gb": 3.7,
-    "free_disk_gb": 21.0,
+    "free_disk_gb": 20.9,
     "need_disk_gb": 10.0,
     "source_gb": 0.03,
     "need_ram_gb_this_ad": 9.7
   },
   "render": {
-    "seconds": 152.9,
-    "x_realtime": 4.22,
-    "ffmpeg_peak_ram_gb": 8.0
+    "seconds": 134.8,
+    "x_realtime": 3.72,
+    "ffmpeg_peak_ram_gb": 8.03
   },
+  "hero": "g-B6-1",
   "master_file": {
     "path": "out/office-ad/office-ad_A_DRAFT_master_1440x2560.mp4",
-    "mb": 54.3
+    "mb": 54.1
   },
   "delivery_file": {
     "path": "out/office-ad/office-ad_A_DRAFT_1080x1920.mp4",
     "mb": 24.6
+  },
+  "phase6": {
+    "stills": [
+      {
+        "t": 0.0,
+        "label": "g-B1-1 icp_callout L (first frame)"
+      },
+      {
+        "t": 13.21,
+        "label": "t-B3 title-behind-head L"
+      },
+      {
+        "t": 16.43,
+        "label": "tick 'OFFER' lands"
+      },
+      {
+        "t": 17.37,
+        "label": "tick 'SCRIPTS' lands"
+      },
+      {
+        "t": 18.37,
+        "label": "tick 'VIDEOS' lands"
+      },
+      {
+        "t": 19.4,
+        "label": "tick 'ADS' lands"
+      },
+      {
+        "t": 21.1,
+        "label": "tick 'LIVE IN 4 DAYS' lands"
+      },
+      {
+        "t": 32.18,
+        "label": "g-B6-1 guarantee XL"
+      },
+      {
+        "t": 34.89,
+        "label": "g-B7-1 cta pulse low"
+      },
+      {
+        "t": 35.31,
+        "label": "g-B7-1 cta pulse high"
+      }
+    ],
+    "sheet": "out/office-ad/proof/A/phase6_components.png",
+    "beat_map": "out/office-ad/proof/A/phase6_beat_map.png"
   },
   "qa": {
     "master_size": {
@@ -178,6 +225,82 @@
     "no_profanity": {
       "status": "pass",
       "value": "no profanity in the kept audio or captions"
+    },
+    "one_biggest_text_moment": {
+      "status": "pass",
+      "sizes": [
+        [
+          "t-B3",
+          "L",
+          115
+        ],
+        [
+          "g-B1-1",
+          "L",
+          115
+        ],
+        [
+          "g-B4-ticks",
+          "S",
+          65
+        ],
+        [
+          "g-B6-1",
+          "XL",
+          172
+        ],
+        [
+          "g-B7-1",
+          "M",
+          94
+        ],
+        [
+          "captions",
+          "-",
+          92
+        ]
+      ],
+      "value": "hero g-B6-1 172px = 1.50x the next biggest text (need >= 1.4x), XL count 1"
+    },
+    "graphics_clear_of_face": {
+      "status": "pass",
+      "value": "no graphic covers the speaker's face"
+    },
+    "ticks_land_on_words": {
+      "status": "pass",
+      "rows": [
+        {
+          "tick": "OFFER",
+          "word_at_s": 16.235,
+          "appears_at_s": 16.268,
+          "offset_ms": 33
+        },
+        {
+          "tick": "SCRIPTS",
+          "word_at_s": 17.168,
+          "appears_at_s": 17.202,
+          "offset_ms": 33
+        },
+        {
+          "tick": "VIDEOS",
+          "word_at_s": 18.168,
+          "appears_at_s": 18.202,
+          "offset_ms": 33
+        },
+        {
+          "tick": "ADS",
+          "word_at_s": 19.202,
+          "appears_at_s": 19.235,
+          "offset_ms": 33
+        },
+        {
+          "tick": "LIVE IN 4 DAYS",
+          "word_at_s": 20.902,
+          "appears_at_s": 20.935,
+          "offset_ms": 33
+        }
+      ],
+      "value": "5 ticks, worst offset 33 ms (limit 50 ms)"
     }
   }
 }

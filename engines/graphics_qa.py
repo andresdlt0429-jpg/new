@@ -37,29 +37,34 @@ def hero_check(titles, graphics, caption_px, hero_id):
                      f"(need >= {G4['hero_min_ratio']}x), XL count {len(xl)}"}
 
 
-def crop_frames(video, t0, dur, box):
+def crop_rgb(video, t0, dur, box):
     x, y, w, h = box
     out = subprocess.run(["ffmpeg", "-hide_banner", "-loglevel", "error", "-ss", f"{max(0, t0):.3f}", "-t", f"{dur:.3f}",
-                          "-i", video, "-vf", f"crop={w}:{h}:{x}:{y},format=gray", "-f", "rawvideo", "-"],
+                          "-i", video, "-vf", f"crop={w}:{h}:{x}:{y}", "-pix_fmt", "rgb24", "-f", "rawvideo", "-"],
                          capture_output=True).stdout
-    n = len(out) // (w * h)
-    return np.frombuffer(out[: n * w * h], np.uint8).reshape(n, h, w).astype(np.int16)
+    n = len(out) // (w * h * 3)
+    return np.frombuffer(out[: n * w * h * 3], np.uint8).reshape(n, h, w, 3).astype(np.int16)
 
 
-def tick_landing(video, graphics, scale, fps):
-    """For every tick item: when it actually appears in the rendered video vs its spoken word."""
+def tick_landing(video, graphics, scale, fps, colors):
+    """When each tick's check-mark square appears in the rendered video vs its spoken word.
+    Detects the mark's own colour (primary / secondary), so body motion behind it can't fake it."""
     rows = []
+    cols = np.array(colors, np.int16)
     for g in graphics:
         if g.get("component") != "ticks":
             continue
+        mark = round(g["font_px"] * 0.95)
         for i, it in enumerate(g["items"]):
             want = g["ts"] + it["t"]
-            bx, by = round(g["x"] * scale), round((g["y"] + i * g["row_h"]) * scale)
-            box = (bx // 2 * 2, by // 2 * 2, round(g["w"] * scale) // 2 * 2, round(g["row_h"] * scale) // 2 * 2)
+            top = g["y"] + i * g["row_h"] + (g["row_h"] - mark) / 2
+            box = (round(g["x"] * scale) // 2 * 2, round(top * scale) // 2 * 2,
+                   max(2, round(mark * scale) // 2 * 2), max(2, round(mark * scale) // 2 * 2))
             win0 = want - 0.4
-            fr = crop_frames(video, win0, 0.8, box)
-            diff = np.abs(fr - fr[0]).mean(axis=(1, 2))
-            hit = int(np.argmax(diff > max(4.0, 0.3 * diff.max()))) if diff.max() > 4.0 else None
+            fr = crop_rgb(video, win0, 0.8, box)
+            dist = np.abs(fr[:, :, :, None, :] - cols[None, None, None, :, :]).sum(-1).min(-1)
+            frac = (dist < 90).mean(axis=(1, 2))
+            hit = int(np.argmax(frac > 0.03)) if frac.max() > 0.25 else None  # first visible frame
             got = None if hit is None else win0 + hit / fps
             rows.append({"tick": it["text"], "word_at_s": round(want, 3),
                          "appears_at_s": None if got is None else round(got, 3),
@@ -120,7 +125,7 @@ def stills(video, graphics, titles, proof):
 def beat_timeline(segs, graphics, titles, caps, hero_id, ticks, total, path, title):
     W, PAD = 2400, 60
     rows = [("beats", 70)] + [(x["id"], 54) for x in sorted(titles + graphics, key=lambda x: x["ts"])] + [("captions", 40)]
-    H = 150 + sum(h for _, h in rows) + 40 + 34 * (len(ticks["rows"]) + 1)
+    H = 180 + sum(h for _, h in rows) + 40 + 34 * (len(ticks["rows"]) + 1)
     img = Image.new("RGB", (W, H), (18, 20, 24))
     d = ImageDraw.Draw(img)
     X = lambda t: PAD + 240 + (W - 2 * PAD - 240) * t / total  # noqa: E731
@@ -128,10 +133,10 @@ def beat_timeline(segs, graphics, titles, caps, hero_id, ticks, total, path, tit
     d.text((PAD, 74), "Beat map (Ad Editor Brief) -> component -> size tier. Star = the one biggest text moment.",
            font=font(22), fill=(170, 175, 185))
     for s in range(int(total) + 1):
-        d.line([X(s), 120, X(s), H - 34 * (len(ticks["rows"]) + 1) - 40], fill=(40, 42, 48))
+        d.line([X(s), 150, X(s), H - 34 * (len(ticks["rows"]) + 1) - 40], fill=(40, 42, 48))
         if s % 5 == 0:
-            d.text((X(s) - 8, 112 - 24), f"{s}s", font=font(16), fill=(130, 130, 140))
-    y = 130
+            d.text((X(s) - 8, 124), f"{s}s", font=font(16), fill=(130, 130, 140))
+    y = 160
     for name, h in rows:
         if name == "beats":
             d.text((PAD, y + 20), "beat", font=font(22, True), fill=(220, 220, 220))
