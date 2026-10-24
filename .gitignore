@@ -20,3 +20,5 @@ engines/machine_limits.json
 !out/*/
 out/*/*
 !out/*/*_qa.json
+# Generated graphics (rebuilt by every render)
+cards/*/
