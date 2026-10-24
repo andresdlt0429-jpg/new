@@ -2,9 +2,10 @@
   "_note": "All brand values live here, never in code. null = not supplied yet by Andy. Fields marked _placeholder are engine defaults until spec/SOP-DLT-1-v2-video-standard.md sets them.",
   "agency": "DLT Marketing",
   "colors": {
-    "_todo": "Sampled from DLT's own intro video (raw/dlt-intro-sample.mp4, quantized to 8 levels). Andy to confirm the exact hex codes.",
-    "primary": "#1070F0",
+    "_source": "primary measured from brand/dlt-logo.jpg (Andy, 2026-10-24; JPEG, quantized to 4 levels); secondary sampled from DLT's intro video. Andy to confirm exact hex codes.",
+    "primary": "#2068F4",
     "secondary": "#F8D898",
+    "text_dark": "#040404",
     "accent": null
   },
   "fonts": {
@@ -55,5 +56,11 @@
     "title_shadow_alpha": 0.45,
     "graphic_size_pct_of_height": 3.4,
     "title_size_pct_of_width": 13
+  },
+  "logo": {
+    "path": "brand/dlt-logo.jpg",
+    "background": "#FEFEFE",
+    "end_card_s": 2.5,
+    "_note": "JPEG on white; the end card uses it on its own white background."
   }
 }

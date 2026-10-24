@@ -511,8 +511,8 @@
   "duration_in_range": {
    "status": "pass",
    "notes": [
-    "variant A: 36.24s (target 35-50s, Andy rule 2)",
-    "variant C2: 35.23s (target 35-50s, Andy rule 2)"
+    "variant A: 38.74s incl. 2.5s logo card (target 35-50s, Andy rule 2)",
+    "variant C2: 37.73s incl. 2.5s logo card (target 35-50s, Andy rule 2)"
    ]
   },
   "speaker_present_for_titles": {

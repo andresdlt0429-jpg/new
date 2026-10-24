@@ -22,6 +22,7 @@ from PIL import Image, ImageDraw, ImageFont
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import align  # noqa: E402
 import components  # noqa: E402
+import depth  # noqa: E402
 import graphics_qa  # noqa: E402
 import ingest  # noqa: E402
 import media  # noqa: E402
@@ -152,6 +153,46 @@ def title_block(text, W, tier="L"):
     return font.size, lines, font.size * 1.02 * len(lines)
 
 
+def end_card(W, H, cards):
+    """Logo card from brand.json logo: the logo on its own background, centred."""
+    lg = BRAND.get("logo")
+    if not lg or not os.path.exists(os.path.join(ROOT, lg["path"])):
+        return None
+    logo = Image.open(os.path.join(ROOT, lg["path"])).convert("RGB")
+    card = Image.new("RGB", (W, H), hex_rgb(lg.get("background", "#FFFFFF"))[:3])
+    w = round(W * 0.82)
+    logo = logo.resize((w, round(logo.height * w / logo.width)), Image.LANCZOS)
+    card.paste(logo, ((W - logo.width) // 2, round(H * 0.45 - logo.height / 2)))
+    p = os.path.join(cards, "end_card.png")
+    card.save(p)
+    return {"png": p, "s": float(lg.get("end_card_s", 2.5))}
+
+
+def slab_title_clip(t, ts, te, samples, W, H, path):
+    """Phase 7 depth title: slab placed so the person hides 4-15% of its letters over the whole
+    range (measured on the matte samples, half size), then rendered with its rise + drift."""
+    hw, hh = W // 2, H // 2
+    y_guess = H * t.get("y_pct", 25) / 100 / 2
+    yc_half, occ = depth.place_title_over_time(t["text"], hw, hh, samples, y_guess, t["tier"], True)
+    yc = yc_half * 2
+    dur = te - ts
+    frames, boxes = [], []
+    for n in range(max(1, round(dur * EXP["fps"]))):
+        img, box, L = depth.slab_frame(t["text"], W, H, yc, n / EXP["fps"], t["tier"], True)
+        frames.append(img)
+        boxes.append(box)
+    x0 = int(min(b[0] for b in boxes)) // 2 * 2
+    y0 = max(0, int(min(b[1] for b in boxes))) // 2 * 2
+    x1 = min(W, int(max(b[0] + b[2] for b in boxes)) + 2)
+    y1 = min(H, int(max(b[1] + b[3] for b in boxes)) + 2)
+    components.write_clip([f.crop((x0, y0, x1, y1)) for f in frames], path)
+    halo = depth.edge_metrics(samples[len(samples) // 2])["halo_pct"]
+    flick = depth.flicker(samples)
+    c = depth.contrast(components.WHITE, np.array([[components.PRIMARY[:3]]], np.uint8))
+    return {"path": path, "x": x0, "y": y0, "font_px": L["font"].size,
+            "depth": {"letters_hidden": occ, "text_contrast": c, "matte_halo_pct": halo, "matte_flicker_pct": flick}}
+
+
 def matte_for(title, ts, te, segs, W, H, path):
     """Speaker matte (multiclass, half size, smoothed) for the title's time range only."""
     s = next(x for x in segs if x["t0"] - 0.001 <= ts < x["t1"])
@@ -161,17 +202,19 @@ def matte_for(title, ts, te, segs, W, H, path):
     enc = subprocess.Popen(["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt",
                             "gray", "-s", f"{hw}x{hh}", "-r", "30", "-i", "-", "-c:v", "ffv1", path],
                            stdin=subprocess.PIPE)
-    prev, n, t = None, 0, time.time()
+    prev, n, t, samples = None, 0, time.time(), []
     for _, small in media.read_frames(os.path.join(ROOT, s["proxy"]), hw, hh, 30, start=start, dur=te - ts):
-        m = spike_layers.person_mask(seg, "multiclass", small)
+        m = depth.refine(spike_layers.person_mask(seg, "multiclass", small), small)  # Phase 7: no halo
         m = m if prev is None else spike_layers.EMA * m + (1 - spike_layers.EMA) * prev
         prev = m
         enc.stdin.write((m * 255).astype(np.uint8).tobytes())
+        if n % 3 == 0:
+            samples.append(m.astype(np.float32))
         n += 1
     enc.stdin.close()
     enc.wait()
     seg.close()
-    return {"frames": n, "seconds": round(time.time() - t, 1)}
+    return {"frames": n, "seconds": round(time.time() - t, 1)}, samples
 
 
 def face_boxes(segs, srcs, ts, te, W, H):
@@ -411,14 +454,14 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
         if not sp:
             continue
         ts, te = sp
-        p = os.path.join(cards, f"{t['id']}.png")
         t = dict(t, tier="XL" if t["id"] == hero_id else t.get("tier", "L"))
-        title_png(t, W, H, p)
         mp = os.path.join(wd, f"matte_{t['id']}.mkv")
-        stats = matte_for(t, ts, te, segs, W, H, mp)
-        titles.append({"id": t["id"], "text": t["text"], "ts": ts, "te": te, "png": p, "matte": mp, "matte_stats": stats,
-                       "tier": t["tier"], "font_px": t["font_px"], "beat": t.get("beat")})
-        print(f"title {t['id']} {ts:.2f}-{te:.2f}s  matte {stats}")
+        stats, samples = matte_for(t, ts, te, segs, W, H, mp)
+        built = slab_title_clip(t, ts, te, samples, W, H, os.path.join(cards, f"{variant['id']}_{t['id']}.mkv"))
+        titles.append({"id": t["id"], "text": t["text"], "ts": ts, "te": te, "png": built["path"], "matte": mp,
+                       "matte_stats": stats, "tier": t["tier"], "font_px": built["font_px"], "beat": t.get("beat"),
+                       "x": built["x"], "y": built["y"], "depth": built["depth"]})
+        print(f"title {t['id']} {ts:.2f}-{te:.2f}s  matte {stats}  depth {built['depth']}")
     for g in plan["layers"]["graphics"]:
         sp = span(g)
         if not sp:
@@ -496,13 +539,20 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
     args = seg_inputs(segs)
     idx = n
     for x in titles:
-        args += ["-loop", "1", "-t", f"{total:.3f}", "-i", x["png"], "-i", x["matte"]]
+        args += ["-i", x["png"], "-i", x["matte"]]
         x["gi"], x["mi"] = idx, idx + 1
         idx += 2
     for x in graphics:
         args += (["-loop", "1", "-t", f"{total:.3f}", "-i", x["png"]] if x["kind"] == "still" else ["-i", x["png"]])
         x["gi"] = idx
         idx += 1
+    card = end_card(W, H, cards)  # brief beat 9: logo card in the last seconds, nothing after it
+    if card:
+        args += ["-loop", "1", "-t", f"{card['s']:.3f}", "-i", card["png"],
+                 "-f", "lavfi", "-t", f"{card['s']:.3f}", "-i", f"anullsrc=r={EXP['audio_rate']}:cl=stereo"]
+        card["ci"], card["ai"] = idx, idx + 1
+        idx += 2
+        R["end_card_s"] = card["s"]
     fl = [f"[{i}:v]setpts=PTS-STARTPTS,fps={EXP['fps']},scale={W}:{H},format=yuv420p,setsar=1[v{i}]" for i in range(n)]
     aparts, _, clean = audio_chain(segs, meas)
     fl += aparts
@@ -511,8 +561,9 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
     for k, x in enumerate(titles):
         ts, te = x["ts"], x["te"]
         fl += [f"[{cur}]split[tb{k}][tf{k}]",
-               f"[{x['gi']}:v]format=rgba,fade=t=in:st={ts:.3f}:d=0.12:alpha=1[tp{k}]",
-               f"[tb{k}][tp{k}]overlay=0:0:enable='between(t,{ts:.3f},{te:.3f})'[tt{k}]",
+               f"[{x['gi']}:v]format=rgba,setpts=PTS-STARTPTS,settb=1/{EXP['fps']},"
+               f"tpad=start_duration={round(ts * EXP['fps']) / EXP['fps']:.4f}:start_mode=add:color=black@0.0[tp{k}]",
+               f"[tb{k}][tp{k}]overlay={x['x']}:{x['y']}:enable='between(t,{ts:.3f},{te:.3f})'[tt{k}]",
                # matte padded with black (alpha 0) to the full length, so both branches stay in step
                f"[{x['mi']}:v]format=gray,scale={W}:{H}:flags=bicubic,setpts=PTS-STARTPTS,"
                # settb first: in the clip's 1 ms timebase tpad steps 33 ms per frame and drifts
@@ -540,8 +591,14 @@ def render_variant(plan, plan_path, variant, draft, srcs, L, W, H, DW, DH, out_d
         fl.append(f"[cap]drawtext=fontfile='{ff}':text='DRAFT · NOT LOCKED':x=36:y=36:fontsize={round(H * 0.016)}"
                   f":fontcolor=white@0.9:box=1:boxcolor=black@0.55:boxborderw=14[dr]")
         cur = "dr"
-    fl += [f"[{cur}]split[vm][vd0]", f"[vd0]scale={DW}:{DH}:flags=lanczos[vd]",
-           clean + "[an]", "[an]asplit[am][ad]"]
+    if card:
+        fl += [f"[{card['ci']}:v]fps={EXP['fps']},scale={W}:{H},format=yuv420p,setsar=1[vcard]",
+               f"[{card['ai']}:a]aresample={EXP['audio_rate']}[acard]",
+               f"[{cur}][vcard]concat=n=2:v=1:a=0[vfin]", clean + "[an0]", "[an0][acard]concat=n=2:v=0:a=1[an]"]
+        cur = "vfin"
+    else:
+        fl.append(clean + "[an]")
+    fl += [f"[{cur}]split[vm][vd0]", f"[vd0]scale={DW}:{DH}:flags=lanczos[vd]", "[an]asplit[am][ad]"]
     master = os.path.join(out_dir, f"{stem}_master_{W}x{H}.mp4")
     delivery = os.path.join(out_dir, f"{stem}_{DW}x{DH}.mp4")
     common_a = ["-c:a", "aac", "-b:a", EXP["audio_bitrate"], "-ar", str(EXP["audio_rate"])]
@@ -608,6 +665,20 @@ def qa(R, plan, segs, srcs, titles, graphics, caps, master, delivery, proof, out
     checks["no_profanity"] = {"status": "fail" if heard else "pass",
                               "value": heard or "no profanity in the kept audio or captions"}
     # Phase 6: one biggest text moment, ticks on their words, component stills, beat map
+    D7 = SOP["depth_sop_7"]
+    bad = []
+    for t in titles:
+        dp = t["depth"]
+        occ = dp["letters_hidden"]
+        if not (occ["p90"] <= D7["occlusion_max"] and occ["median"] >= D7["occlusion_min"]):
+            bad.append(f"{t['id']}: letters hidden median {occ['median']:.0%}, p90 {occ['p90']:.0%}")
+        if dp["text_contrast"] < D7["min_text_contrast"]:
+            bad.append(f"{t['id']}: text contrast {dp['text_contrast']}:1")
+    checks["depth_title"] = {"status": "fail" if bad else ("pass" if titles else "n/a"),
+                             "value": bad or [f"{t['id']}: hidden median {t['depth']['letters_hidden']['median']:.0%} "
+                                              f"p90 {t['depth']['letters_hidden']['p90']:.0%}, contrast "
+                                              f"{t['depth']['text_contrast']}:1, matte halo {t['depth']['matte_halo_pct']}%"
+                                              for t in titles] or "no title"}
     checks["one_biggest_text_moment"] = graphics_qa.hero_check(titles, graphics, round(H * style["size_pct_of_height"] / 100), hero_id)
     tk = graphics_qa.tick_landing(delivery, graphics, DW / W, EXP["fps"],
                                   [components.PRIMARY[:3], components.SECONDARY[:3]])

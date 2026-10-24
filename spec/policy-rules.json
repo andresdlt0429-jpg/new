@@ -1,0 +1,253 @@
+{
+  "_what": "Policy scan rules for the QA gate (stand-in for SOP 6.2 until the SOP arrives). spec/QA-policy.md is generated from this file: edit here, then run python3 engines/policy_scan.py --write-policy.",
+  "_sources": {
+    "policy_safe": "Launchpad Ads: Policy-Safe One-Pagers (Andy's Drive, 2026-10-16), red-flag words table, built from Meta Advertising Standards and FTC guidance",
+    "brief": "spec/ad-editor-brief.md (DLT Ad Editor Brief), Chapter 04 Words / Footage",
+    "rule4": "Andy operating rule 4: never put a number on screen that was not spoken in that video"
+  },
+  "severity": {
+    "BLOCK": "Cannot ship. Fix the words or the footage, then re-render.",
+    "HOLD": "Ships only after Andy accepts it in writing (plans/<ad>/acceptances.json, his exact words).",
+    "NOTE": "Worth knowing; never stops a render."
+  },
+  "rules": [
+    {
+      "id": "income_claim",
+      "severity": "BLOCK",
+      "where": [
+        "spoken",
+        "on_screen",
+        "ad_copy"
+      ],
+      "patterns": [
+        "\\b(you('ll| will)? |we('ll)? help you )?(make|earn|hit|reach|scale to|clear)\\s+(over\\s+)?\\$?\\d[\\d,]*\\s*(k|grand|thousand)?\\s*(a|per|/)?\\s*(month|year|mo|yr)?\\b(?<!\\d)",
+        "\\bsix figures?\\b",
+        "\\$?\\d+\\s*k\\s+in\\s+\\d+\\s+days\\b"
+      ],
+      "why": "Promise of income. Meta bans promises of financial gain; the FTC needs written proof, dates and the share of buyers who got that result.",
+      "instead": "Describe what they get (ads, scripts, follow-up), not the money.",
+      "source": "policy_safe"
+    },
+    {
+      "id": "money_guarantee",
+      "severity": "BLOCK",
+      "where": [
+        "spoken",
+        "on_screen",
+        "ad_copy"
+      ],
+      "patterns": [
+        "guarantee\\w*.{0,40}(\\$|\\bgrand\\b|\\bincome\\b|\\brevenue\\b|\\bmoney\\b|\\bprofit\\b|\\d+\\s*k\\b)",
+        "(\\$|\\bincome\\b|\\brevenue\\b|\\bmoney\\b|\\bprofit\\b).{0,40}guarantee\\w*"
+      ],
+      "why": "Guarantee of financial gain: banned by Meta.",
+      "instead": "\"If you do the work and miss the goal we set together, we keep going at no extra cost.\"",
+      "source": "policy_safe"
+    },
+    {
+      "id": "jobs_guarantee",
+      "severity": "HOLD",
+      "where": [
+        "spoken",
+        "on_screen",
+        "ad_copy"
+      ],
+      "patterns": [
+        "(jobs?|leads?|booked|calls?|installs?).{0,50}guarantee\\w*",
+        "guarantee\\w*.{0,50}(jobs?|leads?|booked|calls?|installs?)"
+      ],
+      "why": "A results guarantee (jobs, not money). Allowed in principle, but the terms (what 'booked' means, the conditions) must be written on the landing page, which Meta reviews with the ad.",
+      "instead": "Keep it, with the terms on the page; or 'If I don't book you the jobs, you don't pay.'",
+      "source": "policy_safe"
+    },
+    {
+      "id": "own_boss_freedom",
+      "severity": "BLOCK",
+      "where": [
+        "spoken",
+        "on_screen",
+        "ad_copy"
+      ],
+      "patterns": [
+        "\\bbe your own boss\\b",
+        "\\bquit your (day )?job\\b",
+        "\\bfinancial freedom\\b"
+      ],
+      "why": "One of Meta's own examples of a banned income ad.",
+      "instead": "\"Add a high-ticket service\", \"start a business with support\".",
+      "source": "policy_safe"
+    },
+    {
+      "id": "no_work_needed",
+      "severity": "BLOCK",
+      "where": [
+        "spoken",
+        "on_screen",
+        "ad_copy"
+      ],
+      "patterns": [
+        "\\bpassive income\\b",
+        "\\bruns without you\\b",
+        "\\beasy money\\b",
+        "\\bno work (needed|required)\\b",
+        "\\bwhile you sleep\\b"
+      ],
+      "why": "Meta bans claims that little or no work is needed to make money.",
+      "instead": "\"This takes real work.\"",
+      "source": "policy_safe"
+    },
+    {
+      "id": "autopilot",
+      "severity": "HOLD",
+      "where": [
+        "spoken",
+        "on_screen",
+        "ad_copy"
+      ],
+      "patterns": [
+        "\\bon autopilot\\b",
+        "\\bautomatic(ally)? (income|money|jobs)\\b"
+      ],
+      "why": "Close to 'runs without you': can read as little or no work needed. Lower risk when it describes the lead flow, not the money.",
+      "instead": "\"Jobs coming in every week\", \"we follow up with every lead for you\".",
+      "source": "policy_safe"
+    },
+    {
+      "id": "get_rich",
+      "severity": "BLOCK",
+      "where": [
+        "spoken",
+        "on_screen",
+        "ad_copy"
+      ],
+      "patterns": [
+        "\\bget rich\\b",
+        "\\bmake money fast\\b",
+        "\\bstart earning today\\b",
+        "\\bovernight\\b.{0,20}\\b(success|money|income)\\b"
+      ],
+      "why": "Get-rich-quick claims are banned.",
+      "instead": "\"Your ads can start in your first week\" (only if true).",
+      "source": "policy_safe"
+    },
+    {
+      "id": "personal_attributes",
+      "severity": "HOLD",
+      "where": [
+        "spoken",
+        "on_screen",
+        "ad_copy"
+      ],
+      "patterns": [
+        "\\bare you broke\\b",
+        "\\bin debt\\b",
+        "\\bstruggling to pay\\b",
+        "\\b(still |stuck )?(got|at|doing|making|stuck at)\\s+\\$?\\d[\\d,]*\\s*(k|grand|thousand)?\\s*(a|per)\\s*month\\b"
+      ],
+      "why": "Implies the ad knows the viewer's financial situation (Meta personal-attributes rule).",
+      "instead": "Name the trade, not their money: \"Exterior cleaners who want more booked jobs.\"",
+      "source": "policy_safe"
+    },
+    {
+      "id": "money_on_screen",
+      "severity": "HOLD",
+      "where": [
+        "on_screen"
+      ],
+      "patterns": [
+        "\\$\\s?\\d[\\d,.]*\\s*k?"
+      ],
+      "why": "A money figure on screen can read as an income claim (Meta reviews what is shown, not only what is said).",
+      "instead": "Show the trade or the job count instead of a dollar figure.",
+      "source": "policy_safe"
+    },
+    {
+      "id": "dollar_testimonial",
+      "severity": "BLOCK",
+      "where": [
+        "spoken",
+        "on_screen",
+        "ad_copy"
+      ],
+      "patterns": [
+        "\\bi (made|earned|sold|cleared)\\s+(over\\s+)?\\$?\\d"
+      ],
+      "why": "An earnings claim through someone else's mouth is still an earnings claim; the FTC wants the typical result.",
+      "instead": "Testimonial about the experience, no dollar amounts.",
+      "source": "policy_safe"
+    },
+    {
+      "id": "sensational_text",
+      "severity": "NOTE",
+      "where": [
+        "on_screen",
+        "ad_copy"
+      ],
+      "patterns": [
+        "!!+",
+        "\\bwarning\\b",
+        "\\bbreaking\\b"
+      ],
+      "why": "Sensational, low-quality text gets rejected. (All-caps on-screen titles are the brief's style; this rule is about '!!!', WARNING, BREAKING.)",
+      "instead": "Plain wording.",
+      "source": "policy_safe"
+    },
+    {
+      "id": "platform_or_brand",
+      "severity": "HOLD",
+      "where": [
+        "spoken",
+        "on_screen",
+        "ad_copy"
+      ],
+      "patterns": [
+        "\\b(facebook|instagram|tiktok|google|youtube)\\b"
+      ],
+      "why": "Making Facebook/Instagram the focus or naming other brands breaks brand and trademark rules.",
+      "instead": "\"Ads in your city\", \"a lighting supplier\".",
+      "source": "policy_safe"
+    },
+    {
+      "id": "profanity",
+      "severity": "BLOCK",
+      "where": [
+        "spoken",
+        "on_screen",
+        "ad_copy"
+      ],
+      "patterns": [
+        "\\b(fuck\\w*|shit\\w*|bitch\\w*|damn|crap)\\b"
+      ],
+      "why": "Profanity is banned in ads, even masked; Meta can limit delivery.",
+      "instead": "Remove it.",
+      "source": "brief"
+    }
+  ],
+  "manual": [
+    {
+      "id": "money_visuals",
+      "check": "No bank/payout screenshots, cash or luxury cars on screen (money and lifestyle visuals read as income proof).",
+      "source": "policy_safe"
+    },
+    {
+      "id": "real_testimonials",
+      "check": "Testimonials are real people in their own words; anything they got for it is disclosed on screen.",
+      "source": "policy_safe"
+    },
+    {
+      "id": "landing_page",
+      "check": "The landing page and form were reviewed too: Meta checks the ad, page and form together.",
+      "source": "policy_safe"
+    },
+    {
+      "id": "footage_rules",
+      "check": "Footage: outdoors, real over stock; no offices, desks, cars or white walls; never a person on a ladder with a buzzing phone.",
+      "source": "brief"
+    },
+    {
+      "id": "phone_check",
+      "check": "Watched once on a real phone, sound on and off.",
+      "source": "brief"
+    }
+  ]
+}

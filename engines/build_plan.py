@@ -238,10 +238,12 @@ def lock_checks(plan, script, al, words, srcs, target):
     mm = [f"{ln['id']}: {f}" for ln in al["lines"] for f in ln["flags"] if f.startswith("NUMBER")]
     c["say_numbers_match_transcript"] = {"status": "fail" if mm else "pass", "notes": mm}
     notes, ok = [], True
+    with open(os.path.join(ROOT, "brand.json")) as f:
+        card = (json.load(f).get("logo") or {}).get("end_card_s", 0.0)
     for v in plan["variants"]:
-        dur = round(sum(p["out"] - p["in"] for p in plan["parts"] if in_variant(p, v)), 2)
+        dur = round(sum(p["out"] - p["in"] for p in plan["parts"] if in_variant(p, v)) + card, 2)
         ok &= target[0] <= dur <= target[1]
-        notes.append(f"variant {v['id']}: {dur}s (target {target[0]}-{target[1]}s, Andy rule 2)")
+        notes.append(f"variant {v['id']}: {dur}s incl. {card}s logo card (target {target[0]}-{target[1]}s, Andy rule 2)")
     c["duration_in_range"] = {"status": "pass" if ok else "fail", "notes": notes}
     sp = []
     for t in plan["layers"]["titles"]:

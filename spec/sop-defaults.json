@@ -217,5 +217,28 @@
     "ticks_x_pct": 9,
     "face_margin_pct": 1.5,
     "min_top_pct": 5
+  },
+  "depth_sop_7": {
+    "_source": "Engine placeholders for the Phase 7 depth look until the SOP arrives.",
+    "guided_radius": 6,
+    "guided_eps": 0.0004,
+    "alpha_lo": 0.12,
+    "alpha_hi": 0.88,
+    "min_text_contrast": 4.5,
+    "slab_max_w": 0.86,
+    "slab_pad_x": 0.45,
+    "slab_pad_y": 0.28,
+    "slab_skew": 0.35,
+    "rise_s": 0.35,
+    "rise_from": 0.9,
+    "text_in_s": [
+      0.12,
+      0.3
+    ],
+    "drift_pct_per_s": 0.25,
+    "occlusion_min": 0.04,
+    "occlusion_max": 0.15,
+    "occlusion_target": 0.08,
+    "_occlusion": "share of title letter pixels hidden by the person: enough to read as depth, never enough to lose a word"
   }
 }
